@@ -4,8 +4,11 @@ PHP клиент для SmartCAT API
 [PHP оболочка для SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## Как использовать?
+ 1. Установить [composer](https://getcomposer.org/)
+ 2. composer require smartcat/smartcat-api
+ 3. composer install
 ```php
-use SmartCAT\SmartCAT;
+use SmartCAT\API\SmartCAT;
 
 $sc=new SmartCAT($login, $password);
 ```

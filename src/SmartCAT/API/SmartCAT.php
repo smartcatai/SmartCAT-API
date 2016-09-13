@@ -1,5 +1,5 @@
 <?php
-namespace SmartCAT;
+namespace SmartCAT\API;
 use SmartCAT\API\Normalizer\NormalizerFactory;
 use SmartCAT\API\Manager\ProjectManager;
 use SmartCAT\API\Manager\DirectoriesManager;
@@ -17,7 +17,7 @@ use Http\Client\Common\Plugin\ContentLengthPlugin;
 use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Socket\Client as SocketHttpClient;
-use Joli\Jane\Encoder\RawEncoder;
+use Joli\Jane\Runtime\Encoder\RawEncoder;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -100,6 +100,7 @@ class SmartCAT
      *
      * @return ProjectManager
      */
+
     public function getProjectManager()
     {
         if (null === $this->projectManager) {
