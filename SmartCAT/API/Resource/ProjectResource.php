@@ -1,0 +1,280 @@
+<?php
+
+namespace SmartCAT\API\Resource;
+
+use Joli\Jane\OpenApi\Client\QueryParam;
+use Joli\Jane\OpenApi\Client\Resource;
+class ProjectResource extends Resource
+{
+    /**
+     * 
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectDelete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/{projectId}';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel
+     */
+    public function projectGet($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/{projectId}';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param \SmartCAT\API\Model\ProjectChangesModel $model Модель изменений проекта
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectUpdateProject($projectId, \SmartCAT\API\Model\ProjectChangesModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/{projectId}';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $this->serializer->serialize($model, 'json');
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel[]
+     */
+    public function projectGetAll($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/list';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel[]', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/{projectId}/statistics';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        return $response;
+    }
+    /**
+     * Принимает multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream). Swagger UI не поддерживает отображение и выполение таких запросов. В секции параметров описана модель, но отсутствуют параметры, соответствующие файлам. Для отправки запроса воспользуйтесь сторонними утилитами, например cURL.
+     *
+     * @param \SmartCAT\API\Model\CreateProjectModel $project Модель создания проекта с файлами
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel
+     */
+    public function projectCreateProject(\SmartCAT\API\Model\CreateProjectModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/create';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $this->serializer->serialize($project, 'json');
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $projectId Идентификатор проекта
+     *     @var  $file файл
+     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
+     *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
+     *     @var string $metaInfo Дополнительная пользовательская информация о документе
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
+     */
+    public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('projectId');
+        $queryParam->setRequired('file');
+        $queryParam->setFormParameters(array('file'));
+        $queryParam->setDefault('disassembleAlgorithmName', NULL);
+        $queryParam->setDefault('externalId', NULL);
+        $queryParam->setDefault('metaInfo', NULL);
+        $url = '/api/integration/v1/project/document';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $projectId Идентификатор проекта
+     *     @var string $targetLanguage Язык перевода
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectAddLanguage($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('projectId');
+        $queryParam->setRequired('targetLanguage');
+        $url = '/api/integration/v1/project/language';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param array  $parameters {
+     *     @var string $groupName Название назначаемой группы
+     *     @var string $workflowStage Этап worflow, на который будет назначена группа
+     *     @var string $targetLanguage Целевой язык. Не обязателен для одноязычных проектов
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectAssignGroupToWorkflowStage($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('groupName');
+        $queryParam->setRequired('workflowStage');
+        $queryParam->setDefault('targetLanguage', NULL);
+        $url = '/api/integration/v1/project/{projectId}/assignGroupToWorkflowStage';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $projectId Идентификатор проекта
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectCancelProject($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('projectId');
+        $url = '/api/integration/v1/project/cancel';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $projectId Идентификатор проекта
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectRestoreProject($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('projectId');
+        $url = '/api/integration/v1/project/restore';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $response = $this->httpClient->sendRequest($request);
+        return $response;
+    }
+}
