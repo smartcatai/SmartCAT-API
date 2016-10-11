@@ -1,33 +1,32 @@
-PHP клиент для SmartCAT API 
+PHP client SmartCAT API 
 ==============
-Версия от 19.08.2016
-[PHP оболочка для SmartCAT API](https://smartcat.ai/api/methods/)
+Version from 19.08.2016
+[PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
-## Как использовать?
- 1. Установить [composer](https://getcomposer.org/)
+## How to use:
+ 1. Install [composer](https://getcomposer.org/)
  2. composer require smartcat/smartcat-api
- 3. composer install
-```php
+ 3. composer install 
+```php 
 use SmartCAT\API\SmartCAT;
 
 $sc=new SmartCAT($login, $password);
 ```
-На текущий момент проверены не все методы API
 
 ## [Callback](https://smartcat.ai/api/methods/#!/Callback)
- [Удаление настроек приема уведомлений](https://smartcat.ai/api/methods/#!/Callback/Callback_Delete) - **Протестировано**  
+ [Reset configurations of notifications reception](https://smartcat.ai/api/methods/#!/Callback/Callback_Delete)
  **DELETE** /api/integration/v1/callback  
  ```php
  $sc->getCallbackManager()->callbackDelete()
  ```
  
- [Чтение настроек приема уведомлений аккаунта](https://smartcat.ai/api/methods/#!/Callback/Callback_Get) - **Протестировано**  
+ [Reading configurations of notifications reception of the account](https://smartcat.ai/api/methods/#!/Callback/Callback_Get)
  **GET** /api/integration/v1/callback  
  ```php
  $sc->getCallbackManager()->callbackGet()
  ```
  
- [Создание или обновление настроек приема уведомлений](https://smartcat.ai/api/methods/#!/Callback/Callback_Update) - **Протестировано**  
+ [Creating and updating configurations of notifications reception](https://smartcat.ai/api/methods/#!/Callback/Callback_Update)
  **POST** /api/integration/v1/callback  
  ```php
  $callback=new CallbackPropertyModel();
@@ -35,33 +34,33 @@ $sc=new SmartCAT($login, $password);
  $res=$this->sc->getCallbackManager()->callbackUpdate($callback);
  ```
  
- [Чтение последних ошибок отправки (не более 100)](https://smartcat.ai/api/methods/#!/Callback/Callback_GetLastErrors) - **Протестировано**  
+ [Reading the last sending errors (no more than 100)](https://smartcat.ai/api/methods/#!/Callback/Callback_GetLastErrors)
  **GET** /api/integration/v1/callback/lastErrors  
  ```php
  $sc->getCallbackManager()->callbackGetLastErrors(['limit'=>$limit])
  ```
 
 ## [Directories](https://smartcat.ai/api/methods/#!/Directories)
- [Получить заданный справочник](https://smartcat.ai/api/methods/#!/Directories/Directories_Get) - **Протестировано**  
+ [Receive the specified directory](https://smartcat.ai/api/methods/#!/Directories/Directories_Get)
  **GET** /api/integration/v1/directory  
  ```php
  $sc->getDirectoriesManager()->directoriesGet(['type'=>'projectStatus'])
  ```
 
 ## [Document](https://smartcat.ai/api/methods/#!/Document)
- [Удалить один или несколько документов](https://smartcat.ai/api/methods/#!/Document/Document_Delete) - **Протестировано**  
+ [Delete one or several documents](https://smartcat.ai/api/methods/#!/Document/Document_Delete)
  **DELETE** /api/integration/v1/document  
  ```php
  $sc->getDocumentManager()->documentDelete(['documentIds'=>['id1','id2']])
  ```
  
- [Получить модель документа](https://smartcat.ai/api/methods/#!/Document/Document_Get) - **Протестировано**  
+ [Receive document model](https://smartcat.ai/api/methods/#!/Document/Document_Get)
  **GET** /api/integration/v1/document  
  ```php
  $sc->getDocumentManager()->documentGet(['documentId'=>$docId])
  ```
  
- [Обновить заданный документ](https://smartcat.ai/api/methods/#!/Document/Document_Update) - **Протестировано**  
+ [Update assigned document](https://smartcat.ai/api/methods/#!/Document/Document_Update)
  **PUT** /api/integration/v1/document/update  
  ```php
  $sc->getDocumentManager()->documentUpdate([
@@ -73,13 +72,13 @@ $sc=new SmartCAT($login, $password);
  ])
  ```
  
- [Переименовать заданный документ](https://smartcat.ai/api/methods/#!/Document/Document_Rename) - **Протестировано**  
+ [Rename assigned document](https://smartcat.ai/api/methods/#!/Document/Document_Rename)
  **PUT** /api/integration/v1/document/rename
  ```php
  $sc->getDocumentManager()->documentRename(['documentId'=>$docId,'name'=>'New file name'])
  ```
  
- [Перевести указанный документ, используя переданный файл с переводами](https://smartcat.ai/api/methods/#!/Document/Document_Translate) - **Протестировано**  
+ [Translate indicated document using the transferred file with translations](https://smartcat.ai/api/methods/#!/Document/Document_Translate)
  **PUT** /api/integration/v1/document/translate  
  ```php
  $sc->getDocumentManager()->documentTranslate([
@@ -91,13 +90,13 @@ $sc=new SmartCAT($login, $password);
  ])
  ```
  
- [Получить статус задачи добавления перевода документа](https://smartcat.ai/api/methods/#!/Document/Document_GetTranslationStatus) - **Протестировано**  
+ [Receive the status of adding document translation](https://smartcat.ai/api/methods/#!/Document/Document_GetTranslationStatus)
  **GET** /api/integration/v1/document/translate/status
  ```php
  $sc->getDocumentManager()->documentGetTranslationStatus(['documentId'=>$docId])
  ```
  
- [Разбить документ на равные блоки по количеству слов и назначить каждого из указанных фрилансеров на один блок](https://smartcat.ai/api/methods/#!/Document/Document_AssignFreelancersToDocument) - **Протестировано**  
+ [Split document into equal segments according to the number of words and assign each freelancer to one segment](https://smartcat.ai/api/methods/#!/Document/Document_AssignFreelancersToDocument)
  **POST** /api/integration/v1/document/assignFreelancers  
   ```php
  $sc->getDocumentManager()->documentAssignFreelancersToDocument(
@@ -110,77 +109,77 @@ $sc=new SmartCAT($login, $password);
  ```
   
 ## [DocumentExport](https://smartcat.ai/api/methods/#!/DocumentExport)
- [Запросить на экспорт документа(-ов)](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_RequestExport) - **Протестировано**  
+ [Request document (-s) export](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_RequestExport)
  **POST** /api/integration/v1/document/export  
  ```php
  $sc->getDocumentExportManager()->documentExportRequestExport(['documentIds'=>['documenId1','documentId2'])
  ```
  
- [Скачать результат экспорта](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_DownloadExportResult) - **Протестировано**  
+ [Download the results of export](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_DownloadExportResult)
  **GET** /api/integration/v1/document/export/{taskId}  
  ```php
  $sc->getDocumentExportManager()->documentExportDownloadExportResult($taskId);
  ```
  
 ## [Project](https://smartcat.ai/api/methods/#!/Project)
- [Удалить проект](https://smartcat.ai/api/methods/#!/Project/Project_Delete) - **Протестировано**  
+ [Delete project](https://smartcat.ai/api/methods/#!/Project/Project_Delete)
  **DELETE** /api/integration/v1/project/{projectId}
  ```php
  $sc->getProjectManager()->projectDelete($projectId)
  ```
  
- [Получить модель проекта](https://smartcat.ai/api/methods/#!/Project/Project_Get) - **Протестировано**  
+ [Receive project model](https://smartcat.ai/api/methods/#!/Project/Project_Get)
  **GET** /api/integration/v1/project/{projectId}
  ```php
  sc->getProjectManager()->projectGet($projectId)
  ```
  
- [Обновить проект по id](https://smartcat.ai/api/methods/#!/Project/Project_UpdateProject)  - **Не рабочий метод API**  
+ [Update project using ID](https://smartcat.ai/api/methods/#!/Project/Project_UpdateProject)  - **Не рабочий метод API**  
  **PUT** /api/integration/v1/project/{projectId} - **Не работает!**
  
- [Получить список всех проектов в аккаунте](https://smartcat.ai/api/methods/#!/Project/Project_GetAll) - **Протестировано**  
+ [Receive the list of all projects in account](https://smartcat.ai/api/methods/#!/Project/Project_GetAll)
  **GET** /api/integration/v1/project/list
  ```php
  $sc->getProjectManager()->projectGetAll()
  ```
  
- [Получить статистику и стоимость по проекту](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectStatistics) - **Протестировано**    
+ [Receive statistics and project value](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectStatistics)  
  **GET** /api/integration/v1/project/{projectId}/statistics  
  ```php
 $sc->getProjectManager()->projectGetProjectStatistics($projectId);
  ```
  
- [Создать проект](https://smartcat.ai/api/methods/#!/Project/Project_CreateProject) - **Протестировано**  
+ [Create a project](https://smartcat.ai/api/methods/#!/Project/Project_CreateProject)
  **POST** /api/integration/v1/project/create  
  ```php
  $sc->getProjectManager()->projectCreateProjectWithFiles($prjInfo);
  ```
   
- [Добавить документ к проекту](https://smartcat.ai/api/methods/#!/Project/Project_AddDocument) - **Протестировано**  
+ [Add new document to project](https://smartcat.ai/api/methods/#!/Project/Project_AddDocument)
  **POST** /api/integration/v1/project/document  
  ```php
  $sc->getProjectManager()->projectAddDocument(['projectId'=>$projectId, 'filePath'=>'path to file','fileName'=>'File name']);
  ```
  
- [Добавить новый целевой язык к проекту](https://smartcat.ai/api/methods/#!/Project/Project_AddLanguage) - **Протестировано**  
+ [Add new target language to project](https://smartcat.ai/api/methods/#!/Project/Project_AddLanguage)
  **POST** /api/integration/v1/project/language  
  ```php
  $sc->getProjectManager()->projectAddLanguage(['projectId'=>$projectId,'targetLanguage'=>'ja']);
  ```
  
- [Назначить группу исполнителей на конкретный этап документов в проекте](https://smartcat.ai/api/methods/#!/Project/Project_AssignGroupToWorkflowStage) - **Протестировано**  
+ [Assign the group of translators for the specific stage of documents in project](https://smartcat.ai/api/methods/#!/Project/Project_AssignGroupToWorkflowStage)
  **PUT** /api/integration/v1/project/{projectId}/assignGroupToWorkflowStage  
  ```php
  $sc->getProjectManager()->projectAssignGroupToWorkflowStage($projectId,['groupName'=>'Administrators','workflowStage'=>'translation'])
  ```
  
- [Отменить проект](https://smartcat.ai/api/methods/#!/Project/Project_CancelProject) - **Протестировано**  
+ [Cancel project](https://smartcat.ai/api/methods/#!/Project/Project_CancelProject)
  **POST** /api/integration/v1/project/cancel
  ```php
  $sc->getProjectManager()->projectCancelProject(['projectId'=>$projectId])
  ```
 
- [Восстановить проект](https://smartcat.ai/api/methods/#!/Project/Project_RestoreProject) - **Протестировано**  
+ [Restore project](https://smartcat.ai/api/methods/#!/Project/Project_RestoreProject)
  **POST** /api/integration/v1/project/restore  
  ```php
  $sc->getProjectManager()->projectRestoreProject(['projectId'=>$projectId])
