@@ -12,6 +12,7 @@ class ModelWithFilesCreateProjectModel
      * @var UploadedFile[]
      */
     protected $files;
+
     /**
      * @return CreateProjectModel
      */
@@ -19,6 +20,7 @@ class ModelWithFilesCreateProjectModel
     {
         return $this->value;
     }
+
     /**
      * @param CreateProjectModel $value
      *
@@ -29,6 +31,7 @@ class ModelWithFilesCreateProjectModel
         $this->value = $value;
         return $this;
     }
+
     /**
      * @return UploadedFile[]
      */
@@ -36,6 +39,7 @@ class ModelWithFilesCreateProjectModel
     {
         return $this->files;
     }
+
     /**
      * @param UploadedFile[] $files
      *

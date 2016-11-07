@@ -4,15 +4,16 @@ namespace SmartCAT\API\Resource;
 
 use Joli\Jane\OpenApi\Client\QueryParam;
 use Joli\Jane\OpenApi\Client\Resource;
+
 class DocumentResource extends Resource
 {
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var array $documentIds Массив идентификаторов документов
+     *
+     * @param array $parameters {
+     * @var array $documentIds Массив идентификаторов документов
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -28,13 +29,14 @@ class DocumentResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор документа
+     *
+     * @param array $parameters {
+     * @var string $documentId Идентификатор документа
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel
      */
@@ -50,20 +52,21 @@ class DocumentResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор документа
-     *     @var  $uploadedFile Файл
-     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
+     *
+     * @param array $parameters {
+     * @var string $documentId Идентификатор документа
+     * @var  $uploadedFile Файл
+     * @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
@@ -82,19 +85,20 @@ class DocumentResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор документа
-     *     @var string $name Новое название
+     *
+     * @param array $parameters {
+     * @var string $documentId Идентификатор документа
+     * @var string $name Новое название
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -111,19 +115,20 @@ class DocumentResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-    * Доступно не для всех форматов файлов, а только для тех, которые поддерживают честное обновление
-               (де-факто на данный момент это ресурсные файлы с уникальными идентификаторами ресурсов).
-               Ставит задачу в процессинге. На момент завершения запроса перевод возможно не завершён
-    *
-    * @param array  $parameters {
-    *     @var string $documentId Идентификатор переводимого документа
-    *     @var  $translationFile Файл с переводом
-    * }
-    * @param string $fetch      Fetch mode (object or response)
-    *
-    * @return \Psr\Http\Message\ResponseInterface
-    */
+     * Доступно не для всех форматов файлов, а только для тех, которые поддерживают честное обновление
+     * (де-факто на данный момент это ресурсные файлы с уникальными идентификаторами ресурсов).
+     * Ставит задачу в процессинге. На момент завершения запроса перевод возможно не завершён
+     *
+     * @param array $parameters {
+     * @var string $documentId Идентификатор переводимого документа
+     * @var  $translationFile Файл с переводом
+     * }
+     * @param string $fetch Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function documentTranslate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
@@ -138,13 +143,14 @@ class DocumentResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор переводимого документа
+     *
+     * @param array $parameters {
+     * @var string $documentId Идентификатор переводимого документа
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -160,15 +166,16 @@ class DocumentResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
+     *
      *
      * @param array $freelancerUserIds Идентификаторы назначаемых пользователей-фрилансеров.
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор переводимого документа.
-     *     @var int $stageNumber Номер этапа workflow.
+     * @param array $parameters {
+     * @var string $documentId Идентификатор переводимого документа.
+     * @var int $stageNumber Номер этапа workflow.
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */

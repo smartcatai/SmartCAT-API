@@ -5,7 +5,7 @@ namespace SmartCAT\API\Model;
 
 class CreateProjectWithFilesModel extends CreateProjectModel
 {
-    protected $files=[];
+    protected $files = [];
 
     /**
      * Приклепляет файл к проекту
@@ -14,11 +14,13 @@ class CreateProjectWithFilesModel extends CreateProjectModel
      * @param
      */
 
-    public function attacheFile($filePath, $fileName){
-        $this->files[$fileName]=$filePath;
+    public function attacheFile($filePath, $fileName)
+    {
+        $this->files[$fileName] = $filePath;
     }
 
-    public function getFiles(){
+    public function getFiles()
+    {
         return $this->files;
     }
 }

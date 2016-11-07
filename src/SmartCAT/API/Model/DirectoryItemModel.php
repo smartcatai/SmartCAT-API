@@ -12,6 +12,7 @@ class DirectoryItemModel
      * @var string
      */
     protected $name;
+
     /**
      * @return string
      */
@@ -19,6 +20,7 @@ class DirectoryItemModel
     {
         return $this->id;
     }
+
     /**
      * @param string $id
      *
@@ -29,6 +31,7 @@ class DirectoryItemModel
         $this->id = $id;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -36,6 +39,7 @@ class DirectoryItemModel
     {
         return $this->name;
     }
+
     /**
      * @param string $name
      *

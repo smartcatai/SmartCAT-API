@@ -5,14 +5,15 @@ namespace SmartCAT\API\Manager;
 
 trait SmartCATManager
 {
-    protected function createFormData(array $params = array(), array $files = array(), array $headers=array()) {
+    protected function createFormData(array $params = array(), array $files = array(), array $headers = array())
+    {
         // invalid characters for "name" and "filename"
         static $disallow = array("\0", "\"", "\r", "\n");
 
         // build file parameters
         foreach ($files as $k => $v) {
-            $contentType="application/octet-stream";
-            if(isset($v["path"])){
+            $contentType = "application/octet-stream";
+            if (isset($v["path"])) {
                 switch (true) {
                     case false === $v["path"] = realpath(filter_var($v["path"])):
                     case !is_file($v["path"]):
@@ -21,13 +22,11 @@ trait SmartCATManager
                 }
                 $filename = call_user_func("end", explode(DIRECTORY_SEPARATOR, $v["path"]));
                 $data = file_get_contents($v["path"]);
-            }
-            else if(isset($v["content"])){
-                $data=$v["content"];
-                $filename=$v["filename"];
-                if(isset($v["mime"])) $contentType=$v["mime"];
-            }
-            else{
+            } else if (isset($v["content"])) {
+                $data = $v["content"];
+                $filename = $v["filename"];
+                if (isset($v["mime"])) $contentType = $v["mime"];
+            } else {
                 continue;
             }
             $k = str_replace($disallow, "_", $k);
@@ -43,11 +42,11 @@ trait SmartCATManager
         // build normal parameters
         foreach ($params as $k => $v) {
             $k = str_replace($disallow, "_", $k);
-            $tmp=[];
-            $tmp[]="Content-Disposition: form-data; name=\"{$k}\"";
-            if(isset($v['headers']))$tmp=array_merge($tmp,$v['headers']);
-            $tmp[]="";
-            $tmp[]=filter_var($v['value']);
+            $tmp = [];
+            $tmp[] = "Content-Disposition: form-data; name=\"{$k}\"";
+            if (isset($v['headers'])) $tmp = array_merge($tmp, $v['headers']);
+            $tmp[] = "";
+            $tmp[] = filter_var($v['value']);
             $body[] = implode("\r\n", $tmp);
         }
 
@@ -68,7 +67,7 @@ trait SmartCATManager
 
         // set options
         //$headers[]="Expect: 100-continue";
-        $headers["Content-Type"]="multipart/form-data; boundary={$boundary}";
-        return array('headers'=>$headers, 'body'=>implode("\r\n", $body));
+        $headers["Content-Type"] = "multipart/form-data; boundary={$boundary}";
+        return array('headers' => $headers, 'body' => implode("\r\n", $body));
     }
 }

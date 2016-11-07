@@ -76,6 +76,7 @@ class CreateProjectModel
      * @var bool
      */
     protected $isForTesting;
+
     /**
      * @return string
      */
@@ -83,6 +84,7 @@ class CreateProjectModel
     {
         return $this->name;
     }
+
     /**
      * @param string $name
      *
@@ -93,6 +95,7 @@ class CreateProjectModel
         $this->name = $name;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -100,6 +103,7 @@ class CreateProjectModel
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
@@ -110,6 +114,7 @@ class CreateProjectModel
         $this->description = $description;
         return $this;
     }
+
     /**
      * @return \DateTime
      */
@@ -117,6 +122,7 @@ class CreateProjectModel
     {
         return $this->deadline;
     }
+
     /**
      * @param \DateTime $deadline
      *
@@ -127,6 +133,7 @@ class CreateProjectModel
         $this->deadline = $deadline;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -134,6 +141,7 @@ class CreateProjectModel
     {
         return $this->sourceLanguage;
     }
+
     /**
      * @param string $sourceLanguage
      *
@@ -144,6 +152,7 @@ class CreateProjectModel
         $this->sourceLanguage = $sourceLanguage;
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -151,6 +160,7 @@ class CreateProjectModel
     {
         return $this->targetLanguages;
     }
+
     /**
      * @param string[] $targetLanguages
      *
@@ -161,6 +171,7 @@ class CreateProjectModel
         $this->targetLanguages = $targetLanguages;
         return $this;
     }
+
     /**
      * @return int
      */
@@ -168,6 +179,7 @@ class CreateProjectModel
     {
         return $this->domainId;
     }
+
     /**
      * @param int $domainId
      *
@@ -178,6 +190,7 @@ class CreateProjectModel
         $this->domainId = $domainId;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -185,6 +198,7 @@ class CreateProjectModel
     {
         return $this->clientId;
     }
+
     /**
      * @param string $clientId
      *
@@ -195,6 +209,7 @@ class CreateProjectModel
         $this->clientId = $clientId;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -202,6 +217,7 @@ class CreateProjectModel
     {
         return $this->vendorAccountId;
     }
+
     /**
      * @param string $vendorAccountId
      *
@@ -212,6 +228,7 @@ class CreateProjectModel
         $this->vendorAccountId = $vendorAccountId;
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -219,6 +236,7 @@ class CreateProjectModel
     {
         return $this->assignToVendor;
     }
+
     /**
      * @param bool $assignToVendor
      *
@@ -229,6 +247,7 @@ class CreateProjectModel
         $this->assignToVendor = $assignToVendor;
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -236,6 +255,7 @@ class CreateProjectModel
     {
         return $this->useMT;
     }
+
     /**
      * @param bool $useMT
      *
@@ -246,6 +266,7 @@ class CreateProjectModel
         $this->useMT = $useMT;
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -253,6 +274,7 @@ class CreateProjectModel
     {
         return $this->pretranslate;
     }
+
     /**
      * @param bool $pretranslate
      *
@@ -263,6 +285,7 @@ class CreateProjectModel
         $this->pretranslate = $pretranslate;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -270,6 +293,7 @@ class CreateProjectModel
     {
         return $this->translationMemoryName;
     }
+
     /**
      * @param string $translationMemoryName
      *
@@ -280,6 +304,7 @@ class CreateProjectModel
         $this->translationMemoryName = $translationMemoryName;
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -287,6 +312,7 @@ class CreateProjectModel
     {
         return $this->useTranslationMemory;
     }
+
     /**
      * @param bool $useTranslationMemory
      *
@@ -297,6 +323,7 @@ class CreateProjectModel
         $this->useTranslationMemory = $useTranslationMemory;
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -304,6 +331,7 @@ class CreateProjectModel
     {
         return $this->autoPropagateRepetitions;
     }
+
     /**
      * @param bool $autoPropagateRepetitions
      *
@@ -314,6 +342,7 @@ class CreateProjectModel
         $this->autoPropagateRepetitions = $autoPropagateRepetitions;
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -321,6 +350,7 @@ class CreateProjectModel
     {
         return $this->disassembleAlgorithmNames;
     }
+
     /**
      * @param string[] $disassembleAlgorithmNames
      *
@@ -331,6 +361,7 @@ class CreateProjectModel
         $this->disassembleAlgorithmNames = $disassembleAlgorithmNames;
         return $this;
     }
+
     /**
      * @return CreateDocumentPropertyModel[]
      */
@@ -338,6 +369,7 @@ class CreateProjectModel
     {
         return $this->documentProperties;
     }
+
     /**
      * @param CreateDocumentPropertyModel[] $documentProperties
      *
@@ -348,6 +380,7 @@ class CreateProjectModel
         $this->documentProperties = $documentProperties;
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -355,6 +388,7 @@ class CreateProjectModel
     {
         return $this->workflowStages;
     }
+
     /**
      * @param string[] $workflowStages
      *
@@ -365,6 +399,7 @@ class CreateProjectModel
         $this->workflowStages = $workflowStages;
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -372,6 +407,7 @@ class CreateProjectModel
     {
         return $this->isForTesting;
     }
+
     /**
      * @param bool $isForTesting
      *

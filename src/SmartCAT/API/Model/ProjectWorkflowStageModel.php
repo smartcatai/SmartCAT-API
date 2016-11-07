@@ -12,6 +12,7 @@ class ProjectWorkflowStageModel
      * @var string
      */
     protected $stageType;
+
     /**
      * @return float
      */
@@ -19,6 +20,7 @@ class ProjectWorkflowStageModel
     {
         return $this->progress;
     }
+
     /**
      * @param float $progress
      *
@@ -29,6 +31,7 @@ class ProjectWorkflowStageModel
         $this->progress = $progress;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -36,6 +39,7 @@ class ProjectWorkflowStageModel
     {
         return $this->stageType;
     }
+
     /**
      * @param string $stageType
      *

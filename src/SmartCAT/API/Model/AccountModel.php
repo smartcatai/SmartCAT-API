@@ -16,6 +16,7 @@ class AccountModel
      * @var bool
      */
     protected $isPersonal;
+
     /**
      * @return string
      */
@@ -23,6 +24,7 @@ class AccountModel
     {
         return $this->id;
     }
+
     /**
      * @param string $id
      *
@@ -33,6 +35,7 @@ class AccountModel
         $this->id = $id;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -40,6 +43,7 @@ class AccountModel
     {
         return $this->name;
     }
+
     /**
      * @param string $name
      *
@@ -50,6 +54,7 @@ class AccountModel
         $this->name = $name;
         return $this;
     }
+
     /**
      * @return bool
      */
@@ -57,6 +62,7 @@ class AccountModel
     {
         return $this->isPersonal;
     }
+
     /**
      * @param bool $isPersonal
      *

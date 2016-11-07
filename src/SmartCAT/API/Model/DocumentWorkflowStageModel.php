@@ -16,6 +16,7 @@ class DocumentWorkflowStageModel
      * @var string
      */
     protected $status;
+
     /**
      * @return float
      */
@@ -23,6 +24,7 @@ class DocumentWorkflowStageModel
     {
         return $this->progress;
     }
+
     /**
      * @param float $progress
      *
@@ -33,6 +35,7 @@ class DocumentWorkflowStageModel
         $this->progress = $progress;
         return $this;
     }
+
     /**
      * @return int
      */
@@ -40,6 +43,7 @@ class DocumentWorkflowStageModel
     {
         return $this->wordsTranslated;
     }
+
     /**
      * @param int $wordsTranslated
      *
@@ -50,6 +54,7 @@ class DocumentWorkflowStageModel
         $this->wordsTranslated = $wordsTranslated;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -57,6 +62,7 @@ class DocumentWorkflowStageModel
     {
         return $this->status;
     }
+
     /**
      * @param string $status
      *
