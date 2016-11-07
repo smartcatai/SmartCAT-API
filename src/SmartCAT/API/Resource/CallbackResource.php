@@ -4,13 +4,14 @@ namespace SmartCAT\API\Resource;
 
 use Joli\Jane\OpenApi\Client\QueryParam;
 use Joli\Jane\OpenApi\Client\Resource;
+
 class CallbackResource extends Resource
 {
     /**
-     * 
      *
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -25,11 +26,12 @@ class CallbackResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\CallbackPropertyModel
      */
@@ -44,17 +46,18 @@ class CallbackResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\CallbackPropertyModel', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\CallbackPropertyModel', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
+     *
      *
      * @param \SmartCAT\API\Model\CallbackPropertyModel $callbackProperty настройки уведомлений
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\Object
      */
@@ -69,18 +72,19 @@ class CallbackResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\Object', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\Object', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var int $limit 
+     *
+     * @param array $parameters {
+     * @var int $limit
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\Object
      */
@@ -96,7 +100,7 @@ class CallbackResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\Object', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\Object', 'json');
             }
         }
         return $response;

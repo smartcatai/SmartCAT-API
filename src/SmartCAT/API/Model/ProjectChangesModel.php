@@ -28,6 +28,7 @@ class ProjectChangesModel
      * @var string
      */
     protected $vendorAccountId;
+
     /**
      * @return string
      */
@@ -35,6 +36,7 @@ class ProjectChangesModel
     {
         return $this->name;
     }
+
     /**
      * @param string $name
      *
@@ -45,6 +47,7 @@ class ProjectChangesModel
         $this->name = $name;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -52,6 +55,7 @@ class ProjectChangesModel
     {
         return $this->description;
     }
+
     /**
      * @param string $description
      *
@@ -62,6 +66,7 @@ class ProjectChangesModel
         $this->description = $description;
         return $this;
     }
+
     /**
      * @return \DateTime
      */
@@ -69,6 +74,7 @@ class ProjectChangesModel
     {
         return $this->deadline;
     }
+
     /**
      * @param \DateTime $deadline
      *
@@ -79,6 +85,7 @@ class ProjectChangesModel
         $this->deadline = $deadline;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -86,6 +93,7 @@ class ProjectChangesModel
     {
         return $this->clientId;
     }
+
     /**
      * @param string $clientId
      *
@@ -96,6 +104,7 @@ class ProjectChangesModel
         $this->clientId = $clientId;
         return $this;
     }
+
     /**
      * @return int
      */
@@ -103,6 +112,7 @@ class ProjectChangesModel
     {
         return $this->domainId;
     }
+
     /**
      * @param int $domainId
      *
@@ -113,6 +123,7 @@ class ProjectChangesModel
         $this->domainId = $domainId;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -120,6 +131,7 @@ class ProjectChangesModel
     {
         return $this->vendorAccountId;
     }
+
     /**
      * @param string $vendorAccountId
      *

@@ -4,15 +4,16 @@ namespace SmartCAT\API\Resource;
 
 use Joli\Jane\OpenApi\Client\QueryParam;
 use Joli\Jane\OpenApi\Client\Resource;
+
 class AccountResource extends Resource
 {
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $userId идентификатор прользователя
+     *
+     * @param array $parameters {
+     * @var string $userId идентификатор прользователя
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\AccountModel[]
      */
@@ -28,7 +29,7 @@ class AccountResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\AccountModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\AccountModel[]', 'json');
             }
         }
         return $response;

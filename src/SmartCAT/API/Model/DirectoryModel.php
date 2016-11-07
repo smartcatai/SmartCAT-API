@@ -12,6 +12,7 @@ class DirectoryModel
      * @var DirectoryItemModel[]
      */
     protected $items;
+
     /**
      * @return string
      */
@@ -19,6 +20,7 @@ class DirectoryModel
     {
         return $this->type;
     }
+
     /**
      * @param string $type
      *
@@ -29,6 +31,7 @@ class DirectoryModel
         $this->type = $type;
         return $this;
     }
+
     /**
      * @return DirectoryItemModel[]
      */
@@ -36,6 +39,7 @@ class DirectoryModel
     {
         return $this->items;
     }
+
     /**
      * @param DirectoryItemModel[] $items
      *

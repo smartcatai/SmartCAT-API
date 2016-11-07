@@ -1,6 +1,7 @@
 <?php
 
 namespace SmartCAT\API\Manager;
+
 use SmartCAT\API\Resource\AccountResource;
 
 

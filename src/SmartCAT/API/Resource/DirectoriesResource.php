@@ -4,15 +4,16 @@ namespace SmartCAT\API\Resource;
 
 use Joli\Jane\OpenApi\Client\QueryParam;
 use Joli\Jane\OpenApi\Client\Resource;
+
 class DirectoriesResource extends Resource
 {
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $type Тип справочника
+     *
+     * @param array $parameters {
+     * @var string $type Тип справочника
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DirectoryModel
      */
@@ -28,7 +29,7 @@ class DirectoriesResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DirectoryModel', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DirectoryModel', 'json');
             }
         }
         return $response;

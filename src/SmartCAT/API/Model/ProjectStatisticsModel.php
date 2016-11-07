@@ -12,6 +12,7 @@ class ProjectStatisticsModel
      * @var float
      */
     protected $cost;
+
     /**
      * @return StatisticsRowModel[]
      */
@@ -19,6 +20,7 @@ class ProjectStatisticsModel
     {
         return $this->statistics;
     }
+
     /**
      * @param StatisticsRowModel[] $statistics
      *
@@ -29,6 +31,7 @@ class ProjectStatisticsModel
         $this->statistics = $statistics;
         return $this;
     }
+
     /**
      * @return float
      */
@@ -36,6 +39,7 @@ class ProjectStatisticsModel
     {
         return $this->cost;
     }
+
     /**
      * @param float $cost
      *

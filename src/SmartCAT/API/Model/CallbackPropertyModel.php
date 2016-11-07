@@ -8,6 +8,7 @@ class CallbackPropertyModel
      * @var string
      */
     protected $url;
+
     /**
      * @return string
      */
@@ -15,6 +16,7 @@ class CallbackPropertyModel
     {
         return $this->url;
     }
+
     /**
      * @param string $url
      *

@@ -1,9 +1,9 @@
 <?php
 
 namespace SmartCAT\API\Manager;
-use SmartCAT\API\Resource\CallbackResource;
+
 use Joli\Jane\OpenApi\Client\QueryParam;
-use Joli\Jane\OpenApi\Client\Resource;
+use SmartCAT\API\Resource\CallbackResource;
 
 class CallbackManager extends CallbackResource
 {
@@ -11,15 +11,15 @@ class CallbackManager extends CallbackResource
      *
      *
      * @param \SmartCAT\API\Model\CallbackPropertyModel $callbackProperty настройки уведомлений
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\Object
      */
     public function callbackUpdate(\SmartCAT\API\Model\CallbackPropertyModel $callbackProperty, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $queryParam->setDefault('Content-Type','application/json');
+        $queryParam->setDefault('Content-Type', 'application/json');
         $queryParam->setHeaderParameters(['Content-Type']);
         $url = '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
@@ -39,10 +39,10 @@ class CallbackManager extends CallbackResource
     /**
      *
      *
-     * @param array  $parameters {
-     *     @var int $limit
+     * @param array $parameters {
+     * @var int $limit
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\Object
      */

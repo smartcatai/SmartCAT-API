@@ -4,14 +4,15 @@ namespace SmartCAT\API\Resource;
 
 use Joli\Jane\OpenApi\Client\QueryParam;
 use Joli\Jane\OpenApi\Client\Resource;
+
 class ProjectResource extends Resource
 {
     /**
-     * 
+     *
      *
      * @param string $projectId Идентификатор проекта
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -27,12 +28,13 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
+     *
      *
      * @param string $projectId Идентификатор проекта
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel
      */
@@ -48,18 +50,19 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
+     *
      *
      * @param string $projectId Идентификатор проекта
      * @param \SmartCAT\API\Model\ProjectChangesModel $model Модель изменений проекта
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -75,11 +78,12 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel[]
      */
@@ -94,17 +98,18 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel[]', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
+     *
      *
      * @param string $projectId Идентификатор проекта
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -120,12 +125,13 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
      * Принимает multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream). Swagger UI не поддерживает отображение и выполение таких запросов. В секции параметров описана модель, но отсутствуют параметры, соответствующие файлам. Для отправки запроса воспользуйтесь сторонними утилитами, например cURL.
      *
      * @param \SmartCAT\API\Model\CreateProjectModel $project Модель создания проекта с файлами
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel
      */
@@ -140,22 +146,23 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
-     *     @var  $file файл
-     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
-     *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
-     *     @var string $metaInfo Дополнительная пользовательская информация о документе
+     *
+     * @param array $parameters {
+     * @var string $projectId Идентификатор проекта
+     * @var  $file файл
+     * @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
+     * @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
+     * @var string $metaInfo Дополнительная пользовательская информация о документе
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
@@ -176,19 +183,20 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
-     *     @var string $targetLanguage Язык перевода
+     *
+     * @param array $parameters {
+     * @var string $projectId Идентификатор проекта
+     * @var string $targetLanguage Язык перевода
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -205,16 +213,17 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
+     *
      *
      * @param string $projectId Идентификатор проекта
-     * @param array  $parameters {
-     *     @var string $groupName Название назначаемой группы
-     *     @var string $workflowStage Этап worflow, на который будет назначена группа
-     *     @var string $targetLanguage Целевой язык. Не обязателен для одноязычных проектов
+     * @param array $parameters {
+     * @var string $groupName Название назначаемой группы
+     * @var string $workflowStage Этап worflow, на который будет назначена группа
+     * @var string $targetLanguage Целевой язык. Не обязателен для одноязычных проектов
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -233,13 +242,14 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
+     *
+     * @param array $parameters {
+     * @var string $projectId Идентификатор проекта
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -255,13 +265,14 @@ class ProjectResource extends Resource
         $response = $this->httpClient->sendRequest($request);
         return $response;
     }
+
     /**
-     * 
      *
-     * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
+     *
+     * @param array $parameters {
+     * @var string $projectId Идентификатор проекта
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */

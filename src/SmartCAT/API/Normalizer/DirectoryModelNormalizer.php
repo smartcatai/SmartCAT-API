@@ -6,6 +6,7 @@ use Joli\Jane\Reference\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
+
 class DirectoryModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -15,6 +16,7 @@ class DirectoryModelNormalizer extends SerializerAwareNormalizer implements Deno
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \SmartCAT\API\Model\DirectoryModel) {
@@ -22,6 +24,7 @@ class DirectoryModelNormalizer extends SerializerAwareNormalizer implements Deno
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (empty($data)) {
@@ -46,6 +49,7 @@ class DirectoryModelNormalizer extends SerializerAwareNormalizer implements Deno
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

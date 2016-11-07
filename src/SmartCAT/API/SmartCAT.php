@@ -1,23 +1,23 @@
 <?php
 namespace SmartCAT\API;
-use SmartCAT\API\Normalizer\NormalizerFactory;
-use SmartCAT\API\Manager\ProjectManager;
-use SmartCAT\API\Manager\DirectoriesManager;
-use SmartCAT\API\Manager\DocumentExportManager;
-use SmartCAT\API\Manager\DocumentManager;
-use SmartCAT\API\Manager\AccountManager;
-use SmartCAT\API\Manager\CallbackManager;
 
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
-use Http\Message\Authentication\BasicAuth;
-use Http\Client\Common\PluginClient;
 use Http\Client\Common\Plugin\AuthenticationPlugin;
 use Http\Client\Common\Plugin\ContentLengthPlugin;
 use Http\Client\Common\Plugin\DecoderPlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
+use Http\Client\Common\PluginClient;
+use Http\Client\HttpClient;
 use Http\Client\Socket\Client as SocketHttpClient;
+use Http\Message\Authentication\BasicAuth;
+use Http\Message\MessageFactory;
 use Joli\Jane\Runtime\Encoder\RawEncoder;
+use SmartCAT\API\Manager\AccountManager;
+use SmartCAT\API\Manager\CallbackManager;
+use SmartCAT\API\Manager\DirectoriesManager;
+use SmartCAT\API\Manager\DocumentExportManager;
+use SmartCAT\API\Manager\DocumentManager;
+use SmartCAT\API\Manager\ProjectManager;
+use SmartCAT\API\Normalizer\NormalizerFactory;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -49,14 +49,14 @@ class SmartCAT
     private $password;
 
     /**
-     * @param HttpClient|null     $httpClient     Http client to use with Docker
-     * @param Serializer|null     $serializer     Deserialize docker response into php objects
+     * @param HttpClient|null $httpClient Http client to use with Docker
+     * @param Serializer|null $serializer Deserialize docker response into php objects
      * @param MessageFactory|null $messageFactory How to create docker request (in PSR7)
      */
     public function __construct($login, $password)
     {
-        $this->login=$login;
-        $this->password=$password;
+        $this->login = $login;
+        $this->password = $password;
         $serializer = new Serializer(
             NormalizerFactory::create(),
             [
@@ -183,7 +183,7 @@ class SmartCAT
 
     /**
      * @var DocumentManager
-    */
+     */
     private $documentManager;
 
     /**
