@@ -12,7 +12,6 @@ class ExportDocumentTaskModel
      * @var string[]
      */
     protected $documentIds;
-
     /**
      * @return string
      */
@@ -20,7 +19,6 @@ class ExportDocumentTaskModel
     {
         return $this->id;
     }
-
     /**
      * @param string $id
      *
@@ -31,7 +29,6 @@ class ExportDocumentTaskModel
         $this->id = $id;
         return $this;
     }
-
     /**
      * @return string[]
      */
@@ -39,7 +36,6 @@ class ExportDocumentTaskModel
     {
         return $this->documentIds;
     }
-
     /**
      * @param string[] $documentIds
      *

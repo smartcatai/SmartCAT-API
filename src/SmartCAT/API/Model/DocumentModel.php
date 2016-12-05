@@ -60,7 +60,6 @@ class DocumentModel
      * @var string
      */
     protected $metaInfo;
-
     /**
      * @return string
      */
@@ -68,7 +67,6 @@ class DocumentModel
     {
         return $this->id;
     }
-
     /**
      * @param string $id
      *
@@ -79,7 +77,6 @@ class DocumentModel
         $this->id = $id;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -87,7 +84,6 @@ class DocumentModel
     {
         return $this->name;
     }
-
     /**
      * @param string $name
      *
@@ -98,7 +94,6 @@ class DocumentModel
         $this->name = $name;
         return $this;
     }
-
     /**
      * @return \DateTime
      */
@@ -106,7 +101,6 @@ class DocumentModel
     {
         return $this->creationDate;
     }
-
     /**
      * @param \DateTime $creationDate
      *
@@ -117,7 +111,6 @@ class DocumentModel
         $this->creationDate = $creationDate;
         return $this;
     }
-
     /**
      * @return \DateTime
      */
@@ -125,7 +118,6 @@ class DocumentModel
     {
         return $this->deadline;
     }
-
     /**
      * @param \DateTime $deadline
      *
@@ -136,7 +128,6 @@ class DocumentModel
         $this->deadline = $deadline;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -144,7 +135,6 @@ class DocumentModel
     {
         return $this->sourceLanguage;
     }
-
     /**
      * @param string $sourceLanguage
      *
@@ -155,7 +145,6 @@ class DocumentModel
         $this->sourceLanguage = $sourceLanguage;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -163,7 +152,6 @@ class DocumentModel
     {
         return $this->documentDisassemblingStatus;
     }
-
     /**
      * @param string $documentDisassemblingStatus
      *
@@ -174,7 +162,6 @@ class DocumentModel
         $this->documentDisassemblingStatus = $documentDisassemblingStatus;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -182,7 +169,6 @@ class DocumentModel
     {
         return $this->targetLanguage;
     }
-
     /**
      * @param string $targetLanguage
      *
@@ -193,7 +179,6 @@ class DocumentModel
         $this->targetLanguage = $targetLanguage;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -201,7 +186,6 @@ class DocumentModel
     {
         return $this->status;
     }
-
     /**
      * @param string $status
      *
@@ -212,7 +196,6 @@ class DocumentModel
         $this->status = $status;
         return $this;
     }
-
     /**
      * @return int
      */
@@ -220,7 +203,6 @@ class DocumentModel
     {
         return $this->wordsCount;
     }
-
     /**
      * @param int $wordsCount
      *
@@ -231,7 +213,6 @@ class DocumentModel
         $this->wordsCount = $wordsCount;
         return $this;
     }
-
     /**
      * @return \DateTime
      */
@@ -239,7 +220,6 @@ class DocumentModel
     {
         return $this->statusModificationDate;
     }
-
     /**
      * @param \DateTime $statusModificationDate
      *
@@ -250,7 +230,6 @@ class DocumentModel
         $this->statusModificationDate = $statusModificationDate;
         return $this;
     }
-
     /**
      * @return bool
      */
@@ -258,7 +237,6 @@ class DocumentModel
     {
         return $this->pretranslateCompleted;
     }
-
     /**
      * @param bool $pretranslateCompleted
      *
@@ -269,7 +247,6 @@ class DocumentModel
         $this->pretranslateCompleted = $pretranslateCompleted;
         return $this;
     }
-
     /**
      * @return DocumentWorkflowStageModel[]
      */
@@ -277,7 +254,6 @@ class DocumentModel
     {
         return $this->workflowStages;
     }
-
     /**
      * @param DocumentWorkflowStageModel[] $workflowStages
      *
@@ -288,7 +264,6 @@ class DocumentModel
         $this->workflowStages = $workflowStages;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -296,7 +271,6 @@ class DocumentModel
     {
         return $this->externalId;
     }
-
     /**
      * @param string $externalId
      *
@@ -307,7 +281,6 @@ class DocumentModel
         $this->externalId = $externalId;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -315,7 +288,6 @@ class DocumentModel
     {
         return $this->metaInfo;
     }
-
     /**
      * @param string $metaInfo
      *

@@ -12,7 +12,6 @@ class DocumentTargetId
      * @var int
      */
     protected $languageId;
-
     /**
      * @return int
      */
@@ -20,7 +19,6 @@ class DocumentTargetId
     {
         return $this->documentId;
     }
-
     /**
      * @param int $documentId
      *
@@ -31,7 +29,6 @@ class DocumentTargetId
         $this->documentId = $documentId;
         return $this;
     }
-
     /**
      * @return int
      */
@@ -39,7 +36,6 @@ class DocumentTargetId
     {
         return $this->languageId;
     }
-
     /**
      * @param int $languageId
      *

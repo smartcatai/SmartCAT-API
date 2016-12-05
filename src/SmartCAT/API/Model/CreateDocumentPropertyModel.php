@@ -16,7 +16,6 @@ class CreateDocumentPropertyModel
      * @var string
      */
     protected $disassembleAlgorithmName;
-
     /**
      * @return string
      */
@@ -24,7 +23,6 @@ class CreateDocumentPropertyModel
     {
         return $this->externalId;
     }
-
     /**
      * @param string $externalId
      *
@@ -35,7 +33,6 @@ class CreateDocumentPropertyModel
         $this->externalId = $externalId;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -43,7 +40,6 @@ class CreateDocumentPropertyModel
     {
         return $this->metaInfo;
     }
-
     /**
      * @param string $metaInfo
      *
@@ -54,7 +50,6 @@ class CreateDocumentPropertyModel
         $this->metaInfo = $metaInfo;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -62,7 +57,6 @@ class CreateDocumentPropertyModel
     {
         return $this->disassembleAlgorithmName;
     }
-
     /**
      * @param string $disassembleAlgorithmName
      *

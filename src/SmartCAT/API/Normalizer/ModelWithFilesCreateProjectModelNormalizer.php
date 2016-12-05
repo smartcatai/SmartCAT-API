@@ -2,11 +2,10 @@
 
 namespace SmartCAT\API\Normalizer;
 
-use Joli\Jane\Reference\Reference;
+use Joli\Jane\Runtime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-
 class ModelWithFilesCreateProjectModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -16,7 +15,6 @@ class ModelWithFilesCreateProjectModelNormalizer extends SerializerAwareNormaliz
         }
         return true;
     }
-
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \SmartCAT\API\Model\ModelWithFilesCreateProjectModel) {
@@ -24,19 +22,9 @@ class ModelWithFilesCreateProjectModelNormalizer extends SerializerAwareNormaliz
         }
         return false;
     }
-
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        if (empty($data)) {
-            return null;
-        }
-        if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
-        }
         $object = new \SmartCAT\API\Model\ModelWithFilesCreateProjectModel();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, 'Value')) {
             $object->setValue($this->serializer->deserialize($data->{'Value'}, 'SmartCAT\\API\\Model\\CreateProjectModel', 'raw', $context));
         }
@@ -49,7 +37,6 @@ class ModelWithFilesCreateProjectModelNormalizer extends SerializerAwareNormaliz
         }
         return $object;
     }
-
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

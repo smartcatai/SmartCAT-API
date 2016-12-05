@@ -2,11 +2,10 @@
 
 namespace SmartCAT\API\Normalizer;
 
-use Joli\Jane\Reference\Reference;
+use Joli\Jane\Runtime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-
 class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -16,7 +15,6 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
         }
         return true;
     }
-
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \SmartCAT\API\Model\ProjectStatisticsModel) {
@@ -24,19 +22,9 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
         }
         return false;
     }
-
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        if (empty($data)) {
-            return null;
-        }
-        if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
-        }
         $object = new \SmartCAT\API\Model\ProjectStatisticsModel();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, 'statistics')) {
             $values = array();
             foreach ($data->{'statistics'} as $value) {
@@ -49,7 +37,6 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
         }
         return $object;
     }
-
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

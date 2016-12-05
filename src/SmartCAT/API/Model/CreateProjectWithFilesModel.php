@@ -2,6 +2,7 @@
 
 namespace SmartCAT\API\Model;
 
+//TODO: В ручную созданая модель
 
 class CreateProjectWithFilesModel extends CreateProjectModel
 {

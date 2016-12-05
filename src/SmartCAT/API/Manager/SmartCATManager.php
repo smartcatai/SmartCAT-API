@@ -70,4 +70,15 @@ trait SmartCATManager
         $headers["Content-Type"] = "multipart/form-data; boundary={$boundary}";
         return array('headers' => $headers, 'body' => implode("\r\n", $body));
     }
+    
+    public function prepareFile($fileInfo)
+    {
+        $pathInfo=pathinfo($fileInfo['filePath']);
+
+        if (isset($fileInfo['filePath'])) {
+            $fileInfo['fileContent'] = fopen($fileInfo['filePath'], 'r');
+        }
+        $fileInfo['fileName'] = $fileInfo['fileName'] ?? $pathInfo['basename'];
+        return $fileInfo;
+    }
 }

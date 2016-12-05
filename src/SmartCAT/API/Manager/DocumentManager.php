@@ -2,16 +2,20 @@
 
 namespace SmartCAT\API\Manager;
 
-use Joli\Jane\OpenApi\Client\QueryParam;
+use Http\Discovery\StreamFactoryDiscovery;
+use Http\Message\MultipartStream\MultipartStreamBuilder;
+use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
 use SmartCAT\API\Resource\DocumentResource;
 
 class DocumentManager extends DocumentResource
 {
     use SmartCATManager;
 
+
+    //TODO: Нет передается Content-Type: application/json
+    //TODO: не правильная документация в swagger на самом деле ожидается json string, а в параметрах написано Array[string]
     /**
-     *
-     *
+     * @deprecated old capability method, use documentAssignExecutives
      * @param array $freelancerUserIds Идентификаторы назначаемых пользователей-фрилансеров.
      * @param array $parameters {
      * @var string $documentId Идентификатор переводимого документа.
@@ -30,16 +34,20 @@ class DocumentManager extends DocumentResource
         $queryParam->setHeaderParameters('Content-Type');
         $url = '/api/integration/v1/document/assignFreelancers';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+
         $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
-        $body = json_encode($freelancerUserIds);
+        $body = $this->serializer->serialize($freelancerUserIds, 'json');;
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $response = $this->httpClient->sendRequest($request);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
         return $response;
     }
 
+    //TODO: PRX-21018 АПИ Не корректно обрабатывает ожидаемые параметры, массивы в get параметрах передаются в виде documentIds[0]=389134_9&documentIds[1]=389135_9, а апи ожидает documentIds=389134_9&documentIds=389135_9
     /**
-     *
-     *
      * @param array $parameters {
      * @var array $documentIds Массив идентификаторов документов
      * }
@@ -47,48 +55,86 @@ class DocumentManager extends DocumentResource
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
+    private function documentDeleteRequest($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('documentIds');
+        $url = '/api/integration/v1/document';
+        $query = $queryParam->buildQueryString($parameters);
+
+        $qr = [];
+        foreach ($parameters['documentIds'] as $documentId) {
+            $qr[] = "documentIds=$documentId";
+        }
+        $url = $url . ('?' . implode("&", $qr));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+
+    //TODO: Обертка для обработка слишком большого кол-ва ид для удаления
+    /**
+     * @param array $parameters {
+     * @var array $documentIds Массив идентификаторов документов
+     * }
+     * @param string $fetch Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface | \Psr\Http\Message\ResponseInterface[]
+     */
     public function documentDelete($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentIds');
         $qr = [];
         $stack = [];
+        $parametersStack = [];
         foreach ($parameters['documentIds'] as $documentId) {
-            $stack[] = "documentIds=$documentId";
-            if (strlen(implode("&", $stack)) > 995) {
-                $last = array_pop($stack);
-                $qr[] = $stack;
-                $stack = [$last];
+            $qr[] = "documentIds=$documentId";
+            $parametersStack[] = $documentId;
+            if (strlen(implode("&", $qr)) > 995) {
+                $last = array_pop($qr);
+                $qr = [$last];
+                $lastParam = array_pop($parametersStack);
+                $stack[] = $parametersStack;
+                $parametersStack = [$lastParam];
             }
         }
-        $qr[] = $stack;
-        $apiUrl = '/api/integration/v1/document';
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
-        $body = $queryParam->buildFormDataString($parameters);
+
+        $stack[] = $parametersStack;
+        $responses = [];
         $response = null;
-        foreach ($qr as $queryParams) {
-            $url = $apiUrl . ('?' . implode("&", $queryParams));
-            $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
-            $response = $this->httpClient->sendRequest($request);
+        foreach ($stack as $params) {
+            $response = $this->documentDeleteRequest(['documentIds' => $params], $fetch);
+            if (self::FETCH_PROMISE === $fetch) {
+                $responses[] = $response;
+            }
             if ($response->getStatusCode() != 204) {
                 return $response;
             }
         }
+        if (self::FETCH_PROMISE === $fetch) {
+            return $responses;
+        }
         return $response;
     }
 
+    //TODO: Генератор не умет работать с файлами
     /**
-     *
-     *
-     * @param array $parameters {
-     * @var string $documentId Идентификатор документа
-     * @var array $uploadedFile {
-     * @var  string $fileName Имя файла
-     * @var  string $filePath Путь к Файлу | blob $fileContent Содержимое файла
+     * @param array  $parameters {
+     *     @var string $documentId Идентификатор документа
+     *     @var array $uploadedFile {
+     *          @var string $fileName - optional
+     *          @var string $filePath | blob $fileContent
      *     }
-     * @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
+     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
      * }
-     * @param string $fetch Fetch mode (object or response)
+     * @param string $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
@@ -96,50 +142,53 @@ class DocumentManager extends DocumentResource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
-        $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $queryParam->setRequired('uploadedFile');
-        $queryParam->setFormParameters(['uploadedFile']);
-        $formParams = [];
-        // build file parameters
-        $files = [];
-        $files['uploadedFile'] = [];
-        $files['uploadedFile']['filename'] = $parameters['uploadedFile']['fileName'];
-        if (isset($parameters['uploadedFile']['filePath'])) {
-            $files['uploadedFile']['content'] = file_get_contents($parameters['uploadedFile']['filePath']);
-        } else {
-            $files['uploadedFile']['content'] = $parameters['uploadedFile']['fileContent'];
-        }
-        $form_data = $this->createFormData($formParams, $files, ['Accept' => 'application/json']);
-
+        $queryParam->setFormParameters(array('uploadedFile'));
+        $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $body = $queryParam->buildFormDataString($parameters);
+        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+
+        $parameters['uploadedFile'] = $this->prepareFile($parameters['uploadedFile']);
+
+        $streamFactory = StreamFactoryDiscovery::find();
+        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder
+            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => $parameters['uploadedFile']['fileName'], 'headers' => ['Content-Type' => "application/octet-stream"]]);
+        $multipartStream = $builder->build();
+        $boundary = $builder->getBoundary();
+        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $body = $multipartStream->getContents();
 
         $url = '/api/integration/v1/document/update';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters), $form_data['headers']);
-        $body = $queryParam->buildFormDataString($parameters);
-        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $form_data['body']);
-        $response = $this->httpClient->sendRequest($request);
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;
     }
 
+    //TODO: Генератор не умет работать с файлами
     /**
      * Доступно не для всех форматов файлов, а только для тех, которые поддерживают честное обновление
-     * (де-факто на данный момент это ресурсные файлы с уникальными идентификаторами ресурсов).
-     * Ставит задачу в процессинге. На момент завершения запроса перевод возможно не завершён
+    (де-факто на данный момент это ресурсные файлы с уникальными идентификаторами ресурсов).
+    Ставит задачу в процессинге. На момент завершения запроса перевод возможно не завершён
      *
-     * @param array $parameters {
-     * @var string $documentId Идентификатор переводимого документа
-     * @var array $translationFile {
-     * @var  string $fileName Имя файла
-     * @var  string $filePath Путь к Файлу | blob $fileContent Содержимое файла
+     * @param array  $parameters {
+     *     @var string $documentId Идентификатор переводимого документа
+     *     @var array $translationFile {
+     *         @var string $fileName - optional
+     *         @var string $filePath | blob $fileContent
      *     }
      * }
-     * @param string $fetch Fetch mode (object or response)
+     * @param string $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -149,25 +198,60 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
+        $body = $queryParam->buildFormDataString($parameters);
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+
+        $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
+
+        $streamFactory = StreamFactoryDiscovery::find();
+        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder
+            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => $parameters['translationFile']['fileName'], 'headers' => ['Content-Type' => "application/octet-stream"]]);
+        $multipartStream = $builder->build();
+        $boundary = $builder->getBoundary();
+        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $body = $multipartStream->getContents();
+
         $url = '/api/integration/v1/document/translate';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $formParams = [];
-        // build file parameters
-        $files = [];
-        $files['translationFile'] = [];
-        $files['translationFile']['filename'] = $parameters['translationFile']['fileName'];
-        if (isset($parameters['translationFile']['filePath'])) {
-            $files['translationFile']['content'] = file_get_contents($parameters['translationFile']['filePath']);
-        } else {
-            $files['translationFile']['content'] = $parameters['translationFile']['fileContent'];
+
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
         }
-        $form_data = $this->createFormData($formParams, $files, ['Accept' => 'application/json']);
+        $response = $promise->wait();
+        return $response;
+    }
 
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters), $form_data['headers']);
-        $body = $queryParam->buildFormDataString($parameters);
-
-        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $form_data['body']);
-        $response = $this->httpClient->sendRequest($request);
+    //TODO: Нет передается Content-Type: application/json
+    /**
+     * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей.
+     * @param array  $parameters {
+     *     @var string $documentId Идентификатор переводимого документа.
+     *     @var int $stageNumber Номер этапа workflow.
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function documentAssignExecutives(\SmartCAT\API\Model\AssignExecutivesRequestModel $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('documentId');
+        $queryParam->setRequired('stageNumber');
+        $queryParam->setDefault('Content-Type', 'application/json');
+        $queryParam->setHeaderParameters('Content-Type');
+        $url = '/api/integration/v1/document/assign';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $body = $this->serializer->serialize($request, 'json');
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
         return $response;
     }
 }

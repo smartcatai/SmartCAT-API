@@ -2,11 +2,10 @@
 
 namespace SmartCAT\API\Normalizer;
 
-use Joli\Jane\Reference\Reference;
+use Joli\Jane\Runtime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-
 class DocumentModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -16,7 +15,6 @@ class DocumentModelNormalizer extends SerializerAwareNormalizer implements Denor
         }
         return true;
     }
-
     public function supportsNormalization($data, $format = null)
     {
         if ($data instanceof \SmartCAT\API\Model\DocumentModel) {
@@ -24,19 +22,9 @@ class DocumentModelNormalizer extends SerializerAwareNormalizer implements Denor
         }
         return false;
     }
-
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        if (empty($data)) {
-            return null;
-        }
-        if (isset($data->{'$ref'})) {
-            return new Reference($data->{'$ref'}, $context['rootSchema'] ?: null);
-        }
         $object = new \SmartCAT\API\Model\DocumentModel();
-        if (!isset($context['rootSchema'])) {
-            $context['rootSchema'] = $object;
-        }
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -85,7 +73,6 @@ class DocumentModelNormalizer extends SerializerAwareNormalizer implements Denor
         }
         return $object;
     }
-
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

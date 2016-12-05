@@ -21,18 +21,12 @@ class UploadedFile
      */
     protected $mediaType;
     /**
-     * @var int
-     */
-    protected $contentLength;
-
-    /**
      * @return string
      */
     public function getFullName()
     {
         return $this->fullName;
     }
-
     /**
      * @param string $fullName
      *
@@ -43,7 +37,6 @@ class UploadedFile
         $this->fullName = $fullName;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -51,7 +44,6 @@ class UploadedFile
     {
         return $this->name;
     }
-
     /**
      * @param string $name
      *
@@ -62,7 +54,6 @@ class UploadedFile
         $this->name = $name;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -70,7 +61,6 @@ class UploadedFile
     {
         return $this->extension;
     }
-
     /**
      * @param string $extension
      *
@@ -81,7 +71,6 @@ class UploadedFile
         $this->extension = $extension;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -89,7 +78,6 @@ class UploadedFile
     {
         return $this->mediaType;
     }
-
     /**
      * @param string $mediaType
      *
@@ -98,25 +86,6 @@ class UploadedFile
     public function setMediaType($mediaType = null)
     {
         $this->mediaType = $mediaType;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getContentLength()
-    {
-        return $this->contentLength;
-    }
-
-    /**
-     * @param int $contentLength
-     *
-     * @return self
-     */
-    public function setContentLength($contentLength = null)
-    {
-        $this->contentLength = $contentLength;
         return $this;
     }
 }

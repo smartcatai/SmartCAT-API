@@ -64,7 +64,6 @@ class ProjectModel
      * @var DocumentModel[]
      */
     protected $documents;
-
     /**
      * @return string
      */
@@ -72,7 +71,6 @@ class ProjectModel
     {
         return $this->id;
     }
-
     /**
      * @param string $id
      *
@@ -83,7 +81,6 @@ class ProjectModel
         $this->id = $id;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -91,7 +88,6 @@ class ProjectModel
     {
         return $this->name;
     }
-
     /**
      * @param string $name
      *
@@ -102,7 +98,6 @@ class ProjectModel
         $this->name = $name;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -110,7 +105,6 @@ class ProjectModel
     {
         return $this->description;
     }
-
     /**
      * @param string $description
      *
@@ -121,7 +115,6 @@ class ProjectModel
         $this->description = $description;
         return $this;
     }
-
     /**
      * @return \DateTime
      */
@@ -129,7 +122,6 @@ class ProjectModel
     {
         return $this->deadline;
     }
-
     /**
      * @param \DateTime $deadline
      *
@@ -140,7 +132,6 @@ class ProjectModel
         $this->deadline = $deadline;
         return $this;
     }
-
     /**
      * @return \DateTime
      */
@@ -148,7 +139,6 @@ class ProjectModel
     {
         return $this->creationDate;
     }
-
     /**
      * @param \DateTime $creationDate
      *
@@ -159,7 +149,6 @@ class ProjectModel
         $this->creationDate = $creationDate;
         return $this;
     }
-
     /**
      * @return \DateTime
      */
@@ -167,7 +156,6 @@ class ProjectModel
     {
         return $this->modificationDate;
     }
-
     /**
      * @param \DateTime $modificationDate
      *
@@ -178,7 +166,6 @@ class ProjectModel
         $this->modificationDate = $modificationDate;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -186,7 +173,6 @@ class ProjectModel
     {
         return $this->sourceLanguage;
     }
-
     /**
      * @param string $sourceLanguage
      *
@@ -197,7 +183,6 @@ class ProjectModel
         $this->sourceLanguage = $sourceLanguage;
         return $this;
     }
-
     /**
      * @return string[]
      */
@@ -205,7 +190,6 @@ class ProjectModel
     {
         return $this->targetLanguages;
     }
-
     /**
      * @param string[] $targetLanguages
      *
@@ -216,7 +200,6 @@ class ProjectModel
         $this->targetLanguages = $targetLanguages;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -224,7 +207,6 @@ class ProjectModel
     {
         return $this->status;
     }
-
     /**
      * @param string $status
      *
@@ -235,7 +217,6 @@ class ProjectModel
         $this->status = $status;
         return $this;
     }
-
     /**
      * @return \DateTime
      */
@@ -243,7 +224,6 @@ class ProjectModel
     {
         return $this->statusModificationDate;
     }
-
     /**
      * @param \DateTime $statusModificationDate
      *
@@ -254,7 +234,6 @@ class ProjectModel
         $this->statusModificationDate = $statusModificationDate;
         return $this;
     }
-
     /**
      * @return int
      */
@@ -262,7 +241,6 @@ class ProjectModel
     {
         return $this->domainId;
     }
-
     /**
      * @param int $domainId
      *
@@ -273,7 +251,6 @@ class ProjectModel
         $this->domainId = $domainId;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -281,7 +258,6 @@ class ProjectModel
     {
         return $this->clientId;
     }
-
     /**
      * @param string $clientId
      *
@@ -292,7 +268,6 @@ class ProjectModel
         $this->clientId = $clientId;
         return $this;
     }
-
     /**
      * @return string
      */
@@ -300,7 +275,6 @@ class ProjectModel
     {
         return $this->vendorAccountId;
     }
-
     /**
      * @param string $vendorAccountId
      *
@@ -311,7 +285,6 @@ class ProjectModel
         $this->vendorAccountId = $vendorAccountId;
         return $this;
     }
-
     /**
      * @return ProjectWorkflowStageModel[]
      */
@@ -319,7 +292,6 @@ class ProjectModel
     {
         return $this->workflowStages;
     }
-
     /**
      * @param ProjectWorkflowStageModel[] $workflowStages
      *
@@ -330,7 +302,6 @@ class ProjectModel
         $this->workflowStages = $workflowStages;
         return $this;
     }
-
     /**
      * @return DocumentModel[]
      */
@@ -338,7 +309,6 @@ class ProjectModel
     {
         return $this->documents;
     }
-
     /**
      * @param DocumentModel[] $documents
      *

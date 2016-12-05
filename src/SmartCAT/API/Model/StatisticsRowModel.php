@@ -36,7 +36,6 @@ class StatisticsRowModel
      * @var float
      */
     protected $cost;
-
     /**
      * @return string
      */
@@ -44,7 +43,6 @@ class StatisticsRowModel
     {
         return $this->name;
     }
-
     /**
      * @param string $name
      *
@@ -55,7 +53,6 @@ class StatisticsRowModel
         $this->name = $name;
         return $this;
     }
-
     /**
      * @return int
      */
@@ -63,7 +60,6 @@ class StatisticsRowModel
     {
         return $this->words;
     }
-
     /**
      * @param int $words
      *
@@ -74,7 +70,6 @@ class StatisticsRowModel
         $this->words = $words;
         return $this;
     }
-
     /**
      * @return float
      */
@@ -82,7 +77,6 @@ class StatisticsRowModel
     {
         return $this->percent;
     }
-
     /**
      * @param float $percent
      *
@@ -93,7 +87,6 @@ class StatisticsRowModel
         $this->percent = $percent;
         return $this;
     }
-
     /**
      * @return int
      */
@@ -101,7 +94,6 @@ class StatisticsRowModel
     {
         return $this->segments;
     }
-
     /**
      * @param int $segments
      *
@@ -112,7 +104,6 @@ class StatisticsRowModel
         $this->segments = $segments;
         return $this;
     }
-
     /**
      * @return float
      */
@@ -120,7 +111,6 @@ class StatisticsRowModel
     {
         return $this->pages;
     }
-
     /**
      * @param float $pages
      *
@@ -131,7 +121,6 @@ class StatisticsRowModel
         $this->pages = $pages;
         return $this;
     }
-
     /**
      * @return int
      */
@@ -139,7 +128,6 @@ class StatisticsRowModel
     {
         return $this->charsWithoutSpaces;
     }
-
     /**
      * @param int $charsWithoutSpaces
      *
@@ -150,7 +138,6 @@ class StatisticsRowModel
         $this->charsWithoutSpaces = $charsWithoutSpaces;
         return $this;
     }
-
     /**
      * @return int
      */
@@ -158,7 +145,6 @@ class StatisticsRowModel
     {
         return $this->charsWithSpaces;
     }
-
     /**
      * @param int $charsWithSpaces
      *
@@ -169,7 +155,6 @@ class StatisticsRowModel
         $this->charsWithSpaces = $charsWithSpaces;
         return $this;
     }
-
     /**
      * @return float
      */
@@ -177,7 +162,6 @@ class StatisticsRowModel
     {
         return $this->cost;
     }
-
     /**
      * @param float $cost
      *

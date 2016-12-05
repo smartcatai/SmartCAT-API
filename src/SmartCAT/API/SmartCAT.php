@@ -17,6 +17,7 @@ use SmartCAT\API\Manager\DirectoriesManager;
 use SmartCAT\API\Manager\DocumentExportManager;
 use SmartCAT\API\Manager\DocumentManager;
 use SmartCAT\API\Manager\ProjectManager;
+use SmartCAT\API\Manager\TranslationMemoriesManager;
 use SmartCAT\API\Normalizer\NormalizerFactory;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
@@ -197,6 +198,23 @@ class SmartCAT
             $this->documentManager = new DocumentManager($this->httpClient, $this->messageFactory, $this->serializer);
         }
         return $this->documentManager;
+    }
+
+    /**
+     * @var TranslationMemoriesManager
+     */
+    private $translationMemoriesManager;
+
+    /**
+     *
+     * @return TranslationMemoriesManager
+     */
+    public function getTranslationMemoriesManager()
+    {
+        if (null === $this->translationMemoriesManager) {
+            $this->translationMemoriesManager = new TranslationMemoriesManager($this->httpClient, $this->messageFactory, $this->serializer);
+        }
+        return $this->translationMemoriesManager;
     }
 
 }

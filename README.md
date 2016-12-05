@@ -1,17 +1,37 @@
 PHP client SmartCAT API 
 ==============
-Version from 19.08.2016
+[![Latest Version](https://img.shields.io/github/release/smartcatai/SmartCAT-API.svg?style=flat-square)](https://img.shields.io/github/release/smartcatai/SmartCAT-API.svg?style=flat-square)
+[![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
+[![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
+
+Version from 24.11.2016
 [PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## How to use:
  1. Install [composer](https://getcomposer.org/)
  2. composer require smartcat/smartcat-api
  3. composer install 
+
+ [Use Case](https://www.smartcat.ai/api/docs/)
+
 ```php 
 use SmartCAT\API\SmartCAT;
 
 $sc=new SmartCAT($login, $password);
 ```
+
+## [Account](https://smartcat.ai/api/methods/#!/Account/Account_GetAccountInfo)
+ [Gets the account details](https://smartcat.ai/api/methods/#!/Account/Account_GetAccountInfo)    
+ **GET** /api/integration/v1/account   
+ ```php
+ $sc->getAccountManager()->accountGetAccountInfo();
+ ```
+
+ [Gets parsing formats supported by the account](https://smartcat.ai/api/methods/#!/Directories/Directories_GetSupportedFormatsForAccount)    
+ **GET** /api/integration/v1/directory/formats  
+ ```php
+ $sc->getAccountManager()->accountGetAssignableExecutives();
+ ```
 
 ## [Callback](https://smartcat.ai/api/methods/#!/Callback)
  [Reset configurations of notifications reception](https://smartcat.ai/api/methods/#!/Callback/Callback_Delete)
@@ -45,6 +65,12 @@ $sc=new SmartCAT($login, $password);
  **GET** /api/integration/v1/directory  
  ```php
  $sc->getDirectoriesManager()->directoriesGet(['type'=>'projectStatus'])
+ ```
+
+ [Получить поддерживаемые в аккунте форматы для разбора](https://smartcat.ai/api/methods/#!/Directories/Directories_GetSupportedFormatsForAccount)    
+ **GET** /api/integration/v1/directory/formats  
+ ```php
+$sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ```
 
 ## [Document](https://smartcat.ai/api/methods/#!/Document)
@@ -134,8 +160,8 @@ $sc=new SmartCAT($login, $password);
  sc->getProjectManager()->projectGet($projectId)
  ```
  
- [Update project using ID](https://smartcat.ai/api/methods/#!/Project/Project_UpdateProject)  - **Не рабочий метод API**  
- **PUT** /api/integration/v1/project/{projectId} - **Не работает!**
+ [Update project using ID](https://smartcat.ai/api/methods/#!/Project/Project_UpdateProject)  
+ **PUT** /api/integration/v1/project/{projectId}
  
  [Receive the list of all projects in account](https://smartcat.ai/api/methods/#!/Project/Project_GetAll)
  **GET** /api/integration/v1/project/list
@@ -158,7 +184,13 @@ $sc->getProjectManager()->projectGetProjectStatistics($projectId);
  [Add new document to project](https://smartcat.ai/api/methods/#!/Project/Project_AddDocument)
  **POST** /api/integration/v1/project/document  
  ```php
- $sc->getProjectManager()->projectAddDocument(['projectId'=>$projectId, 'filePath'=>'path to file','fileName'=>'File name']);
+ $sc->getProjectManager()->projectAddDocument([
+     'projectId'=>$projectId, 
+     'file' => [
+        'filePath'=>'path to file',
+        'fileName'=>'File name'
+     ]
+ ]);
  ```
  
  [Add new target language to project](https://smartcat.ai/api/methods/#!/Project/Project_AddLanguage)
@@ -184,3 +216,98 @@ $sc->getProjectManager()->projectGetProjectStatistics($projectId);
  ```php
  $sc->getProjectManager()->projectRestoreProject(['projectId'=>$projectId])
  ```
+ 
+## [TranslationMemories](https://smartcat.ai/api/methods/#!/TranslationMemories)
+ [Deletes the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_RemoveTranslationMemory)    
+ **DELETE** /api/integration/v1/translationmemory/{tmId}    
+ ```php
+ $sc->getTranslationMemoriesManager()->translationMemoriesRemoveTranslationMemory($tmId)
+ ```
+
+ [Gets TM details](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetMetaInfo)    
+ **GET** /api/integration/v1/translationmemory/{tmId}    
+ ```php
+ $sc->getTranslationMemoriesManager()->translationMemoriesGetMetaInfo($tmId);
+ ```
+
+ [Imports TMX files into the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_Import)    
+ **POST** /api/integration/v1/translationmemory/{tmId}    
+ ```php
+$sc->getTranslationMemoriesManager()->translationMemoriesImport(
+    $tmId,
+    [
+        'replaceAllContent' => 'true',
+        'tmxFile' => [
+            'filePath' => __DIR__ . '\Resources\Space.tmx'
+        ]
+    ]
+);
+ ```
+
+[Gets a collection of TMs available for the account](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_Import)    
+ **GET** /api/integration/v1/translationmemory    
+ ```php
+$thirstRes = $sc->getTranslationMemoriesManager()->translationMemoriesGetTranslationMemoriesBatch([
+    'lastProcessedId' => 0,
+    'batchSize' => 10
+]);
+$last = array_pop($thirstRes);
+$secondRes = $sc->getTranslationMemoriesManager()->translationMemoriesGetTranslationMemoriesBatch([
+    'lastProcessedId' => $last->getId(),
+    'batchSize' => $count
+]);
+ ```
+
+[Creates an empty TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_CreateEmptyTM)    
+ **POST** /api/integration/v1/translationmemory    
+ ```php
+$tm = new CreateTranslationMemoryModel();
+$name = 'PHP Unit ' . date('U');
+$tm->setName($name);
+$tm->setSourceLanguage('ru');
+$tm->setTargetLanguages(['en']);
+$tm->setDescription("Description: $name");
+
+$tmId = $this->sc->getTranslationMemoriesManager()->translationMemoriesCreateEmptyTM($tm);
+ ```
+
+[Gets a collection of tasks for TMX import](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetPendingTasks)    
+ **GET** /api/integration/v1/translationmemory/task    
+ ```php
+$sc->getTranslationMemoriesManager()->translationMemoriesGetPendingTasks();
+ ```
+
+[Sets an array of target languages required by the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_SetTMTargetLanguages)    
+ **PUT** /api/integration/v1/translationmemory/{tmId}/target    
+ ```php
+$sc->getTranslationMemoriesManager()->translationMemoriesSetTMTargetLanguages($tmId, ["en", "es"]);
+ ```
+
+[Exports TMX files from the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_ExportFile)    
+ **GET** /api/integration/v1/translationmemory/{tmId}/file    
+ ```php
+$sc->getTranslationMemoriesManager()->translationMemoriesExportFile($tmId, ['withTags' => true])
+ ```
+
+[Gets matches from a given TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetTMTranslations)    
+ **POST** /api/integration/v1/translationmemory/matches    
+ ```php
+$tmMatch = new TmMatchesRequest();
+$tmMatch->setSourceLanguage('en');
+$tmMatch->setTargetLanguage('ru');
+$segmentModel = new SegmentModel();
+$segmentModel->setText('Test text message');
+$segmentModel->setPrevContext('');
+$segmentModel->setNextContext('');
+$segmentModel->setTags([]);
+$tmMatch->setSegmentModel($segmentModel);
+
+$sc->getTranslationMemoriesManager()->translationMemoriesGetTMTranslations($tmMatch, ['tmId' => $tmId]);
+ ```
+
+[Removes a given import task](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_RemoveSpecificImportTask)    
+ **DELETE** /api/integration/v1/translationmemory/task/{taskId}    
+ ```php
+$sc->getTranslationMemoriesManager()->translationMemoriesRemoveSpecificImportTask($last->getId())
+ ```
+
