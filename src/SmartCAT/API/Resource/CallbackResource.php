@@ -60,7 +60,7 @@ class CallbackResource extends Resource
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\CallbackPropertyModel $callbackProperty настройки уведомлений
+     * @param \SmartCAT\API\Model\CallbackPropertyModel $callbackProperty Настройки уведомлений
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -85,7 +85,7 @@ class CallbackResource extends Resource
      * 
      *
      * @param array  $parameters {
-     *     @var int $limit 
+     *     @var int $limit Лимит возвращаемого списка ошибок (не более 100)
      * }
      * @param string $fetch      Fetch mode (object or response)
      *

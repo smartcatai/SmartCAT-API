@@ -21,6 +21,10 @@ class UploadedFile
      */
     protected $mediaType;
     /**
+     * @var int
+     */
+    protected $fileSize;
+    /**
      * @return string
      */
     public function getFullName()
@@ -86,6 +90,23 @@ class UploadedFile
     public function setMediaType($mediaType = null)
     {
         $this->mediaType = $mediaType;
+        return $this;
+    }
+    /**
+     * @return int
+     */
+    public function getFileSize()
+    {
+        return $this->fileSize;
+    }
+    /**
+     * @param int $fileSize
+     *
+     * @return self
+     */
+    public function setFileSize($fileSize = null)
+    {
+        $this->fileSize = $fileSize;
         return $this;
     }
 }

@@ -37,6 +37,9 @@ class UploadedFileNormalizer extends SerializerAwareNormalizer implements Denorm
         if (property_exists($data, 'MediaType')) {
             $object->setMediaType($data->{'MediaType'});
         }
+        if (property_exists($data, 'FileSize')) {
+            $object->setFileSize($data->{'FileSize'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -53,6 +56,9 @@ class UploadedFileNormalizer extends SerializerAwareNormalizer implements Denorm
         }
         if (null !== $object->getMediaType()) {
             $data->{'MediaType'} = $object->getMediaType();
+        }
+        if (null !== $object->getFileSize()) {
+            $data->{'FileSize'} = $object->getFileSize();
         }
         return $data;
     }

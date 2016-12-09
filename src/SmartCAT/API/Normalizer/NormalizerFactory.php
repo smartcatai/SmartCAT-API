@@ -9,6 +9,7 @@ class NormalizerFactory
         $normalizers = array();
         $normalizers[] = new \Joli\Jane\Runtime\Normalizer\ArrayDenormalizer();
         $normalizers[] = new AccountModelNormalizer();
+        $normalizers[] = new MTEngineModelNormalizer();
         $normalizers[] = new AssignableExecutiveModelNormalizer();
         $normalizers[] = new CallbackPropertyModelNormalizer();
         $normalizers[] = new AdditionalHeaderModelNormalizer();
@@ -21,9 +22,9 @@ class NormalizerFactory
         $normalizers[] = new DocumentModelNormalizer();
         $normalizers[] = new DocumentWorkflowStageModelNormalizer();
         $normalizers[] = new AssignedExecutiveModelNormalizer();
-        $normalizers[] = new UploadedFileNormalizer();
         $normalizers[] = new AssignExecutivesRequestModelNormalizer();
         $normalizers[] = new ExecutiveNormalizer();
+        $normalizers[] = new UploadedFileNormalizer();
         $normalizers[] = new ExportDocumentTaskModelNormalizer();
         $normalizers[] = new ProjectModelNormalizer();
         $normalizers[] = new ProjectWorkflowStageModelNormalizer();
