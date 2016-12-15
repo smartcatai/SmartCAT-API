@@ -4,7 +4,7 @@ PHP client SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Version from 24.11.2016
+Version from 15.12.2016
 [PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## How to use:
@@ -27,11 +27,17 @@ $sc=new SmartCAT($login, $password);
  $sc->getAccountManager()->accountGetAccountInfo();
  ```
 
- [Gets parsing formats supported by the account](https://smartcat.ai/api/methods/#!/Directories/Directories_GetSupportedFormatsForAccount)    
- **GET** /api/integration/v1/directory/formats  
- ```php
- $sc->getAccountManager()->accountGetAssignableExecutives();
- ```
+  [Gets MT engines available for the account](https://smartcat.ai/api/methods/#!/Account/Account_GetMTEnginesForAccount)    
+  **GET** /api/integration/v1/account/mtengines   
+  ```php
+  $sc->getAccountManager()->accountGetMTEnginesForAccount();
+  ```
+ 
+  [Gets available assignees (MyTeam freelancers or internal account users)](https://smartcat.ai/api/methods/#!/Account/Account_GetAssignableExecutives)    
+  **GET** /api/integration/v1/account/assignableExecutives  
+  ```php
+  $sc->getAccountManager()->accountGetAssignableExecutives();
+  ```
 
 ## [Callback](https://smartcat.ai/api/methods/#!/Callback)
  [Reset configurations of notifications reception](https://smartcat.ai/api/methods/#!/Callback/Callback_Delete)
@@ -67,7 +73,7 @@ $sc=new SmartCAT($login, $password);
  $sc->getDirectoriesManager()->directoriesGet(['type'=>'projectStatus'])
  ```
 
- [Получить поддерживаемые в аккунте форматы для разбора](https://smartcat.ai/api/methods/#!/Directories/Directories_GetSupportedFormatsForAccount)    
+ [Gets parsing formats supported by the account](https://smartcat.ai/api/methods/#!/Directories/Directories_GetSupportedFormatsForAccount)    
  **GET** /api/integration/v1/directory/formats  
  ```php
 $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();

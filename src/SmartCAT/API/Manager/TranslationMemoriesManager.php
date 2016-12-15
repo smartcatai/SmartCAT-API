@@ -18,6 +18,7 @@ use SmartCAT\API\Resource\TranslationMemoriesResource;
 class TranslationMemoriesManager extends TranslationMemoriesResource
 {
     use SmartCATManager;
+
     //TODO: Нет описания возвращаемых данных, API возращает кривоватый ответ заворачивая tmId в кавычки
     /**
      * @param \SmartCAT\API\Model\CreateTranslationMemoryModel $model
@@ -41,14 +42,14 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
     //TODO: Генератор не умет работать с файлами
     /**
      * @param string $tmId Идентификатор ТМ
-     * @param array  $parameters {
-     *     @var bool $replaceAllContent Необходимость полной замены содержимого ТМ
-     *     @var  $tmxFile {
-     *          @var string $fileName - optional
-     *          @var string $filePath | blob $fileContent
+     * @param array $parameters {
+     * @var bool $replaceAllContent Необходимость полной замены содержимого ТМ
+     * @var  $tmxFile {
+     * @var string $fileName - optional
+     * @var string $filePath | blob $fileContent
      *     }
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -72,7 +73,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
             ->addResource('uploadedFile', $parameters['tmxFile']['fileContent'], ['filename' => $parameters['tmxFile']['fileName'], 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
-        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
@@ -84,59 +85,15 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         return $response;
     }
 
-    //TODO: Нет описания модели ответа
-    /**
-     * @param array $parameters
-     * @param string $fetch
-     * @return \SmartCAT\API\Model\TranslationMemoryImportTaskModel[]|\Psr\Http\Message\ResponseInterface
-     */
-    public function translationMemoriesGetPendingTasks($parameters = array(), $fetch = self::FETCH_OBJECT)
-    {
-        $response = parent::translationMemoriesGetPendingTasks($parameters, $fetch);
-        if (self::FETCH_OBJECT == $fetch) {
-            if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\TranslationMemoryImportTaskModel[]', 'json');
-            }
-            if ('204' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\TranslationMemoryImportTaskModel[]', 'json');
-            }
-        }
-        return $response;
-    }
 
-    //TODO: Нет описания модели ответа
-    //TODO: все свойства моделей указаны как необязательные, даже если они обязательны, PRX-19477
-    /**
-     * @param \SmartCAT\API\Model\TmMatchesRequest $request Запрос с сегментами для поиска матчей
-     * @param array  $parameters {
-     *     @var string $tmId Идентификатор ТМ, в которой необходимо искать матчи
-     * }
-     * @param string $fetch      Fetch mode (object or response)
-     *
-     * @return \SmartCAT\API\Model\TranslationMemoryMatchesModel | \Psr\Http\Message\ResponseInterface
-     */
-    public function translationMemoriesGetTMTranslations(\SmartCAT\API\Model\TmMatchesRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
-    {
-
-        $response = parent::translationMemoriesGetTMTranslations($request, $parameters, $fetch);
-        if (self::FETCH_OBJECT == $fetch) {
-            if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\TranslationMemoryMatchesModel', 'json');
-            }
-            if ('204' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\TranslationMemoryMatchesModel', 'json');
-            }
-        }
-        return $response;
-
-    }
+    //TODO: translationMemoriesGetTMTranslations все свойства моделей указаны как необязательные, даже если они обязательны, PRX-19477
 
     //TODO: Не корректно указан тип входного параметра $targetLanguages, ожидается json string, а указан array
     /**
      * @param string $tmId Идентификатор ТМ
      * @param array $targetLanguages Массив требуемых таргет-языков
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -157,5 +114,27 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         }
         $response = $promise->wait();
         return $response;
+    }
+
+    /**
+     *
+     *
+     * @param string $tmId Идентификатор ТМ
+     * @param array $parameters {
+     * @var bool $withTags Необходимость inline тегов после экспорта
+     * }
+     * @param string $fetch Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function translationMemoriesExportFile($tmId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $promise = parent::translationMemoriesExportFile($tmId, $parameters, self::FETCH_PROMISE);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+
     }
 }

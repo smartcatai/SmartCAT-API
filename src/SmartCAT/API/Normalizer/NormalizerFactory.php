@@ -45,10 +45,6 @@ class NormalizerFactory
         $normalizers[] = new SegmentTagModelNormalizer();
         $normalizers[] = new SegmentWithMatchesModelNormalizer();
         $normalizers[] = new TagsFromUnitNormalizer();
-        //TODO: В ручную зозданные нормалайзеры
-        $normalizers[] = new TranslationMemoryImportTaskModelNormalizer();
-        $normalizers[] = new TranslationMemoryMatchesModelNormalizer();
-        $normalizers[] = new TranslationMemoryMatchesTagsModelNormalizer();
         return $normalizers;
     }
 }

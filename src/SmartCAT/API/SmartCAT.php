@@ -50,12 +50,15 @@ class SmartCAT
     private $password;
 
     /**
-     * @param HttpClient|null $httpClient Http client to use with Docker
-     * @param Serializer|null $serializer Deserialize docker response into php objects
-     * @param MessageFactory|null $messageFactory How to create docker request (in PSR7)
+     * SmartCAT constructor.
+     * @param string $login API логин
+     * @param string $password API пароль
+     * @param string $locale Устанавливает настройки локали, см http://php.net/manual/en/function.setlocale.php
      */
-    public function __construct($login, $password)
+    public function __construct($login, $password, $locale = 'en_US.utf8')
     {
+        setlocale(LC_ALL, $locale);
+
         $this->login = $login;
         $this->password = $password;
         $serializer = new Serializer(
