@@ -5,14 +5,6 @@ namespace SmartCAT\API\Model;
 class AssignedExecutiveModel
 {
     /**
-     * @var string
-     */
-    protected $id;
-    /**
-     * @var string
-     */
-    protected $type;
-    /**
      * @var int
      */
     protected $assignedWordsCount;
@@ -20,40 +12,6 @@ class AssignedExecutiveModel
      * @var float
      */
     protected $progress;
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @param string $id
-     *
-     * @return self
-     */
-    public function setId($id = null)
-    {
-        $this->id = $id;
-        return $this;
-    }
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-    /**
-     * @param string $type
-     *
-     * @return self
-     */
-    public function setType($type = null)
-    {
-        $this->type = $type;
-        return $this;
-    }
     /**
      * @return int
      */

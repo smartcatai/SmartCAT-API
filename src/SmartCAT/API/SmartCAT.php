@@ -53,12 +53,9 @@ class SmartCAT
      * SmartCAT constructor.
      * @param string $login API логин
      * @param string $password API пароль
-     * @param string $locale Устанавливает настройки локали, см http://php.net/manual/en/function.setlocale.php
      */
-    public function __construct($login, $password, $locale = 'en_US.utf8')
+    public function __construct($login, $password)
     {
-        setlocale(LC_ALL, $locale);
-
         $this->login = $login;
         $this->password = $password;
         $serializer = new Serializer(

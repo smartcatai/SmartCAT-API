@@ -4,7 +4,7 @@ PHP client SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Version from 15.12.2016
+Version from 23.12.2016
 [PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## How to use:
@@ -179,13 +179,30 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  **GET** /api/integration/v1/project/{projectId}/statistics  
  ```php
 $sc->getProjectManager()->projectGetProjectStatistics($projectId);
+do {
+    sleep(5);
+    $res = $sc->getProjectManager()->projectGetProjectStatistics($projectId);
+} while(!is_array($res));
  ```
  
  [Create a project](https://smartcat.ai/api/methods/#!/Project/Project_CreateProject)
  **POST** /api/integration/v1/project/create  
  ```php
- $sc->getProjectManager()->projectCreateProjectWithFiles($prjInfo);
- ```
+ $prjCreate = new CreateProjectWithFilesModel();
+ $prjCreate->setName('Test project');
+ $prjCreate->setDescription('Test project');
+ $prjCreate->setSourceLanguage('ru');
+ $prjCreate->setTargetLanguages(['en']);
+ $prjCreate->setAssignToVendor(false);
+ $prjCreate->setUseMT(false);
+ $prjCreate->setPretranslate(false);
+ $prjCreate->setUseTranslationMemory(false);
+ $prjCreate->setAutoPropagateRepetitions(false);
+ $prjCreate->setIsForTesting(true);
+ $prjCreate->setWorkflowStages(['translation']);
+ $prjCreate->attacheFile(__DIR__.'\Resources\File1_EN.docx','File1_EN.docx');
+ $sc->getProjectManager()->projectCreateProjectWithFiles($prjCreate);
+```
   
  [Add new document to project](https://smartcat.ai/api/methods/#!/Project/Project_AddDocument)
  **POST** /api/integration/v1/project/document  

@@ -5,6 +5,7 @@ namespace SmartCAT\API\Manager;
 use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
+use Joli\Jane\OpenApi\Runtime\Client\Resource;
 use SmartCAT\API\Resource\ProjectResource;
 
 class ProjectManager extends ProjectResource
@@ -150,8 +151,8 @@ class ProjectManager extends ProjectResource
         return $response;
     }
 
-    //TODO: нет описания модели ответа PRX-21018
     /**
+     * @deprecated use projectGetProjectStatistics
      * @param string $projectId Идентификатор проекта
      * @param array  $parameters {
      *     @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
@@ -160,9 +161,39 @@ class ProjectManager extends ProjectResource
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
+    public function projectGetProjectStatisticsObsolete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $response = parent::projectGetProjectStatisticsObsolete($projectId, $parameters, $fetch);
+        return $response;
+    }
+
+    //TODO: Если статистика не готова, метод возвращает plane текст, а не готовый ответ, генератор это обрабатывать не умеет
+    /**
+     * Первый вызов запускает расчет статистики, последующие возвращают статистику или отвечают что она еще не готова
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param array  $parameters {
+     *     @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectStatisticsModel[]|string
+     */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
-        $response = parent::projectGetProjectStatistics($projectId, $parameters, $fetch);
+        $promise = parent::projectGetProjectStatistics($projectId, $parameters, self::FETCH_PROMISE);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectStatisticsModel[]', 'json');
+            }
+            if ('202' == $response->getStatusCode()) {
+                return (string) $response->getBody();
+            }
+        }
         return $response;
     }
 }

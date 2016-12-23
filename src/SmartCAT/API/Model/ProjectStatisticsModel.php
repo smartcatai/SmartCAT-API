@@ -5,6 +5,10 @@ namespace SmartCAT\API\Model;
 class ProjectStatisticsModel
 {
     /**
+     * @var string
+     */
+    protected $language;
+    /**
      * @var StatisticsRowModel[]
      */
     protected $statistics;
@@ -12,6 +16,23 @@ class ProjectStatisticsModel
      * @var float
      */
     protected $cost;
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+    /**
+     * @param string $language
+     *
+     * @return self
+     */
+    public function setLanguage($language = null)
+    {
+        $this->language = $language;
+        return $this;
+    }
     /**
      * @return StatisticsRowModel[]
      */

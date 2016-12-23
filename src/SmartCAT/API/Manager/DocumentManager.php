@@ -46,7 +46,7 @@ class DocumentManager extends DocumentResource
         return $response;
     }
 
-    //TODO: PRX-21018 АПИ Не корректно обрабатывает ожидаемые параметры, массивы в get параметрах передаются в виде documentIds[0]=389134_9&documentIds[1]=389135_9, а апи ожидает documentIds=389134_9&documentIds=389135_9
+    //TODO: PRX-21041 АПИ Не корректно обрабатывает ожидаемые параметры, массивы в get параметрах передаются в виде documentIds[0]=389134_9&documentIds[1]=389135_9, а апи ожидает documentIds=389134_9&documentIds=389135_9
     /**
      * @param array $parameters {
      * @var array $documentIds Массив идентификаторов документов

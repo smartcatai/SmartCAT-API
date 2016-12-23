@@ -126,7 +126,7 @@ class ProjectResource extends Resource
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function projectGetProjectStatisticsObsolete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('onlyExactMatches', NULL);
@@ -141,6 +141,72 @@ class ProjectResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param array  $parameters {
+     *     @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectStatisticsModel[]|string
+     */
+    public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setDefault('onlyExactMatches', NULL);
+        $url = '/api/integration/v2/project/{projectId}/statistics';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectStatisticsModel[]', 'json');
+            }
+            if ('202' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectStatisticsModel[]', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId идентификатор проекта
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ExecutiveStatisticsModel[]
+     */
+    public function projectGetCompletedWorkStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/{projectId}/completedWorkStatistics';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ExecutiveStatisticsModel[]', 'json');
+            }
+        }
         return $response;
     }
     /**

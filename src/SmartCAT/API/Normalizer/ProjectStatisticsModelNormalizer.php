@@ -25,6 +25,9 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCAT\API\Model\ProjectStatisticsModel();
+        if (property_exists($data, 'language')) {
+            $object->setLanguage($data->{'language'});
+        }
         if (property_exists($data, 'statistics')) {
             $values = array();
             foreach ($data->{'statistics'} as $value) {
@@ -40,6 +43,9 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();
+        if (null !== $object->getLanguage()) {
+            $data->{'language'} = $object->getLanguage();
+        }
         if (null !== $object->getStatistics()) {
             $values = array();
             foreach ($object->getStatistics() as $value) {

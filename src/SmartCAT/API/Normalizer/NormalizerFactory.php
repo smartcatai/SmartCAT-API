@@ -29,8 +29,12 @@ class NormalizerFactory
         $normalizers[] = new ProjectModelNormalizer();
         $normalizers[] = new ProjectWorkflowStageModelNormalizer();
         $normalizers[] = new ProjectChangesModelNormalizer();
-        $normalizers[] = new ProjectStatisticsModelNormalizer();
+        $normalizers[] = new ProjectStatisticsObsoleteModelNormalizer();
         $normalizers[] = new StatisticsRowModelNormalizer();
+        $normalizers[] = new ProjectStatisticsModelNormalizer();
+        $normalizers[] = new ExecutiveStatisticsModelNormalizer();
+        $normalizers[] = new ExecutiveModelNormalizer();
+        $normalizers[] = new CompletedWorkStatisticsModelNormalizer();
         $normalizers[] = new ProjectTranslationMemoryModelNormalizer();
         $normalizers[] = new TranslationMemoryForProjectModelNormalizer();
         $normalizers[] = new ModelWithFilesCreateProjectModelNormalizer();
