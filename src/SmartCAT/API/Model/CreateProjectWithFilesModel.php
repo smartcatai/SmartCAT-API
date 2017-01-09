@@ -10,14 +10,18 @@ class CreateProjectWithFilesModel extends CreateProjectModel
 
     /**
      * Приклепляет файл к проекту
-     * string $filePath путь к файлу
+     * string $file путь к файлу или stream
      * string $fileName имя файла
      * @param
      */
 
-    public function attacheFile($filePath, $fileName)
+    public function attacheFile($file, $fileName = null)
     {
-        $this->files[$fileName] = $filePath;
+        if (gettype($file) == 'resource') {
+            $this->files[] = ['fileName' => $fileName, 'fileContent' => $file];
+        } else {
+            $this->files[] = ['fileName' => $fileName, 'fileContent' => fopen($file, 'r')];
+        }
     }
 
     public function getFiles()

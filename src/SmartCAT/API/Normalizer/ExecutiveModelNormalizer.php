@@ -25,11 +25,11 @@ class ExecutiveModelNormalizer extends SerializerAwareNormalizer implements Deno
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCAT\API\Model\ExecutiveModel();
-        if (property_exists($data, 'Id')) {
-            $object->setId($data->{'Id'});
+        if (property_exists($data, 'id')) {
+            $object->setId($data->{'id'});
         }
-        if (property_exists($data, 'Type')) {
-            $object->setType($data->{'Type'});
+        if (property_exists($data, 'type')) {
+            $object->setType($data->{'type'});
         }
         return $object;
     }
@@ -37,10 +37,10 @@ class ExecutiveModelNormalizer extends SerializerAwareNormalizer implements Deno
     {
         $data = new \stdClass();
         if (null !== $object->getId()) {
-            $data->{'Id'} = $object->getId();
+            $data->{'id'} = $object->getId();
         }
         if (null !== $object->getType()) {
-            $data->{'Type'} = $object->getType();
+            $data->{'type'} = $object->getType();
         }
         return $data;
     }

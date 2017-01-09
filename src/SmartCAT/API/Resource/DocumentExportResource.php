@@ -32,19 +32,23 @@ class DocumentExportResource extends Resource
         return $response;
     }
     /**
-     * 
-     *
-     * @param array  $parameters {
-     *     @var array $documentIds Идентификаторы документов
-     * }
-     * @param string $fetch      Fetch mode (object or response)
-     *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ExportDocumentTaskModel
-     */
+    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
+               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+               Пример запроса - ?documentIds=61331_25'ampersand'documentIds=61332_9.<br />
+    *
+    * @param array  $parameters {
+    *     @var array $documentIds Идентификаторы документов
+    *     @var string $type Тип экспортируемого документа, по умолчанию {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target}
+    * }
+    * @param string $fetch      Fetch mode (object or response)
+    *
+    * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ExportDocumentTaskModel
+    */
     public function documentExportRequestExport($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentIds');
+        $queryParam->setDefault('type', NULL);
         $url = '/api/integration/v1/document/export';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));

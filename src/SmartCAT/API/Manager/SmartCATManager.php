@@ -74,12 +74,7 @@ trait SmartCATManager
     public function prepareFile($fileInfo)
     {
         if(isset($fileInfo['filePath'])) {
-            $pathInfo = pathinfo($fileInfo['filePath']);
-
-            if (isset($fileInfo['filePath'])) {
-                $fileInfo['fileContent'] = fopen($fileInfo['filePath'], 'r');
-            }
-            $fileInfo['fileName'] = $fileInfo['fileName'] ?? $pathInfo['basename'];
+            $fileInfo['fileContent'] = fopen($fileInfo['filePath'], 'r');
         }
         return $fileInfo;
     }

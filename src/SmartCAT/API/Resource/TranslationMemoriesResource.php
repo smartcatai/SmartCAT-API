@@ -98,6 +98,9 @@ class TranslationMemoriesResource extends Resource
      * @param array  $parameters {
      *     @var string $lastProcessedId Последний идентификатор, полученный из предыдущего запроса
      *     @var int $batchSize Желаемый размер коллекции, которую необходимо вернуть
+     *     @var string $sourceLanguage необязательный фильтр по исходному языку
+     *     @var string $targetLanguage необязательный фильтр по целевому языку
+     *     @var string $clientId необязательный фильтр по клиенту
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -108,6 +111,9 @@ class TranslationMemoriesResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setRequired('lastProcessedId');
         $queryParam->setRequired('batchSize');
+        $queryParam->setDefault('sourceLanguage', NULL);
+        $queryParam->setDefault('targetLanguage', NULL);
+        $queryParam->setDefault('clientId', NULL);
         $url = '/api/integration/v1/translationmemory';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));

@@ -33,14 +33,14 @@ class ProjectManager extends ProjectResource
             ->addResource('model', $this->serializer->serialize($project, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
         $projectFile = $project->getFiles();
         $i = 0;
-        foreach ($projectFile as $fileName => $filePath) {
+        foreach ($projectFile as $fileName => $file) {
             $i++;
             $builder
                 ->addResource(
                     'file' . $i,
-                    fopen($filePath, 'r'),
+                    $file['fileContent'],
                     [
-                        'filename' => $fileName,
+                        'filename' => $file['fileName'] ?? null,
                         'headers' => ['Content-Type' => "application/octet-stream"]
                     ]
                 );
@@ -71,7 +71,7 @@ class ProjectManager extends ProjectResource
      *     @var string $projectId Идентификатор проекта
      *     @var  $file {
      *          @var string $fileName - optional
-     *          @var string $filePath | blob $fileContent
+     *          @var string $filePath | blob or stream $fileContent
      *     }
      *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
      *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа

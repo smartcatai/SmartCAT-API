@@ -152,7 +152,7 @@ class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectStatisticsModel[]|string
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectStatisticsModel[]
      */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

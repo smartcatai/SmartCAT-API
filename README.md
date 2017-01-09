@@ -4,7 +4,7 @@ PHP client SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Version from 23.12.2016
+Version from 09.01.2017
 [PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## How to use:
@@ -64,6 +64,14 @@ $sc=new SmartCAT($login, $password);
  **GET** /api/integration/v1/callback/lastErrors  
  ```php
  $sc->getCallbackManager()->callbackGetLastErrors(['limit'=>$limit])
+ ```
+
+## [Client](https://smartcat.ai/api/methods/#!/Client)
+ [Creates a client with the specified name and returns the Id](https://smartcat.ai/api/methods/#!/Client/Client_CreateClient)  
+ If the client already exists, just returns the Id.    
+ **POST** /api/integration/v1/client/create
+ ```php
+$clientId = $this->sc->getClientManager()->clientCreateClient('Test client');
  ```
 
 ## [Directories](https://smartcat.ai/api/methods/#!/Directories)

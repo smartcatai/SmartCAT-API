@@ -13,6 +13,7 @@ use Http\Message\MessageFactory;
 use Joli\Jane\Runtime\Encoder\RawEncoder;
 use SmartCAT\API\Manager\AccountManager;
 use SmartCAT\API\Manager\CallbackManager;
+use SmartCAT\API\Manager\ClientManager;
 use SmartCAT\API\Manager\DirectoriesManager;
 use SmartCAT\API\Manager\DocumentExportManager;
 use SmartCAT\API\Manager\DocumentManager;
@@ -217,4 +218,20 @@ class SmartCAT
         return $this->translationMemoriesManager;
     }
 
+    /**
+     * @var ClientManager
+     */
+    private $clientManager;
+
+    /**
+     *
+     * @return ClientManager
+     */
+    public function getClientManager()
+    {
+        if (null === $this->clientManager) {
+            $this->clientManager = new ClientManager($this->httpClient, $this->messageFactory, $this->serializer);
+        }
+        return $this->clientManager;
+    }
 }

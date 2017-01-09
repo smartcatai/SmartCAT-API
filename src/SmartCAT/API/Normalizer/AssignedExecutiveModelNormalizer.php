@@ -31,6 +31,12 @@ class AssignedExecutiveModelNormalizer extends SerializerAwareNormalizer impleme
         if (property_exists($data, 'progress')) {
             $object->setProgress($data->{'progress'});
         }
+        if (property_exists($data, 'id')) {
+            $object->setId($data->{'id'});
+        }
+        if (property_exists($data, 'type')) {
+            $object->setType($data->{'type'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -41,6 +47,12 @@ class AssignedExecutiveModelNormalizer extends SerializerAwareNormalizer impleme
         }
         if (null !== $object->getProgress()) {
             $data->{'progress'} = $object->getProgress();
+        }
+        if (null !== $object->getId()) {
+            $data->{'id'} = $object->getId();
+        }
+        if (null !== $object->getType()) {
+            $data->{'type'} = $object->getType();
         }
         return $data;
     }

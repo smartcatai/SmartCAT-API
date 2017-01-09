@@ -130,7 +130,7 @@ class DocumentManager extends DocumentResource
      *     @var string $documentId Идентификатор документа
      *     @var array $uploadedFile {
      *          @var string $fileName - optional
-     *          @var string $filePath | blob $fileContent
+     *          @var string $filePath | blob or stream $fileContent
      *     }
      *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
      * }
@@ -153,7 +153,7 @@ class DocumentManager extends DocumentResource
         $streamFactory = StreamFactoryDiscovery::find();
         $builder = new MultipartStreamBuilder($streamFactory);
         $builder
-            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => $parameters['uploadedFile']['fileName'], 'headers' => ['Content-Type' => "application/octet-stream"]]);
+            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => $parameters['uploadedFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
@@ -185,7 +185,7 @@ class DocumentManager extends DocumentResource
      *     @var string $documentId Идентификатор переводимого документа
      *     @var array $translationFile {
      *         @var string $fileName - optional
-     *         @var string $filePath | blob $fileContent
+     *         @var string $filePath | blob or stream $fileContent
      *     }
      * }
      * @param string $fetch      Fetch mode (object or response)
@@ -206,7 +206,7 @@ class DocumentManager extends DocumentResource
         $streamFactory = StreamFactoryDiscovery::find();
         $builder = new MultipartStreamBuilder($streamFactory);
         $builder
-            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => $parameters['translationFile']['fileName'], 'headers' => ['Content-Type' => "application/octet-stream"]]);
+            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => $parameters['translationFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
@@ -247,6 +247,57 @@ class DocumentManager extends DocumentResource
         $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+
+    //TODO: Генератор не умет работать с файлами
+    //TODO: Надо написать тест
+    /**
+     *
+     *
+     * @param array  $parameters {
+     *     @var string $documentId Идентификатор обновляемого документа
+     *     @var bool $confirmTranslation Подтверждать переводы
+     *     @var bool $overwriteUpdatedSegments Обновлять ли переводы в сегментах, которые успели измениться с момента выгрузки xliff файла
+     *     @var array $translationFile Xliff файл с переводами сегментов{
+     *          @var string $fileName - optional
+     *          @var string $filePath | blob or stream $fileContent
+     *     }
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function documentTranslateWithXliff($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('documentId');
+        $queryParam->setRequired('confirmTranslation');
+        $queryParam->setRequired('overwriteUpdatedSegments');
+        $queryParam->setRequired('translationFile');
+        $queryParam->setFormParameters(array('translationFile'));
+        $body = $queryParam->buildFormDataString($parameters);
+
+        $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
+
+        $streamFactory = StreamFactoryDiscovery::find();
+        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder
+            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => $parameters['translationFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
+        $multipartStream = $builder->build();
+        $boundary = $builder->getBoundary();
+        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $body = $multipartStream->getContents();
+
+        $url = '/api/integration/v1/document/translateWithXliff';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;

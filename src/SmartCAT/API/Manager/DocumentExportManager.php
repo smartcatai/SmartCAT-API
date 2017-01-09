@@ -10,8 +10,13 @@ class DocumentExportManager extends DocumentExportResource
 {
     //TODO: PRX-21041 АПИ Не корректно обрабатывает ожидаемые параметры, массивы в get параметрах передаются в виде documentIds[0]=389134_9&documentIds[1]=389135_9, а апи ожидает documentIds=389134_9&documentIds=389135_9
     /**
+     * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
+    где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+    Пример запроса - ?documentIds=61331_25'ampersand'documentIds=61332_9.<br />
+     *
      * @param array  $parameters {
      *     @var array $documentIds Идентификаторы документов
+     *     @var string $type Тип экспортируемого документа, по умолчанию null, может быть null | target | xliff
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -21,13 +26,17 @@ class DocumentExportManager extends DocumentExportResource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentIds');
+        $queryParam->setDefault('type', NULL);
         $url = '/api/integration/v1/document/export';
         $query = $queryParam->buildQueryString($parameters);
-
         $qr = [];
         foreach ($parameters['documentIds'] as $documentId) {
             $qr[] = "documentIds=$documentId";
         }
+        if(!empty($parameters['type'])) {
+            $qr[] = "type={$parameters['type']}";
+        }
+
         $url = $url . ('?' . implode("&", $qr));
 
         $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
