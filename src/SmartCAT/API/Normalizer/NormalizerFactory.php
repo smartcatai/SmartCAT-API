@@ -24,7 +24,10 @@ class NormalizerFactory
         $normalizers[] = new AssignedExecutiveModelNormalizer();
         $normalizers[] = new AssignExecutivesRequestModelNormalizer();
         $normalizers[] = new ExecutiveNormalizer();
+        $normalizers[] = new ModelWithFilesUploadDocumentPropertiesModelNormalizer();
+        $normalizers[] = new UploadDocumentPropertiesModelNormalizer();
         $normalizers[] = new UploadedFileNormalizer();
+        $normalizers[] = new BilingualFileImportSettingsNormalizer();
         $normalizers[] = new ExportDocumentTaskModelNormalizer();
         $normalizers[] = new ProjectModelNormalizer();
         $normalizers[] = new ProjectWorkflowStageModelNormalizer();

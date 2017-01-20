@@ -17,6 +17,10 @@ class CreateDocumentPropertyModel
      */
     protected $disassembleAlgorithmName;
     /**
+     * @var BilingualFileImportSettings
+     */
+    protected $bilingualFileImportSettings;
+    /**
      * @return string
      */
     public function getExternalId()
@@ -65,6 +69,23 @@ class CreateDocumentPropertyModel
     public function setDisassembleAlgorithmName($disassembleAlgorithmName = null)
     {
         $this->disassembleAlgorithmName = $disassembleAlgorithmName;
+        return $this;
+    }
+    /**
+     * @return BilingualFileImportSettings
+     */
+    public function getBilingualFileImportSettings()
+    {
+        return $this->bilingualFileImportSettings;
+    }
+    /**
+     * @param BilingualFileImportSettings $bilingualFileImportSettings
+     *
+     * @return self
+     */
+    public function setBilingualFileImportSettings(BilingualFileImportSettings $bilingualFileImportSettings = null)
+    {
+        $this->bilingualFileImportSettings = $bilingualFileImportSettings;
         return $this;
     }
 }

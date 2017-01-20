@@ -13,6 +13,10 @@ class AssignExecutivesRequestModel
      */
     protected $minWordsCountForExecutive;
     /**
+     * @var string
+     */
+    protected $assignmentMode;
+    /**
      * @return Executive[]
      */
     public function getExecutives()
@@ -44,6 +48,23 @@ class AssignExecutivesRequestModel
     public function setMinWordsCountForExecutive($minWordsCountForExecutive = null)
     {
         $this->minWordsCountForExecutive = $minWordsCountForExecutive;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getAssignmentMode()
+    {
+        return $this->assignmentMode;
+    }
+    /**
+     * @param string $assignmentMode
+     *
+     * @return self
+     */
+    public function setAssignmentMode($assignmentMode = null)
+    {
+        $this->assignmentMode = $assignmentMode;
         return $this;
     }
 }

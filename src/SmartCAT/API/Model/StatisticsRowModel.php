@@ -37,6 +37,10 @@ class StatisticsRowModel
      */
     protected $cost;
     /**
+     * @var float
+     */
+    protected $effectiveWordsForBilling;
+    /**
      * @return string
      */
     public function getName()
@@ -170,6 +174,23 @@ class StatisticsRowModel
     public function setCost($cost = null)
     {
         $this->cost = $cost;
+        return $this;
+    }
+    /**
+     * @return float
+     */
+    public function getEffectiveWordsForBilling()
+    {
+        return $this->effectiveWordsForBilling;
+    }
+    /**
+     * @param float $effectiveWordsForBilling
+     *
+     * @return self
+     */
+    public function setEffectiveWordsForBilling($effectiveWordsForBilling = null)
+    {
+        $this->effectiveWordsForBilling = $effectiveWordsForBilling;
         return $this;
     }
 }

@@ -128,6 +128,7 @@ class DocumentManager extends DocumentResource
     /**
      * @param array  $parameters {
      *     @var string $documentId Идентификатор документа
+     *     @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
      *     @var array $uploadedFile {
      *          @var string $fileName - optional
      *          @var string $filePath | blob or stream $fileContent
@@ -140,6 +141,10 @@ class DocumentManager extends DocumentResource
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
+        $updateDocumentModel = $parameters['updateDocumentModel'] ?? null;
+        if ($updateDocumentModel) {
+            unset($parameters['updateDocumentModel']);
+        }
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('uploadedFile');
@@ -154,6 +159,10 @@ class DocumentManager extends DocumentResource
         $builder = new MultipartStreamBuilder($streamFactory);
         $builder
             ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => $parameters['uploadedFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
+        if ($updateDocumentModel) {
+            $builder
+                ->addResource('updateDocumentModel', $this->serializer->serialize($updateDocumentModel, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
+        }
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
@@ -226,10 +235,17 @@ class DocumentManager extends DocumentResource
 
     //TODO: Нет передается Content-Type: application/json
     /**
-     * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей.
+     * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
+    где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+    Пояснения к значениям AssignmentMode:<br />
+    AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
+    AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося фрилансера на все свободные от назначения сегменты документа.<br />
+    AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
+     *
+     * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей
      * @param array  $parameters {
-     *     @var string $documentId Идентификатор переводимого документа.
-     *     @var int $stageNumber Номер этапа workflow.
+     *     @var string $documentId Идентификатор документа
+     *     @var int $stageNumber Номер этапа workflow
      * }
      * @param string $fetch      Fetch mode (object or response)
      *

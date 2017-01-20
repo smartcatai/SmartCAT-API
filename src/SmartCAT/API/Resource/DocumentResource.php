@@ -126,6 +126,10 @@ class DocumentResource extends Resource
     /**
     * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
                где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+               Пояснения к значениям AssignmentMode:<br />
+               AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
+               AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося фрилансера на все свободные от назначения сегменты документа.<br />
+               AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
     *
     * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей
     * @param array  $parameters {
@@ -157,26 +161,24 @@ class DocumentResource extends Resource
     * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
                где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
     *
+    * @param \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
     * @param array  $parameters {
     *     @var string $documentId Идентификатор документа
-    *     @var  $uploadedFile Файл
     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
     */
-    public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function documentUpdateV2(\SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
-        $queryParam->setRequired('uploadedFile');
-        $queryParam->setFormParameters(array('uploadedFile'));
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $url = '/api/integration/v1/document/update';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
-        $body = $queryParam->buildFormDataString($parameters);
+        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $body = $this->serializer->serialize($updateDocumentModel, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {

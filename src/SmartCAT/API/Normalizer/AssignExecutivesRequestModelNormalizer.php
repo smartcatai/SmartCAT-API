@@ -35,6 +35,9 @@ class AssignExecutivesRequestModelNormalizer extends SerializerAwareNormalizer i
         if (property_exists($data, 'minWordsCountForExecutive')) {
             $object->setMinWordsCountForExecutive($data->{'minWordsCountForExecutive'});
         }
+        if (property_exists($data, 'assignmentMode')) {
+            $object->setAssignmentMode($data->{'assignmentMode'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -49,6 +52,9 @@ class AssignExecutivesRequestModelNormalizer extends SerializerAwareNormalizer i
         }
         if (null !== $object->getMinWordsCountForExecutive()) {
             $data->{'minWordsCountForExecutive'} = $object->getMinWordsCountForExecutive();
+        }
+        if (null !== $object->getAssignmentMode()) {
+            $data->{'assignmentMode'} = $object->getAssignmentMode();
         }
         return $data;
     }

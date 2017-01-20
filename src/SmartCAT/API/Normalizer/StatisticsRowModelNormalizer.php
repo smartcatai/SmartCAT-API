@@ -49,6 +49,9 @@ class StatisticsRowModelNormalizer extends SerializerAwareNormalizer implements 
         if (property_exists($data, 'cost')) {
             $object->setCost($data->{'cost'});
         }
+        if (property_exists($data, 'effectiveWordsForBilling')) {
+            $object->setEffectiveWordsForBilling($data->{'effectiveWordsForBilling'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -77,6 +80,9 @@ class StatisticsRowModelNormalizer extends SerializerAwareNormalizer implements 
         }
         if (null !== $object->getCost()) {
             $data->{'cost'} = $object->getCost();
+        }
+        if (null !== $object->getEffectiveWordsForBilling()) {
+            $data->{'effectiveWordsForBilling'} = $object->getEffectiveWordsForBilling();
         }
         return $data;
     }

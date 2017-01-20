@@ -347,11 +347,11 @@ class ProjectResource extends Resource
         return $response;
     }
     /**
-     * 
+     * Принимает multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream). Swagger UI не поддерживает отображение и выполение таких запросов. В секции параметров описана модель, но отсутствуют параметры, соответствующие файлам. Для отправки запроса воспользуйтесь сторонними утилитами, например cURL.
      *
+     * @param \SmartCAT\API\Model\UploadDocumentPropertiesModel $documentModel Модель загрузки документа с файлом
      * @param array  $parameters {
      *     @var string $projectId Идентификатор проекта
-     *     @var  $file файл
      *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
      *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
      *     @var string $metaInfo Дополнительная пользовательская информация о документе
@@ -360,19 +360,17 @@ class ProjectResource extends Resource
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
-    public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function projectAddDocumentV2(\SmartCAT\API\Model\UploadDocumentPropertiesModel $documentModel, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('projectId');
-        $queryParam->setRequired('file');
-        $queryParam->setFormParameters(array('file'));
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $queryParam->setDefault('externalId', NULL);
         $queryParam->setDefault('metaInfo', NULL);
         $url = '/api/integration/v1/project/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
-        $body = $queryParam->buildFormDataString($parameters);
+        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $body = $this->serializer->serialize($documentModel, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
