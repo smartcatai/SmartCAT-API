@@ -40,6 +40,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
     }
 
     //TODO: Генератор не умет работать с файлами
+    //TODO: bool передается в апи как 0 или 1, а должен как true или false
     /**
      * @param string $tmId Идентификатор ТМ
      * @param array $parameters {
@@ -55,6 +56,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
      */
     public function translationMemoriesImport($tmId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
+        $parameters = $this->prepareParams($parameters);
         $queryParam = new QueryParam();
         $queryParam->setRequired('replaceAllContent');
         $queryParam->setRequired('tmxFile');
@@ -116,6 +118,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         return $response;
     }
 
+    //TODO: bool передается в апи как 0 или 1, а должен как true или false
     /**
      *
      *
@@ -129,6 +132,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
      */
     public function translationMemoriesExportFile($tmId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
+        $parameters = $this->prepareParams($parameters);
         $promise = parent::translationMemoriesExportFile($tmId, $parameters, self::FETCH_PROMISE);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;

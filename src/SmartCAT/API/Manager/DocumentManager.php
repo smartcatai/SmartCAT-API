@@ -272,7 +272,6 @@ class DocumentManager extends DocumentResource
     }
 
     //TODO: Генератор не умет работать с файлами
-    //TODO: Надо написать тест
     /**
      *
      *
@@ -291,6 +290,7 @@ class DocumentManager extends DocumentResource
      */
     public function documentTranslateWithXliff($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
+        $parameters = $this->prepareParams($parameters);
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('confirmTranslation');
@@ -298,6 +298,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
         $body = $queryParam->buildFormDataString($parameters);
+        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
@@ -312,7 +313,6 @@ class DocumentManager extends DocumentResource
 
         $url = '/api/integration/v1/document/translateWithXliff';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {

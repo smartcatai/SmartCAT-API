@@ -70,12 +70,27 @@ trait SmartCATManager
         $headers["Content-Type"] = "multipart/form-data; boundary={$boundary}";
         return array('headers' => $headers, 'body' => implode("\r\n", $body));
     }
-    
-    public function prepareFile($fileInfo)
+
+    protected function prepareFile($fileInfo)
     {
         if(isset($fileInfo['filePath'])) {
             $fileInfo['fileContent'] = fopen($fileInfo['filePath'], 'r');
         }
         return $fileInfo;
+    }
+
+    /**
+     * Конвертирует все параметры типа bool в строку
+     * @param array $params
+     * @return array
+     */
+    protected function prepareParams(array $params)
+    {
+        foreach ($params as $key => $param) {
+            if (gettype($param) === 'boolean') {
+                $params[$key] = (string)(($param) ? 'true' : 'false');
+            }
+        }
+        return $params;
     }
 }

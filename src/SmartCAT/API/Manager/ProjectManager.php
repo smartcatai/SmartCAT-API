@@ -199,6 +199,7 @@ class ProjectManager extends ProjectResource
         return $response;
     }
 
+    //TODO: bool передается в апи как 0 или 1, а должен как true или false
     /**
      * @deprecated use projectGetProjectStatistics
      * @param string $projectId Идентификатор проекта
@@ -211,12 +212,13 @@ class ProjectManager extends ProjectResource
      */
     public function projectGetProjectStatisticsObsolete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
+        $parameters = $this->prepareParams($parameters);
         $response = parent::projectGetProjectStatisticsObsolete($projectId, $parameters, $fetch);
         return $response;
     }
 
     //TODO: Если статистика не готова, метод возвращает plane текст, а не готовый ответ, генератор это обрабатывать не умеет
-    //TODO: onlyExactMatches передается в апи как 0 или 1, а должен как true false
+    //TODO: bool передается в апи как 0 или 1, а должен как true или false
     /**
      * Первый вызов запускает расчет статистики, последующие возвращают статистику или отвечают что она еще не готова
      *
@@ -230,13 +232,7 @@ class ProjectManager extends ProjectResource
      */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
-        if(isset($parameters['onlyExactMatches'])) {
-            if ($parameters['onlyExactMatches']) {
-                $parameters['onlyExactMatches'] = 'true';
-            } else {
-                $parameters['onlyExactMatches'] = 'false';
-            }
-        }
+        $parameters = $this->prepareParams($parameters);
         $promise = parent::projectGetProjectStatistics($projectId, $parameters, self::FETCH_PROMISE);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
