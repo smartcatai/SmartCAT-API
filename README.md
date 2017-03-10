@@ -4,7 +4,7 @@ PHP client SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Version from 20.01.2017
+Version from 09.03.2017
 [PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## How to use:
@@ -57,7 +57,7 @@ $sc=new SmartCAT($login, $password);
  ```php
  $callback=new CallbackPropertyModel();
  $callback->setUrl('https://smartcat.ai');
- $res=$this->sc->getCallbackManager()->callbackUpdate($callback);
+ $res=$sc->getCallbackManager()->callbackUpdate($callback);
  ```
  
  [Reading the last sending errors (no more than 100)](https://smartcat.ai/api/methods/#!/Callback/Callback_GetLastErrors)
@@ -71,7 +71,7 @@ $sc=new SmartCAT($login, $password);
  If the client already exists, just returns the Id.    
  **POST** /api/integration/v1/client/create
  ```php
-$clientId = $this->sc->getClientManager()->clientCreateClient('Test client');
+$clientId = $sc->getClientManager()->clientCreateClient('Test client');
  ```
 
 ## [Directories](https://smartcat.ai/api/methods/#!/Directories)
@@ -101,15 +101,23 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ```
  
  [Update assigned document](https://smartcat.ai/api/methods/#!/Document/Document_Update)
- **PUT** /api/integration/v1/document/update  
+ **PUT** /api/integration/v1/document/update
  ```php
- $sc->getDocumentManager()->documentUpdate([
-    'documentId'=>$docId,
-    'uploadedFile'=>[
-        'filePath'=>'\Resources\File2_EN.docx',
-        'fileName'=>'File2_EN.docx'
-    ]
- ])
+ $bilingualFileImportSettings = new BilingualFileImportSettingsModel();
+ $bilingualFileImportSettings
+     ->setConfirmMode('none')
+     ->setLockMode('none')
+     ->setTargetSubstitutionMode('all');
+ $updateDocumentModel = new UploadDocumentPropertiesModel();
+ $updateDocumentModel->setBilingualFileImportSettings($bilingualFileImportSettings);
+ $res = $sc->getDocumentManager()->documentUpdate([
+     'documentId' => $docId,
+     'updateDocumentModel' => $updateDocumentModel,
+     'uploadedFile' => [
+         'fileContent' => fopen(__DIR__ . '\Resources\File2_EN.docx', 'r'),
+         'fileName' => 'File2_EN.docx'
+     ]
+ ]);
  ```
  
  [Rename assigned document](https://smartcat.ai/api/methods/#!/Document/Document_Rename)
@@ -184,7 +192,7 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ```
  
  [Receive statistics and project value](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectStatistics)  
- **GET** /api/integration/v1/project/{projectId}/statistics  
+ **GET** /api/integration/v2/project/{projectId}/statistics  
  ```php
 $sc->getProjectManager()->projectGetProjectStatistics($projectId);
 do {
@@ -193,6 +201,41 @@ do {
 } while(!is_array($res));
  ```
  
+ [Receiving statistics for the completed parts of the project](https://smartcat.ai/api/methods/#!/Project/Project_GetCompletedWorkStatistics)      
+ **GET** /api/integration/v1/project/{projectId}/completedWorkStatistics   
+ ```php
+ $res = $sc->getProjectManager()->projectGetCompletedWorkStatistics($projectId);
+ ```
+
+ [Receiving a list of the TMs plugged into the project](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectTranslationMemories)      
+ **GET** /api/integration/v1/project/{projectId}/translationmemories    
+ ```php
+ $res = $sc->getProjectManager()->projectGetProjectTranslationMemories($projectId);
+ ```
+
+ [Rewrite connected TMs — same set of TMs for all target languages](https://smartcat.ai/api/methods/#!/Project/Project_SetTranslationMemoriesForWholeProject)      
+ **POST** /api/integration/v1/project/{projectId}/translationmemories    
+ ```php
+ $translationMemoryForProjectModel = new TranslationMemoryForProjectModel();
+ $translationMemoryForProjectModel->setId($tmId);
+ $translationMemoryForProjectModel->setIsWritable(true);
+ $translationMemoryForProjectModel->setMatchThreshold(100);
+ $res = $sc->getProjectManager()->projectSetTranslationMemoriesForWholeProject($projectId, [$translationMemoryForProjectModel]);
+ ```
+
+ [Rewrite connected TMs — each target language with its own set of TMs](https://smartcat.ai/api/methods/#!/Project/Project_SetTranslationMemoriesForWholeProject)      
+ **POST** /api/integration/v1/project/{projectId}/translationmemories/bylanguages     
+ ```php
+ $translationMemoryForProjectModel = new TranslationMemoryForProjectModel();
+ $translationMemoryForProjectModel->setId($tmId);
+ $translationMemoryForProjectModel->setIsWritable(true);
+ $translationMemoryForProjectModel->setMatchThreshold(100);
+ $tm = new TranslationMemoriesForLanguageModel();
+ $tm->setLanguage('en');
+ $tm->setTranslationMemories([$translationMemoryForProjectModel]);
+ $res = $sc->getProjectManager()->projectSetProjectTranslationMemoriesByLanguages($projectId, [$tm]);
+ ```
+
  [Create a project](https://smartcat.ai/api/methods/#!/Project/Project_CreateProject)
  **POST** /api/integration/v1/project/create  
  ```php
@@ -208,12 +251,27 @@ do {
  $prjCreate->setAutoPropagateRepetitions(false);
  $prjCreate->setIsForTesting(true);
  $prjCreate->setWorkflowStages(['translation']);
- $prjCreate->attacheFile(__DIR__.'\Resources\File1_EN.docx','File1_EN.docx');
+ $prjCreate->attacheFile(fopen(__DIR__.'\Resources\File1_EN.docx'),'File1_EN.docx');
  $sc->getProjectManager()->projectCreateProjectWithFiles($prjCreate);
 ```
   
  [Add new document to project](https://smartcat.ai/api/methods/#!/Project/Project_AddDocument)
  **POST** /api/integration/v1/project/document  
+ ```php
+ $bilingualFileImportSettings = new BilingualFileImportSettingsModel();
+ $bilingualFileImportSettings
+     ->setConfirmMode('none')
+     ->setLockMode('none')
+     ->setTargetSubstitutionMode('all');
+ $documentModel = new CreateDocumentPropertyWithFilesModel();
+ $documentModel->setBilingualFileImportSettings($bilingualFileImportSettings);
+ $documentModel->attachFile(fopen(__DIR__ . '\Resources\File2_EN.docx'), 'File2_EN.docx');
+ $res = $sc->getProjectManager()->projectAddDocument([
+     'documentModel' => [$documentModel],
+     'projectId' => $projectId
+ ]);
+ ```
+ Deprecated:
  ```php
  $sc->getProjectManager()->projectAddDocument([
      'projectId'=>$projectId, 
@@ -299,7 +357,7 @@ $tm->setSourceLanguage('ru');
 $tm->setTargetLanguages(['en']);
 $tm->setDescription("Description: $name");
 
-$tmId = $this->sc->getTranslationMemoriesManager()->translationMemoriesCreateEmptyTM($tm);
+$tmId = $sc->getTranslationMemoriesManager()->translationMemoriesCreateEmptyTM($tm);
  ```
 
 [Gets a collection of tasks for TMX import](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetPendingTasks)    

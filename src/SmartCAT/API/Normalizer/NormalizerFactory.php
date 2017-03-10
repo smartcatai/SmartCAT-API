@@ -13,8 +13,7 @@ class NormalizerFactory
         $normalizers[] = new AssignableExecutiveModelNormalizer();
         $normalizers[] = new CallbackPropertyModelNormalizer();
         $normalizers[] = new AdditionalHeaderModelNormalizer();
-        $normalizers[] = new CallbackErrorNormalizer();
-        $normalizers[] = new FailResponseNormalizer();
+        $normalizers[] = new CallbackErrorModelNormalizer();
         $normalizers[] = new DirectoryModelNormalizer();
         $normalizers[] = new DirectoryItemModelNormalizer();
         $normalizers[] = new FileFormatModelNormalizer();
@@ -27,7 +26,7 @@ class NormalizerFactory
         $normalizers[] = new ModelWithFilesUploadDocumentPropertiesModelNormalizer();
         $normalizers[] = new UploadDocumentPropertiesModelNormalizer();
         $normalizers[] = new UploadedFileNormalizer();
-        $normalizers[] = new BilingualFileImportSettingsNormalizer();
+        $normalizers[] = new BilingualFileImportSettingsModelNormalizer();
         $normalizers[] = new ExportDocumentTaskModelNormalizer();
         $normalizers[] = new ProjectModelNormalizer();
         $normalizers[] = new ProjectWorkflowStageModelNormalizer();
@@ -43,6 +42,8 @@ class NormalizerFactory
         $normalizers[] = new ModelWithFilesCreateProjectModelNormalizer();
         $normalizers[] = new CreateProjectModelNormalizer();
         $normalizers[] = new CreateDocumentPropertyModelNormalizer();
+        $normalizers[] = new ModelWithFilesIReadOnlyListCreateDocumentPropertyModelNormalizer();
+        $normalizers[] = new TranslationMemoriesForLanguageModelNormalizer();
         $normalizers[] = new TranslationMemoryModelNormalizer();
         $normalizers[] = new CreateTranslationMemoryModelNormalizer();
         $normalizers[] = new TMImportTaskModelNormalizer();

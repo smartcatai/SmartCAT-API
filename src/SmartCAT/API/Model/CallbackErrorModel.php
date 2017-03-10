@@ -2,8 +2,16 @@
 
 namespace SmartCAT\API\Model;
 
-class FailResponse
+class CallbackErrorModel
 {
+    /**
+     * @var \DateTime
+     */
+    protected $created;
+    /**
+     * @var string
+     */
+    protected $url;
     /**
      * @var string
      */
@@ -16,6 +24,40 @@ class FailResponse
      * @var string
      */
     protected $content;
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    /**
+     * @param \DateTime $created
+     *
+     * @return self
+     */
+    public function setCreated(\DateTime $created = null)
+    {
+        $this->created = $created;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+    /**
+     * @param string $url
+     *
+     * @return self
+     */
+    public function setUrl($url = null)
+    {
+        $this->url = $url;
+        return $this;
+    }
     /**
      * @return string
      */

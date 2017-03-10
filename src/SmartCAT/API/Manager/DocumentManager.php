@@ -272,6 +272,7 @@ class DocumentManager extends DocumentResource
     }
 
     //TODO: Генератор не умет работать с файлами
+    //TODO: Не правильное описание метода PRX-23102
     /**
      *
      *
@@ -296,7 +297,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('confirmTranslation');
         $queryParam->setRequired('overwriteUpdatedSegments');
         $queryParam->setRequired('translationFile');
-        $queryParam->setFormParameters(array('translationFile'));
+        $queryParam->setFormParameters(['translationFile']);
         $body = $queryParam->buildFormDataString($parameters);
         $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
 

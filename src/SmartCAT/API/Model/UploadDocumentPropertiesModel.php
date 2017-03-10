@@ -5,22 +5,22 @@ namespace SmartCAT\API\Model;
 class UploadDocumentPropertiesModel
 {
     /**
-     * @var BilingualFileImportSettings
+     * @var BilingualFileImportSettingsModel
      */
     protected $bilingualFileImportSettings;
     /**
-     * @return BilingualFileImportSettings
+     * @return BilingualFileImportSettingsModel
      */
     public function getBilingualFileImportSettings()
     {
         return $this->bilingualFileImportSettings;
     }
     /**
-     * @param BilingualFileImportSettings $bilingualFileImportSettings
+     * @param BilingualFileImportSettingsModel $bilingualFileImportSettings
      *
      * @return self
      */
-    public function setBilingualFileImportSettings(BilingualFileImportSettings $bilingualFileImportSettings = null)
+    public function setBilingualFileImportSettings(BilingualFileImportSettingsModel $bilingualFileImportSettings = null)
     {
         $this->bilingualFileImportSettings = $bilingualFileImportSettings;
         return $this;

@@ -35,7 +35,7 @@ class CreateDocumentPropertyModelNormalizer extends SerializerAwareNormalizer im
             $object->setDisassembleAlgorithmName($data->{'disassembleAlgorithmName'});
         }
         if (property_exists($data, 'bilingualFileImportSettings')) {
-            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCAT\\API\\Model\\BilingualFileImportSettings', 'raw', $context));
+            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCAT\\API\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
         }
         return $object;
     }

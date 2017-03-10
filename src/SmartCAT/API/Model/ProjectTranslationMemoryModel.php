@@ -13,6 +13,14 @@ class ProjectTranslationMemoryModel
      */
     protected $matchThreshold;
     /**
+     * @var int
+     */
+    protected $targetLanguageId;
+    /**
+     * @var bool
+     */
+    protected $isWritable;
+    /**
      * @return string
      */
     public function getId()
@@ -44,6 +52,40 @@ class ProjectTranslationMemoryModel
     public function setMatchThreshold($matchThreshold = null)
     {
         $this->matchThreshold = $matchThreshold;
+        return $this;
+    }
+    /**
+     * @return int
+     */
+    public function getTargetLanguageId()
+    {
+        return $this->targetLanguageId;
+    }
+    /**
+     * @param int $targetLanguageId
+     *
+     * @return self
+     */
+    public function setTargetLanguageId($targetLanguageId = null)
+    {
+        $this->targetLanguageId = $targetLanguageId;
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getIsWritable()
+    {
+        return $this->isWritable;
+    }
+    /**
+     * @param bool $isWritable
+     *
+     * @return self
+     */
+    public function setIsWritable($isWritable = null)
+    {
+        $this->isWritable = $isWritable;
         return $this;
     }
 }

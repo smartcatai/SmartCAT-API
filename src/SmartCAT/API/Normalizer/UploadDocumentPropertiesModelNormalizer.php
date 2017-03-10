@@ -26,7 +26,7 @@ class UploadDocumentPropertiesModelNormalizer extends SerializerAwareNormalizer 
     {
         $object = new \SmartCAT\API\Model\UploadDocumentPropertiesModel();
         if (property_exists($data, 'bilingualFileImportSettings')) {
-            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCAT\\API\\Model\\BilingualFileImportSettings', 'raw', $context));
+            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCAT\\API\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
         }
         return $object;
     }

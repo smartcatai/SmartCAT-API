@@ -6,25 +6,25 @@ use Joli\Jane\Runtime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class BilingualFileImportSettingsNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class BilingualFileImportSettingsModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\BilingualFileImportSettings') {
+        if ($type !== 'SmartCAT\\API\\Model\\BilingualFileImportSettingsModel') {
             return false;
         }
         return true;
     }
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\BilingualFileImportSettings) {
+        if ($data instanceof \SmartCAT\API\Model\BilingualFileImportSettingsModel) {
             return true;
         }
         return false;
     }
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\BilingualFileImportSettings();
+        $object = new \SmartCAT\API\Model\BilingualFileImportSettingsModel();
         if (property_exists($data, 'targetSubstitutionMode')) {
             $object->setTargetSubstitutionMode($data->{'targetSubstitutionMode'});
         }

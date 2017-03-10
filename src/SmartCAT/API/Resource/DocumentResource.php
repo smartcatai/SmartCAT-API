@@ -170,7 +170,7 @@ class DocumentResource extends Resource
     *
     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
     */
-    public function documentUpdateV2(\SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
@@ -255,7 +255,7 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-     * 
+     * Принимает multipart-запрос, содержащий один или несколько файлов (Content-Type=application/octet-stream). Из-за ограничений Swagger UI секция параметров содержит только один элемент управления для выбора файла. Для отправки нескольких файлов в одном запросе воспользуйтесь сторонними утилитами, например cURL.
      *
      * @param array  $parameters {
      *     @var string $documentId Идентификатор обновляемого документа

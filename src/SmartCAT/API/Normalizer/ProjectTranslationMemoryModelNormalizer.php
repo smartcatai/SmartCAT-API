@@ -31,6 +31,12 @@ class ProjectTranslationMemoryModelNormalizer extends SerializerAwareNormalizer 
         if (property_exists($data, 'matchThreshold')) {
             $object->setMatchThreshold($data->{'matchThreshold'});
         }
+        if (property_exists($data, 'targetLanguageId')) {
+            $object->setTargetLanguageId($data->{'targetLanguageId'});
+        }
+        if (property_exists($data, 'isWritable')) {
+            $object->setIsWritable($data->{'isWritable'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -41,6 +47,12 @@ class ProjectTranslationMemoryModelNormalizer extends SerializerAwareNormalizer 
         }
         if (null !== $object->getMatchThreshold()) {
             $data->{'matchThreshold'} = $object->getMatchThreshold();
+        }
+        if (null !== $object->getTargetLanguageId()) {
+            $data->{'targetLanguageId'} = $object->getTargetLanguageId();
+        }
+        if (null !== $object->getIsWritable()) {
+            $data->{'isWritable'} = $object->getIsWritable();
         }
         return $data;
     }

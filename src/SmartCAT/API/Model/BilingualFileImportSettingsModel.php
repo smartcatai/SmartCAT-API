@@ -2,7 +2,7 @@
 
 namespace SmartCAT\API\Model;
 
-class BilingualFileImportSettings
+class BilingualFileImportSettingsModel
 {
     /**
      * @var string

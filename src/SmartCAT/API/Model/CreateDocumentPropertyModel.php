@@ -17,7 +17,7 @@ class CreateDocumentPropertyModel
      */
     protected $disassembleAlgorithmName;
     /**
-     * @var BilingualFileImportSettings
+     * @var BilingualFileImportSettingsModel
      */
     protected $bilingualFileImportSettings;
     /**
@@ -72,18 +72,18 @@ class CreateDocumentPropertyModel
         return $this;
     }
     /**
-     * @return BilingualFileImportSettings
+     * @return BilingualFileImportSettingsModel
      */
     public function getBilingualFileImportSettings()
     {
         return $this->bilingualFileImportSettings;
     }
     /**
-     * @param BilingualFileImportSettings $bilingualFileImportSettings
+     * @param BilingualFileImportSettingsModel $bilingualFileImportSettings
      *
      * @return self
      */
-    public function setBilingualFileImportSettings(BilingualFileImportSettings $bilingualFileImportSettings = null)
+    public function setBilingualFileImportSettings(BilingualFileImportSettingsModel $bilingualFileImportSettings = null)
     {
         $this->bilingualFileImportSettings = $bilingualFileImportSettings;
         return $this;

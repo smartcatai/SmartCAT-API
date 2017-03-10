@@ -233,7 +233,7 @@ class ProjectResource extends Resource
         }
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
-            if ('204' == $response->getStatusCode()) {
+            if ('200' == $response->getStatusCode()) {
                 return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectTranslationMemoryModel[]', 'json');
             }
         }
@@ -249,7 +249,7 @@ class ProjectResource extends Resource
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function projectSetProjectTranslationmemories($projectId, $tmModels, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function projectSetTranslationMemoriesForWholeProject($projectId, $tmModels, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $url = '/api/integration/v1/project/{projectId}/translationmemories';
@@ -349,7 +349,7 @@ class ProjectResource extends Resource
     /**
      * Принимает multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream). Swagger UI не поддерживает отображение и выполение таких запросов. В секции параметров описана модель, но отсутствуют параметры, соответствующие файлам. Для отправки запроса воспользуйтесь сторонними утилитами, например cURL.
      *
-     * @param \SmartCAT\API\Model\UploadDocumentPropertiesModel $documentModel Модель загрузки документа с файлом
+     * @param \SmartCAT\API\Model\CreateDocumentPropertyModel[] $documentModel Модель загрузки документа с файлом
      * @param array  $parameters {
      *     @var string $projectId Идентификатор проекта
      *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
@@ -360,7 +360,7 @@ class ProjectResource extends Resource
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
-    public function projectAddDocumentV2(\SmartCAT\API\Model\UploadDocumentPropertiesModel $documentModel, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('projectId');
@@ -370,7 +370,7 @@ class ProjectResource extends Resource
         $url = '/api/integration/v1/project/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
-        $body = $this->serializer->serialize($documentModel, 'json');
+        $body = $documentModel;
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
@@ -404,6 +404,32 @@ class ProjectResource extends Resource
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId Идентификатор проекта
+     * @param \SmartCAT\API\Model\TranslationMemoriesForLanguageModel[] $tmForLanguagesModels Коллекия языков и заданных для них коллекций ТМ
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectSetProjectTranslationMemoriesByLanguages($projectId, $tmForLanguagesModels, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/{projectId}/translationmemories/bylanguages';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $body = $tmForLanguagesModels;
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {

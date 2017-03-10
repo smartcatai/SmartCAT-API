@@ -15,13 +15,18 @@ class CreateProjectWithFilesModel extends CreateProjectModel
      * @param
      */
 
-    public function attacheFile($file, $fileName = null)
+    public function attachFile($file, $fileName = null)
     {
         if (gettype($file) == 'resource') {
             $this->files[] = ['fileName' => $fileName, 'fileContent' => $file];
         } else {
             $this->files[] = ['fileName' => $fileName, 'fileContent' => fopen($file, 'r')];
         }
+    }
+
+    public function attacheFile($file, $fileName = null)
+    {
+        $this->attachFile($file, $fileName);
     }
 
     public function getFiles()

@@ -89,7 +89,7 @@ class CallbackResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\CallbackError[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\CallbackErrorModel[]
      */
     public function callbackGetLastErrors($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -107,7 +107,7 @@ class CallbackResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\CallbackError[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\CallbackErrorModel[]', 'json');
             }
         }
         return $response;

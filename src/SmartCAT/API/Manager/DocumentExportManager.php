@@ -16,7 +16,8 @@ class DocumentExportManager extends DocumentExportResource
      *
      * @param array  $parameters {
      *     @var array $documentIds Идентификаторы документов
-     *     @var string $type Тип экспортируемого документа, по умолчанию null, может быть null | target | xliff
+     *     @var string $type Тип экспортируемого документа, по умолчанию {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target}
+     *     @var int $stageNumber Номер этапа WF при скачивании промежуточного результата (доступен только если {type} = {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target})
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -27,6 +28,7 @@ class DocumentExportManager extends DocumentExportResource
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentIds');
         $queryParam->setDefault('type', NULL);
+        $queryParam->setDefault('stageNumber', NULL);
         $url = '/api/integration/v1/document/export';
         $query = $queryParam->buildQueryString($parameters);
         $qr = [];
@@ -35,6 +37,9 @@ class DocumentExportManager extends DocumentExportResource
         }
         if(!empty($parameters['type'])) {
             $qr[] = "type={$parameters['type']}";
+        }
+        if(!empty($parameters['stageNumber'])) {
+            $qr[] = "stageNumber={$parameters['stageNumber']}";
         }
 
         $url = $url . ('?' . implode("&", $qr));
