@@ -1,58 +1,58 @@
-PHP client SmartCAT API 
+PHP клиент для SmartCAT API 
 ==============
 [![Latest Version](https://img.shields.io/github/release/smartcatai/SmartCAT-API.svg?style=flat-square)](https://img.shields.io/github/release/smartcatai/SmartCAT-API.svg?style=flat-square)
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Version from 12.05.2017
-[PHP client SmartCAT API](https://smartcat.ai/api/methods/)
+Версия от 12.05.2017
+[PHP оболочка для SmartCAT API](https://smartcat.ai/api/methods/)
 
-## How to use:
- 1. Install [composer](https://getcomposer.org/)
+## Как использовать?
+ 1. Установить [composer](https://getcomposer.org/)
  2. composer require smartcat/smartcat-api
- 3. composer install 
-
- [Use Case](https://www.smartcat.ai/api/docs/)
-
-```php 
+ 3. composer install
+ 
+ [Сценарии использования](https://ru.smartcat.ai/api/docs/)
+ 
+```php
 use SmartCAT\API\SmartCAT;
 
 $sc=new SmartCAT($login, $password);
 ```
 
 ## [Account](https://smartcat.ai/api/methods/#!/Account/Account_GetAccountInfo)
- [Gets the account details](https://smartcat.ai/api/methods/#!/Account/Account_GetAccountInfo)    
+ [Получение информации об аккаунте](https://smartcat.ai/api/methods/#!/Account/Account_GetAccountInfo)    
  **GET** /api/integration/v1/account   
  ```php
  $sc->getAccountManager()->accountGetAccountInfo();
  ```
 
-  [Gets MT engines available for the account](https://smartcat.ai/api/methods/#!/Account/Account_GetMTEnginesForAccount)    
-  **GET** /api/integration/v1/account/mtengines   
-  ```php
-  $sc->getAccountManager()->accountGetMTEnginesForAccount();
-  ```
- 
-  [Gets available assignees (MyTeam freelancers or internal account users)](https://smartcat.ai/api/methods/#!/Account/Account_GetAssignableExecutives)    
-  **GET** /api/integration/v1/account/assignableExecutives  
-  ```php
-  $sc->getAccountManager()->accountGetAssignableExecutives();
-  ```
+ [Получение движков перевода доступных для аккаунта](https://smartcat.ai/api/methods/#!/Account/Account_GetMTEnginesForAccount)    
+ **GET** /api/integration/v1/account/mtengines   
+ ```php
+ $sc->getAccountManager()->accountGetMTEnginesForAccount();
+ ```
+
+ [Метод получения доступных для назначения исполнителей (фрилансеров из MyTeam или внутренних пользователей из аккаунта)](https://smartcat.ai/api/methods/#!/Account/Account_GetAssignableExecutives)    
+ **GET** /api/integration/v1/account/assignableExecutives  
+ ```php
+ $sc->getAccountManager()->accountGetAssignableExecutives();
+ ```
 
 ## [Callback](https://smartcat.ai/api/methods/#!/Callback)
- [Reset configurations of notifications reception](https://smartcat.ai/api/methods/#!/Callback/Callback_Delete)
+ [Удаление настроек приема уведомлений](https://smartcat.ai/api/methods/#!/Callback/Callback_Delete)    
  **DELETE** /api/integration/v1/callback  
  ```php
  $sc->getCallbackManager()->callbackDelete()
  ```
  
- [Reading configurations of notifications reception of the account](https://smartcat.ai/api/methods/#!/Callback/Callback_Get)
+ [Чтение настроек приема уведомлений аккаунта](https://smartcat.ai/api/methods/#!/Callback/Callback_Get)    
  **GET** /api/integration/v1/callback  
  ```php
  $sc->getCallbackManager()->callbackGet()
  ```
  
- [Creating and updating configurations of notifications reception](https://smartcat.ai/api/methods/#!/Callback/Callback_Update)
+ [Создание или обновление настроек приема уведомлений](https://smartcat.ai/api/methods/#!/Callback/Callback_Update)    
  **POST** /api/integration/v1/callback  
  ```php
  $callback=new CallbackPropertyModel();
@@ -60,60 +60,60 @@ $sc=new SmartCAT($login, $password);
  $res=$sc->getCallbackManager()->callbackUpdate($callback);
  ```
  
- [Reading the last sending errors (no more than 100)](https://smartcat.ai/api/methods/#!/Callback/Callback_GetLastErrors)
+ [Чтение последних ошибок отправки (не более 100)](https://smartcat.ai/api/methods/#!/Callback/Callback_GetLastErrors)    
  **GET** /api/integration/v1/callback/lastErrors  
  ```php
  $sc->getCallbackManager()->callbackGetLastErrors(['limit'=>$limit])
  ```
 
 ## [Client](https://smartcat.ai/api/methods/#!/Client)
- [Creates a client with the specified name and returns the Id](https://smartcat.ai/api/methods/#!/Client/Client_CreateClient)  
- If the client already exists, just returns the Id.    
+ [Создать клиента с заданным именем и вернуть его Id.](https://smartcat.ai/api/methods/#!/Client/Client_CreateClient)  
+ Если клиент с таким именем существовал, то просто вернуть его Id.    
  **POST** /api/integration/v1/client/create
  ```php
 $clientId = $sc->getClientManager()->clientCreateClient('Test client');
  ```
 
- [Get details on a client specified within an account](https://smartcat.ai/api/methods/#!/Client/Client_GetClient)  
+ [Получение информации о клиенте аккаунта](https://smartcat.ai/api/methods/#!/Client/Client_GetClient)  
  **GET** /api/integration/v1/client
  ```php
 $client = $sc->getClientManager()->clientGetClient($clientId);
  ```
 
- [Sets the specified net rate model for the specified customer](https://smartcat.ai/api/methods/#!/Client/Client_SetClientNetRate)  
+ [Устанавливает указанному клиенту указанную сетку скидок](https://smartcat.ai/api/methods/#!/Client/Client_SetClientNetRate)  
  **PUT** /api/integration/v1/client/{clientId}/set
  ```php
 $client = $sc->getClientManager()->clientSetClientNetRate($clientId, ['netRateId' => $netRateId]);
  ```
 
 ## [Directories](https://smartcat.ai/api/methods/#!/Directories)
- [Receive the specified directory](https://smartcat.ai/api/methods/#!/Directories/Directories_Get)
+ [Получить заданный справочник](https://smartcat.ai/api/methods/#!/Directories/Directories_Get)    
  **GET** /api/integration/v1/directory  
  ```php
  $sc->getDirectoriesManager()->directoriesGet(['type'=>'projectStatus'])
  ```
 
- [Gets parsing formats supported by the account](https://smartcat.ai/api/methods/#!/Directories/Directories_GetSupportedFormatsForAccount)    
+ [Получить поддерживаемые в аккунте форматы для разбора](https://smartcat.ai/api/methods/#!/Directories/Directories_GetSupportedFormatsForAccount)    
  **GET** /api/integration/v1/directory/formats  
  ```php
 $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ```
 
 ## [Document](https://smartcat.ai/api/methods/#!/Document)
- [Delete one or several documents](https://smartcat.ai/api/methods/#!/Document/Document_Delete)
+ [Удалить один или несколько документов](https://smartcat.ai/api/methods/#!/Document/Document_Delete)    
  **DELETE** /api/integration/v1/document  
  ```php
  $sc->getDocumentManager()->documentDelete(['documentIds'=>['id1','id2']])
  ```
  
- [Receive document model](https://smartcat.ai/api/methods/#!/Document/Document_Get)
+ [Получить модель документа](https://smartcat.ai/api/methods/#!/Document/Document_Get)    
  **GET** /api/integration/v1/document  
  ```php
  $sc->getDocumentManager()->documentGet(['documentId'=>$docId])
  ```
  
- [Update assigned document](https://smartcat.ai/api/methods/#!/Document/Document_Update)
- **PUT** /api/integration/v1/document/update
+ [Обновить заданный документ](https://smartcat.ai/api/methods/#!/Document/Document_Update)    
+ **PUT** /api/integration/v1/document/update  
  ```php
  $bilingualFileImportSettings = new BilingualFileImportSettingsModel();
  $bilingualFileImportSettings
@@ -132,13 +132,13 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ]);
  ```
  
- [Rename assigned document](https://smartcat.ai/api/methods/#!/Document/Document_Rename)
+ [Переименовать заданный документ](https://smartcat.ai/api/methods/#!/Document/Document_Rename)    
  **PUT** /api/integration/v1/document/rename
  ```php
  $sc->getDocumentManager()->documentRename(['documentId'=>$docId,'name'=>'New file name'])
  ```
  
- [Translate indicated document using the transferred file with translations](https://smartcat.ai/api/methods/#!/Document/Document_Translate)
+ [Перевести указанный документ, используя переданный файл с переводами](https://smartcat.ai/api/methods/#!/Document/Document_Translate)    
  **PUT** /api/integration/v1/document/translate  
  ```php
  $sc->getDocumentManager()->documentTranslate([
@@ -150,13 +150,13 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ])
  ```
  
- [Receive the status of adding document translation](https://smartcat.ai/api/methods/#!/Document/Document_GetTranslationStatus)
+ [Получить статус задачи добавления перевода документа](https://smartcat.ai/api/methods/#!/Document/Document_GetTranslationStatus)    
  **GET** /api/integration/v1/document/translate/status
  ```php
  $sc->getDocumentManager()->documentGetTranslationStatus(['documentId'=>$docId])
  ```
  
- [Split document into equal segments according to the number of words and assign each freelancer to one segment](https://smartcat.ai/api/methods/#!/Document/Document_AssignFreelancersToDocument)
+ [Разбить документ на равные блоки по количеству слов и назначить каждого из указанных фрилансеров на один блок - устаревший](https://smartcat.ai/api/methods/#!/Document/Document_AssignFreelancersToDocument)    
  **POST** /api/integration/v1/document/assignFreelancers  
   ```php
  $sc->getDocumentManager()->documentAssignFreelancersToDocument(
@@ -168,42 +168,57 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  )
  ```
   
+ [Разбить документ на равные блоки по количеству слов и назначить каждого из указанных фрилансеров на один блок](https://smartcat.ai/api/methods/#!/Document/Document_AssignFreelancersToDocument)    
+ **POST** /api/integration/v1/document/assign    
+  ```php
+$assignExecutivesRequestModel = new AssignExecutivesRequestModel();
+$executive = new Executive();
+$executive->setId($freelancerId);
+$assignExecutivesRequestModel->setExecutives([$executive]);
+$res=$sc->getDocumentManager()->documentAssignExecutives(
+    $assignExecutivesRequestModel,
+    [
+        'documentId' => $docId,
+        'stageNumber' => $stageNumber
+    ]
+);
+ ```
 ## [DocumentExport](https://smartcat.ai/api/methods/#!/DocumentExport)
- [Request document (-s) export](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_RequestExport)
+ [Запросить на экспорт документа(-ов)](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_RequestExport)    
  **POST** /api/integration/v1/document/export  
  ```php
  $sc->getDocumentExportManager()->documentExportRequestExport(['documentIds'=>['documenId1','documentId2'])
  ```
  
- [Download the results of export](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_DownloadExportResult)
+ [Скачать результат экспорта](https://smartcat.ai/api/methods/#!/DocumentExport/DocumentExport_DownloadExportResult)    
  **GET** /api/integration/v1/document/export/{taskId}  
  ```php
  $sc->getDocumentExportManager()->documentExportDownloadExportResult($taskId);
  ```
  
 ## [Project](https://smartcat.ai/api/methods/#!/Project)
- [Delete project](https://smartcat.ai/api/methods/#!/Project/Project_Delete)
+ [Удалить проект](https://smartcat.ai/api/methods/#!/Project/Project_Delete)    
  **DELETE** /api/integration/v1/project/{projectId}
  ```php
  $sc->getProjectManager()->projectDelete($projectId)
  ```
  
- [Receive project model](https://smartcat.ai/api/methods/#!/Project/Project_Get)
+ [Получить модель проекта](https://smartcat.ai/api/methods/#!/Project/Project_Get)    
  **GET** /api/integration/v1/project/{projectId}
  ```php
  sc->getProjectManager()->projectGet($projectId)
  ```
  
- [Update project using ID](https://smartcat.ai/api/methods/#!/Project/Project_UpdateProject)  
- **PUT** /api/integration/v1/project/{projectId}
+ [Обновить проект по id](https://smartcat.ai/api/methods/#!/Project/Project_UpdateProject)  - **Не рабочий метод API**  
+ **PUT** /api/integration/v1/project/{projectId} - **Не работает!**
  
- [Receive the list of all projects in account](https://smartcat.ai/api/methods/#!/Project/Project_GetAll)
+ [Получить список всех проектов в аккаунте](https://smartcat.ai/api/methods/#!/Project/Project_GetAll)    
  **GET** /api/integration/v1/project/list
  ```php
  $sc->getProjectManager()->projectGetAll()
  ```
  
- [Receive statistics and project value](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectStatistics)  
+ [Получить статистику и стоимость по проекту](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectStatistics)      
  **GET** /api/integration/v2/project/{projectId}/statistics  
  ```php
 $sc->getProjectManager()->projectGetProjectStatistics($projectId);
@@ -213,19 +228,19 @@ do {
 } while(!is_array($res));
  ```
  
- [Receiving statistics for the completed parts of the project](https://smartcat.ai/api/methods/#!/Project/Project_GetCompletedWorkStatistics)      
+ [Получение статистики по выполненной в проекте работе](https://smartcat.ai/api/methods/#!/Project/Project_GetCompletedWorkStatistics)      
  **GET** /api/integration/v1/project/{projectId}/completedWorkStatistics   
  ```php
  $res = $sc->getProjectManager()->projectGetCompletedWorkStatistics($projectId);
  ```
 
- [Receiving a list of the TMs plugged into the project](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectTranslationMemories)      
+ [Получение списка идентификаторов ТМ подключенных к проекту](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectTranslationMemories)      
  **GET** /api/integration/v1/project/{projectId}/translationmemories    
  ```php
  $res = $sc->getProjectManager()->projectGetProjectTranslationMemories($projectId);
  ```
 
- [Rewrite connected TMs — same set of TMs for all target languages](https://smartcat.ai/api/methods/#!/Project/Project_SetTranslationMemoriesForWholeProject)      
+ [Перезаписать набор ТМ подключенных к проекту, набор ТМ одинаков для всех языков перевода проекта](https://smartcat.ai/api/methods/#!/Project/Project_SetTranslationMemoriesForWholeProject)      
  **POST** /api/integration/v1/project/{projectId}/translationmemories    
  ```php
  $translationMemoryForProjectModel = new TranslationMemoryForProjectModel();
@@ -235,7 +250,7 @@ do {
  $res = $sc->getProjectManager()->projectSetTranslationMemoriesForWholeProject($projectId, [$translationMemoryForProjectModel]);
  ```
 
- [Rewrite connected TMs — each target language with its own set of TMs](https://smartcat.ai/api/methods/#!/Project/Project_SetTranslationMemoriesForWholeProject)      
+ [Перезаписать набор ТМ подключенных к проекту, для каждого языка перевода проекта задается свой набор ТМ](https://smartcat.ai/api/methods/#!/Project/Project_SetTranslationMemoriesForWholeProject)      
  **POST** /api/integration/v1/project/{projectId}/translationmemories/bylanguages     
  ```php
  $translationMemoryForProjectModel = new TranslationMemoryForProjectModel();
@@ -248,27 +263,27 @@ do {
  $res = $sc->getProjectManager()->projectSetProjectTranslationMemoriesByLanguages($projectId, [$tm]);
  ```
 
- [Create a project](https://smartcat.ai/api/methods/#!/Project/Project_CreateProject)
+[Создать проект](https://smartcat.ai/api/methods/#!/Project/Project_CreateProject)    
  **POST** /api/integration/v1/project/create  
  ```php
- $prjCreate = new CreateProjectWithFilesModel();
- $prjCreate->setName('Test project');
- $prjCreate->setDescription('Test project');
- $prjCreate->setSourceLanguage('ru');
- $prjCreate->setTargetLanguages(['en']);
- $prjCreate->setAssignToVendor(false);
- $prjCreate->setUseMT(false);
- $prjCreate->setPretranslate(false);
- $prjCreate->setUseTranslationMemory(false);
- $prjCreate->setAutoPropagateRepetitions(false);
- $prjCreate->setIsForTesting(true);
- $prjCreate->setWorkflowStages(['translation']);
- $prjCreate->attacheFile(fopen(__DIR__.'\Resources\File1_EN.docx'),'File1_EN.docx');
- $sc->getProjectManager()->projectCreateProjectWithFiles($prjCreate);
-```
+$prjCreate = new CreateProjectWithFilesModel();
+$prjCreate->setName('Test project');
+$prjCreate->setDescription('Test project');
+$prjCreate->setSourceLanguage('ru');
+$prjCreate->setTargetLanguages(['en']);
+$prjCreate->setAssignToVendor(false);
+$prjCreate->setUseMT(false);
+$prjCreate->setPretranslate(false);
+$prjCreate->setUseTranslationMemory(false);
+$prjCreate->setAutoPropagateRepetitions(false);
+$prjCreate->setIsForTesting(true);
+$prjCreate->setWorkflowStages(['translation']);
+$prjCreate->attacheFile(fopen(__DIR__.'\Resources\File1_EN.docx'),'File1_EN.docx');
+$sc->getProjectManager()->projectCreateProjectWithFiles($prjCreate);
+ ```
   
- [Add new document to project](https://smartcat.ai/api/methods/#!/Project/Project_AddDocument)
- **POST** /api/integration/v1/project/document  
+ [Добавить документ к проекту](https://smartcat.ai/api/methods/#!/Project/Project_AddDocument)    
+ **POST** /api/integration/v1/project/document
  ```php
  $bilingualFileImportSettings = new BilingualFileImportSettingsModel();
  $bilingualFileImportSettings
@@ -283,7 +298,19 @@ do {
      'projectId' => $projectId
  ]);
  ```
- Deprecated:
+ устаревший вариант:
+ ```php
+ $sc->getProjectManager()->projectAddDocument([
+    'projectId'=>$projectId, 
+    'file' => [
+        'filePath' => '\Resources\File2_EN.docx',
+        'fileName' => 'File2_EN.docx'
+    ]
+ ]);
+ ```
+ 
+ [Добавить новый целевой язык к проекту](https://smartcat.ai/api/methods/#!/Project/Project_AddLanguage)    
+ **POST** /api/integration/v1/project/language  
  ```php
  $sc->getProjectManager()->projectAddDocument([
      'projectId'=>$projectId, 
@@ -294,44 +321,38 @@ do {
  ]);
  ```
  
- [Add new target language to project](https://smartcat.ai/api/methods/#!/Project/Project_AddLanguage)
- **POST** /api/integration/v1/project/language  
- ```php
- $sc->getProjectManager()->projectAddLanguage(['projectId'=>$projectId,'targetLanguage'=>'ja']);
- ```
- 
- [Assign the group of translators for the specific stage of documents in project](https://smartcat.ai/api/methods/#!/Project/Project_AssignGroupToWorkflowStage)
+ [Назначить группу исполнителей на конкретный этап документов в проекте](https://smartcat.ai/api/methods/#!/Project/Project_AssignGroupToWorkflowStage)    
  **PUT** /api/integration/v1/project/{projectId}/assignGroupToWorkflowStage  
  ```php
  $sc->getProjectManager()->projectAssignGroupToWorkflowStage($projectId,['groupName'=>'Administrators','workflowStage'=>'translation'])
  ```
  
- [Cancel project](https://smartcat.ai/api/methods/#!/Project/Project_CancelProject)
+ [Отменить проект](https://smartcat.ai/api/methods/#!/Project/Project_CancelProject)    
  **POST** /api/integration/v1/project/cancel
  ```php
  $sc->getProjectManager()->projectCancelProject(['projectId'=>$projectId])
  ```
 
- [Restore project](https://smartcat.ai/api/methods/#!/Project/Project_RestoreProject)
+ [Восстановить проект](https://smartcat.ai/api/methods/#!/Project/Project_RestoreProject)    
  **POST** /api/integration/v1/project/restore  
  ```php
  $sc->getProjectManager()->projectRestoreProject(['projectId'=>$projectId])
  ```
- 
+
 ## [TranslationMemories](https://smartcat.ai/api/methods/#!/TranslationMemories)
- [Deletes the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_RemoveTranslationMemory)    
+ [Удалить ТМ](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_RemoveTranslationMemory)    
  **DELETE** /api/integration/v1/translationmemory/{tmId}    
  ```php
  $sc->getTranslationMemoriesManager()->translationMemoriesRemoveTranslationMemory($tmId)
  ```
 
- [Gets TM details](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetMetaInfo)    
+ [Получить информацию о TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetMetaInfo)    
  **GET** /api/integration/v1/translationmemory/{tmId}    
  ```php
  $sc->getTranslationMemoriesManager()->translationMemoriesGetMetaInfo($tmId);
  ```
 
- [Imports TMX files into the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_Import)    
+ [Импорт tmx-файлов в TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_Import)    
  **POST** /api/integration/v1/translationmemory/{tmId}    
  ```php
 $sc->getTranslationMemoriesManager()->translationMemoriesImport(
@@ -345,7 +366,7 @@ $sc->getTranslationMemoriesManager()->translationMemoriesImport(
 );
  ```
 
-[Gets a collection of TMs available for the account](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_Import)    
+[Получить пачку доступных ТМ с фильтрацией в аккаунте](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_Import)    
  **GET** /api/integration/v1/translationmemory    
  ```php
 $thirstRes = $sc->getTranslationMemoriesManager()->translationMemoriesGetTranslationMemoriesBatch([
@@ -359,7 +380,7 @@ $secondRes = $sc->getTranslationMemoriesManager()->translationMemoriesGetTransla
 ]);
  ```
 
-[Creates an empty TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_CreateEmptyTM)    
+[Создать пустую ТМ](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_CreateEmptyTM)    
  **POST** /api/integration/v1/translationmemory    
  ```php
 $tm = new CreateTranslationMemoryModel();
@@ -372,25 +393,25 @@ $tm->setDescription("Description: $name");
 $tmId = $sc->getTranslationMemoriesManager()->translationMemoriesCreateEmptyTM($tm);
  ```
 
-[Gets a collection of tasks for TMX import](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetPendingTasks)    
+[Получить коллекцию задач на импорт tmx-файлов](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetPendingTasks)    
  **GET** /api/integration/v1/translationmemory/task    
  ```php
 $sc->getTranslationMemoriesManager()->translationMemoriesGetPendingTasks();
  ```
 
-[Sets an array of target languages required by the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_SetTMTargetLanguages)    
+[Установить массив требуемых целевых языков в ТМ](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_SetTMTargetLanguages)    
  **PUT** /api/integration/v1/translationmemory/{tmId}/target    
  ```php
 $sc->getTranslationMemoriesManager()->translationMemoriesSetTMTargetLanguages($tmId, ["en", "es"]);
  ```
 
-[Exports TMX files from the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_ExportFile)    
+[Экспорт tmx файлов из базы ТМ](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_ExportFile)    
  **GET** /api/integration/v1/translationmemory/{tmId}/file    
  ```php
 $sc->getTranslationMemoriesManager()->translationMemoriesExportFile($tmId, ['withTags' => true])
  ```
 
-[Gets matches from a given TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetTMTranslations)    
+[Получение матчей из указанной ТМ](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_GetTMTranslations)    
  **POST** /api/integration/v1/translationmemory/matches    
  ```php
 $tmMatch = new TmMatchesRequest();
@@ -406,7 +427,7 @@ $tmMatch->setSegmentModel($segmentModel);
 $sc->getTranslationMemoriesManager()->translationMemoriesGetTMTranslations($tmMatch, ['tmId' => $tmId]);
  ```
 
-[Removes a given import task](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_RemoveSpecificImportTask)    
+[Удалить указанную задачу на импорт](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_RemoveSpecificImportTask)    
  **DELETE** /api/integration/v1/translationmemory/task/{taskId}    
  ```php
 $sc->getTranslationMemoriesManager()->translationMemoriesRemoveSpecificImportTask($last->getId())
