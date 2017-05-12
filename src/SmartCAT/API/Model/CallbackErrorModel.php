@@ -25,6 +25,10 @@ class CallbackErrorModel
      */
     protected $content;
     /**
+     * @var string[]
+     */
+    protected $sourceIds;
+    /**
      * @return \DateTime
      */
     public function getCreated()
@@ -107,6 +111,23 @@ class CallbackErrorModel
     public function setContent($content = null)
     {
         $this->content = $content;
+        return $this;
+    }
+    /**
+     * @return string[]
+     */
+    public function getSourceIds()
+    {
+        return $this->sourceIds;
+    }
+    /**
+     * @param string[] $sourceIds
+     *
+     * @return self
+     */
+    public function setSourceIds(array $sourceIds = null)
+    {
+        $this->sourceIds = $sourceIds;
         return $this;
     }
 }

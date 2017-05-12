@@ -355,6 +355,7 @@ class ProjectResource extends Resource
      *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
      *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
      *     @var string $metaInfo Дополнительная пользовательская информация о документе
+     *     @var string $targetLanguages Языки перевода всех документов, перечисленные через запятую, опционально. Могут быть переопределены в отдельных документах в теле запроса. По-умолчанию используются языки перевода проекта.
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -367,6 +368,7 @@ class ProjectResource extends Resource
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $queryParam->setDefault('externalId', NULL);
         $queryParam->setDefault('metaInfo', NULL);
+        $queryParam->setDefault('targetLanguages', NULL);
         $url = '/api/integration/v1/project/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));

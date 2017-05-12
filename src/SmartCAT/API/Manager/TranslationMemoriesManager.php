@@ -124,7 +124,8 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
      *
      * @param string $tmId Идентификатор ТМ
      * @param array $parameters {
-     * @var bool $withTags Необходимость inline тегов после экспорта
+     *     @var bool $withTags Необходимость inline тегов после экспорта
+     *     @var bool $tradosCompatible Выгружать в формате, совместимом с Trados
      * }
      * @param string $fetch Fetch mode (object or response)
      *

@@ -128,8 +128,9 @@ class DocumentResource extends Resource
                где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
                Пояснения к значениям AssignmentMode:<br />
                AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
-               AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося фрилансера на все свободные от назначения сегменты документа.<br />
+               AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося исполнителя на все свободные от назначения сегменты документа.<br />
                AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
+               Примечание: если количество сегментов не указано, задача будет разделена на равные блоки между всеми исполнителями.<br />
     *
     * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей
     * @param array  $parameters {
@@ -255,18 +256,19 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-     * Принимает multipart-запрос, содержащий один или несколько файлов (Content-Type=application/octet-stream). Из-за ограничений Swagger UI секция параметров содержит только один элемент управления для выбора файла. Для отправки нескольких файлов в одном запросе воспользуйтесь сторонними утилитами, например cURL.
-     *
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор обновляемого документа
-     *     @var bool $confirmTranslation Подтверждать переводы
-     *     @var bool $overwriteUpdatedSegments Обновлять ли переводы в сегментах, которые успели измениться с момента выгрузки xliff файла
-     *     @var  $translationFile Xliff файл с переводами сегментов
-     * }
-     * @param string $fetch      Fetch mode (object or response)
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
+    * Метод доступен только для возврата модифицированных XLIFF-файлов, экспортированных с помощью метода POST /api/integration/v1/document/export. 
+               Тело запроса может содержать только один XLIFF-файл.
+    *
+    * @param array  $parameters {
+    *     @var string $documentId Идентификатор обновляемого документа
+    *     @var bool $confirmTranslation Подтверждать переводы
+    *     @var bool $overwriteUpdatedSegments Обновлять ли переводы в сегментах, которые успели измениться с момента выгрузки xliff файла
+    *     @var  $translationFile Xliff файл с переводами сегментов
+    * }
+    * @param string $fetch      Fetch mode (object or response)
+    *
+    * @return \Psr\Http\Message\ResponseInterface
+    */
     public function documentTranslateWithXliff($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();

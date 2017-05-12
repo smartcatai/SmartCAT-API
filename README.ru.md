@@ -4,7 +4,7 @@ PHP client SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Version from 09.03.2017
+Version from 12.05.2017
 [PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## How to use:
@@ -72,6 +72,18 @@ $sc=new SmartCAT($login, $password);
  **POST** /api/integration/v1/client/create
  ```php
 $clientId = $sc->getClientManager()->clientCreateClient('Test client');
+ ```
+
+ [Get details on a client specified within an account](https://smartcat.ai/api/methods/#!/Client/Client_GetClient)  
+ **GET** /api/integration/v1/client
+ ```php
+$client = $sc->getClientManager()->clientGetClient($clientId);
+ ```
+
+ [Sets the specified net rate model for the specified customer](https://smartcat.ai/api/methods/#!/Client/Client_SetClientNetRate)  
+ **PUT** /api/integration/v1/client/{clientId}/set
+ ```php
+$client = $sc->getClientManager()->clientSetClientNetRate($clientId, ['netRateId' => $netRateId]);
  ```
 
 ## [Directories](https://smartcat.ai/api/methods/#!/Directories)

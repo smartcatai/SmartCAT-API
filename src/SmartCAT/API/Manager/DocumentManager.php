@@ -239,8 +239,9 @@ class DocumentManager extends DocumentResource
     где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
     Пояснения к значениям AssignmentMode:<br />
     AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
-    AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося фрилансера на все свободные от назначения сегменты документа.<br />
+    AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося исполнителя на все свободные от назначения сегменты документа.<br />
     AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
+    Примечание: если количество сегментов не указано, задача будет разделена на равные блоки между всеми исполнителями.<br />
      *
      * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей
      * @param array  $parameters {
@@ -274,7 +275,7 @@ class DocumentManager extends DocumentResource
     //TODO: Генератор не умет работать с файлами
     //TODO: Не правильное описание метода PRX-23102
     /**
-     *
+     * Метод доступен только для возврата модифицированных XLIFF-файлов, экспортированных с помощью метода POST /api/integration/v1/document/export. Тело запроса может содержать только один XLIFF-файл.
      *
      * @param array  $parameters {
      *     @var string $documentId Идентификатор обновляемого документа

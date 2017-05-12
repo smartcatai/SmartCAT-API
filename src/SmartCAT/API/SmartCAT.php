@@ -27,6 +27,10 @@ use Symfony\Component\Serializer\Serializer;
 
 class SmartCAT
 {
+    const SC_USA = 'us.smartcat.ai';
+    const SC_EUROPE = 'smartcat.ai';
+    const SC_ASIA = 'ea.smartcat.ai';
+
     /**
      * @var HttpClient
      */
@@ -54,8 +58,9 @@ class SmartCAT
      * SmartCAT constructor.
      * @param string $login API логин
      * @param string $password API пароль
+     * @param string $host Имя сервера smartCAT
      */
-    public function __construct($login, $password)
+    public function __construct($login, $password, $host = self::SC_EUROPE)
     {
         $this->login = $login;
         $this->password = $password;
@@ -73,7 +78,7 @@ class SmartCAT
         $this->serializer = $serializer;
         $this->messageFactory = $messageFactory;
         $options = [
-            'remote_socket' => 'tcp://smartcat.ai:443',
+            'remote_socket' => "tcp://$host:443",
             'ssl' => true
         ];
 

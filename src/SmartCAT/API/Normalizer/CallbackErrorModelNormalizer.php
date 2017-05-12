@@ -40,6 +40,13 @@ class CallbackErrorModelNormalizer extends SerializerAwareNormalizer implements 
         if (property_exists($data, 'content')) {
             $object->setContent($data->{'content'});
         }
+        if (property_exists($data, 'sourceIds')) {
+            $values = array();
+            foreach ($data->{'sourceIds'} as $value) {
+                $values[] = $value;
+            }
+            $object->setSourceIds($values);
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -59,6 +66,13 @@ class CallbackErrorModelNormalizer extends SerializerAwareNormalizer implements 
         }
         if (null !== $object->getContent()) {
             $data->{'content'} = $object->getContent();
+        }
+        if (null !== $object->getSourceIds()) {
+            $values = array();
+            foreach ($object->getSourceIds() as $value) {
+                $values[] = $value;
+            }
+            $data->{'sourceIds'} = $values;
         }
         return $data;
     }

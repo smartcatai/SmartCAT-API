@@ -14,6 +14,9 @@ class NormalizerFactory
         $normalizers[] = new CallbackPropertyModelNormalizer();
         $normalizers[] = new AdditionalHeaderModelNormalizer();
         $normalizers[] = new CallbackErrorModelNormalizer();
+        $normalizers[] = new ClientModelNormalizer();
+        $normalizers[] = new NetRateModelNormalizer();
+        $normalizers[] = new TMRangeRateModelNormalizer();
         $normalizers[] = new DirectoryModelNormalizer();
         $normalizers[] = new DirectoryItemModelNormalizer();
         $normalizers[] = new FileFormatModelNormalizer();

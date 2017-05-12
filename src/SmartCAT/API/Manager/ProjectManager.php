@@ -93,6 +93,7 @@ class ProjectManager extends ProjectResource
      *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
      *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
      *     @var string $metaInfo Дополнительная пользовательская информация о документе
+     *     @var string $targetLanguages Языки перевода всех документов, перечисленные через запятую, опционально. Могут быть переопределены в отдельных документах в теле запроса. По-умолчанию используются языки перевода проекта.
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -114,6 +115,7 @@ class ProjectManager extends ProjectResource
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $queryParam->setDefault('externalId', NULL);
         $queryParam->setDefault('metaInfo', NULL);
+        $queryParam->setDefault('targetLanguages', NULL);
         $headers = array_merge(['Host' => 'smartcat.ai', 'Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $documentModel = $parameters['documentModel'] ?? null;

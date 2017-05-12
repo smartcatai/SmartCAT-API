@@ -192,6 +192,7 @@ class TranslationMemoriesResource extends Resource
      * @param string $tmId Идентификатор ТМ
      * @param array  $parameters {
      *     @var bool $withTags Необходимость inline тегов после экспорта
+     *     @var bool $tradosCompatible Выгружать в формате, совместимом с Trados
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -201,6 +202,7 @@ class TranslationMemoriesResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('withTags', NULL);
+        $queryParam->setDefault('tradosCompatible', NULL);
         $url = '/api/integration/v1/translationmemory/{tmId}/file';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));

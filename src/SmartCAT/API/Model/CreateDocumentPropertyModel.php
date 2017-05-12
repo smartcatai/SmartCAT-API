@@ -21,6 +21,10 @@ class CreateDocumentPropertyModel
      */
     protected $bilingualFileImportSettings;
     /**
+     * @var string[]
+     */
+    protected $targetLanguages;
+    /**
      * @return string
      */
     public function getExternalId()
@@ -86,6 +90,23 @@ class CreateDocumentPropertyModel
     public function setBilingualFileImportSettings(BilingualFileImportSettingsModel $bilingualFileImportSettings = null)
     {
         $this->bilingualFileImportSettings = $bilingualFileImportSettings;
+        return $this;
+    }
+    /**
+     * @return string[]
+     */
+    public function getTargetLanguages()
+    {
+        return $this->targetLanguages;
+    }
+    /**
+     * @param string[] $targetLanguages
+     *
+     * @return self
+     */
+    public function setTargetLanguages(array $targetLanguages = null)
+    {
+        $this->targetLanguages = $targetLanguages;
         return $this;
     }
 }
