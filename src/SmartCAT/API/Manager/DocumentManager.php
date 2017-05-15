@@ -141,7 +141,7 @@ class DocumentManager extends DocumentResource
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
-        $updateDocumentModel = $parameters['updateDocumentModel'] ?? null;
+        $updateDocumentModel = isset($parameters['updateDocumentModel']) ? $parameters['updateDocumentModel'] : null;
         if ($updateDocumentModel) {
             unset($parameters['updateDocumentModel']);
         }
@@ -158,7 +158,7 @@ class DocumentManager extends DocumentResource
         $streamFactory = StreamFactoryDiscovery::find();
         $builder = new MultipartStreamBuilder($streamFactory);
         $builder
-            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => $parameters['uploadedFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
+            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => (isset($parameters['uploadedFile']['fileName']) ? $parameters['uploadedFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         if ($updateDocumentModel) {
             $builder
                 ->addResource('updateDocumentModel', $this->serializer->serialize($updateDocumentModel, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
@@ -215,7 +215,7 @@ class DocumentManager extends DocumentResource
         $streamFactory = StreamFactoryDiscovery::find();
         $builder = new MultipartStreamBuilder($streamFactory);
         $builder
-            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => $parameters['translationFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
+            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
@@ -307,7 +307,7 @@ class DocumentManager extends DocumentResource
         $streamFactory = StreamFactoryDiscovery::find();
         $builder = new MultipartStreamBuilder($streamFactory);
         $builder
-            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => $parameters['translationFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
+            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;

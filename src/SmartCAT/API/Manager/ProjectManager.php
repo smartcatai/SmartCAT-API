@@ -5,15 +5,15 @@ namespace SmartCAT\API\Manager;
 use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
-use SmartCAT\API\Model\CreateDocumentPropertyModel;
 use SmartCAT\API\Model\CreateDocumentPropertyWithFilesModel;
 use SmartCAT\API\Resource\ProjectResource;
 
 class ProjectManager extends ProjectResource
 {
     use SmartCATManager;
+
     //TODO: Генератор не умет работать с файлами и multipart-запросами
+
     /**
      * Создать проект, генерирует multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream).
      * @param \SmartCAT\API\Model\CreateProjectWithFilesModel $project Модель создания проекта с файлами
@@ -42,7 +42,7 @@ class ProjectManager extends ProjectResource
                     'file' . $i,
                     $file['fileContent'],
                     [
-                        'filename' => $file['fileName'] ?? null,
+                        'filename' => isset($file['fileName']) ? $file['fileName'] : null,
                         'headers' => ['Content-Type' => "application/octet-stream"]
                     ]
                 );
@@ -50,7 +50,7 @@ class ProjectManager extends ProjectResource
 
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
-        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
@@ -69,33 +69,33 @@ class ProjectManager extends ProjectResource
 
     //TODO: Генератор не умет работать с файлами и multipart-запросами
     /**
-     * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
-     *     @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $documentModel - optional Модель загрузки документа с файлом
-     *     @var  $file {
-     *          @var string $fileName - optional
-     *          @var string $filePath | blob or stream $fileContent
+     * @param array $parameters {
+     * @var string $projectId Идентификатор проекта
+     * @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $documentModel - optional Модель загрузки документа с файлом
+     * @var  $file {
+     * @var string $fileName - optional
+     * @var string $filePath | blob or stream $fileContent
      *     }
-     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
-     *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
-     *     @var string $metaInfo Дополнительная пользовательская информация о документе
+     * @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
+     * @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
+     * @var string $metaInfo Дополнительная пользовательская информация о документе
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
     /**
      * Принимает multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream). Swagger UI не поддерживает отображение и выполение таких запросов. В секции параметров описана модель, но отсутствуют параметры, соответствующие файлам. Для отправки запроса воспользуйтесь сторонними утилитами, например cURL.
      *
-     * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
-     *     @var \SmartCAT\API\Model\CreateDocumentPropertyWithFilesModel[] $documentModel Модель загрузки документа с файлом
-     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
-     *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
-     *     @var string $metaInfo Дополнительная пользовательская информация о документе
-     *     @var string $targetLanguages Языки перевода всех документов, перечисленные через запятую, опционально. Могут быть переопределены в отдельных документах в теле запроса. По-умолчанию используются языки перевода проекта.
+     * @param array $parameters {
+     * @var string $projectId Идентификатор проекта
+     * @var \SmartCAT\API\Model\CreateDocumentPropertyWithFilesModel[] $documentModel Модель загрузки документа с файлом
+     * @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
+     * @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
+     * @var string $metaInfo Дополнительная пользовательская информация о документе
+     * @var string $targetLanguages Языки перевода всех документов, перечисленные через запятую, опционально. Могут быть переопределены в отдельных документах в теле запроса. По-умолчанию используются языки перевода проекта.
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
@@ -118,7 +118,7 @@ class ProjectManager extends ProjectResource
         $queryParam->setDefault('targetLanguages', NULL);
         $headers = array_merge(['Host' => 'smartcat.ai', 'Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
-        $documentModel = $parameters['documentModel'] ?? null;
+        $documentModel = isset($parameters['documentModel']) ? $parameters['documentModel'] : null;
 
         $url = '/api/integration/v1/project/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
@@ -133,7 +133,7 @@ class ProjectManager extends ProjectResource
             foreach ($documentModel as $dm) {
                 $file = $this->prepareFile($dm->getFile());
                 $builder
-                    ->addResource("file$i", $file['fileContent'], ['filename' => $file['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
+                    ->addResource("file$i", $file['fileContent'], ['filename' => (isset($file['fileName']) ? $file['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
                 $i++;
             }
 
@@ -158,20 +158,21 @@ class ProjectManager extends ProjectResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;
     }
 
     //TODO: Нет передается Content-Type: application/json
+
     /**
      * Обновить проект по id
      *
      * @param string $projectId Идентификатор проекта
      * @param \SmartCAT\API\Model\ProjectChangesModel $model Модель изменений проекта
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -195,13 +196,14 @@ class ProjectManager extends ProjectResource
     }
 
     //TODO: bool передается в апи как 0 или 1, а должен как true или false
+
     /**
      * @deprecated use projectGetProjectStatistics
      * @param string $projectId Идентификатор проекта
-     * @param array  $parameters {
-     *     @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
+     * @param array $parameters {
+     * @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -218,10 +220,10 @@ class ProjectManager extends ProjectResource
      * Первый вызов запускает расчет статистики, последующие возвращают статистику или отвечают что она еще не готова
      *
      * @param string $projectId Идентификатор проекта
-     * @param array  $parameters {
-     *     @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
+     * @param array $parameters {
+     * @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectStatisticsModel[]|string
      */
@@ -235,23 +237,24 @@ class ProjectManager extends ProjectResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ProjectStatisticsModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\ProjectStatisticsModel[]', 'json');
             }
             if ('202' == $response->getStatusCode()) {
-                return (string) $response->getBody();
+                return (string)$response->getBody();
             }
         }
         return $response;
     }
 
     //TODO: Не корректно обрабатывается параметр $tmForLanguagesModels
+
     /**
      *
      *
      * @param string $projectId Идентификатор проекта
      * @param \SmartCAT\API\Model\TranslationMemoryForProjectModel[] $tmModels Коллекия ТМ
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -273,13 +276,14 @@ class ProjectManager extends ProjectResource
     }
 
     //TODO: Не корректно обрабатывается параметр $tmForLanguagesModels
+
     /**
      * Перезаписать набор ТМ подключенных к проекту, для каждого языка перевода проекта задается свой набор ТМ
      *
      * @param string $projectId Идентификатор проекта
      * @param \SmartCAT\API\Model\TranslationMemoriesForLanguageModel[] $tmForLanguagesModels Коллекия языков и заданных для них коллекций ТМ
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */

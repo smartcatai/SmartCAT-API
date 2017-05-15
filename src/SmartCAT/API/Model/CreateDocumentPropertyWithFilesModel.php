@@ -32,7 +32,7 @@ class CreateDocumentPropertyWithFilesModel extends CreateDocumentPropertyModel
     /**
      * @return CreateDocumentPropertyModel;
      */
-    public function toCreateDocumentPropertyModel(): CreateDocumentPropertyModel
+    public function toCreateDocumentPropertyModel()
     {
         $ret = new CreateDocumentPropertyModel();
         $methods = get_class_methods($ret);

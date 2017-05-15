@@ -72,7 +72,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         $streamFactory = StreamFactoryDiscovery::find();
         $builder = new MultipartStreamBuilder($streamFactory);
         $builder
-            ->addResource('uploadedFile', $parameters['tmxFile']['fileContent'], ['filename' => $parameters['tmxFile']['fileName'] ?? null, 'headers' => ['Content-Type' => "application/octet-stream"]]);
+            ->addResource('uploadedFile', $parameters['tmxFile']['fileContent'], ['filename' => (isset($parameters['tmxFile']['fileName']) ? $parameters['tmxFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
