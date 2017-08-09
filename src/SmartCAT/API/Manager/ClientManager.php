@@ -14,12 +14,14 @@ use SmartCAT\API\Resource\ClientResource;
 class ClientManager extends ClientResource
 {
 
+    use SmartCATManager;
+
     /**
      *
      *
      * @param string $name имя клиента
-     * @param array  $parameters List of parameters
-     * @param string $fetch      Fetch mode (object or response)
+     * @param array $parameters List of parameters
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return string
      */
@@ -28,7 +30,7 @@ class ClientManager extends ClientResource
         $name = "\"$name\"";
         $promise = parent::clientCreateClient($name, $parameters, self::FETCH_PROMISE);
         if (self::FETCH_PROMISE === $fetch) {
-         return $promise;
+            return $promise;
         }
         $response = $promise->wait();
         $res = $response->getBody()->getContents();

@@ -8,18 +8,21 @@ use SmartCAT\API\Resource\DocumentExportResource;
 
 class DocumentExportManager extends DocumentExportResource
 {
+    use SmartCATManager;
+
     //TODO: PRX-21041 АПИ Не корректно обрабатывает ожидаемые параметры, массивы в get параметрах передаются в виде documentIds[0]=389134_9&documentIds[1]=389135_9, а апи ожидает documentIds=389134_9&documentIds=389135_9
+
     /**
      * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-    где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
-    Пример запроса - ?documentIds=61331_25'ampersand'documentIds=61332_9.<br />
+     * где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+     * Пример запроса - ?documentIds=61331_25'ampersand'documentIds=61332_9.<br />
      *
-     * @param array  $parameters {
-     *     @var array $documentIds Идентификаторы документов
-     *     @var string $type Тип экспортируемого документа, по умолчанию {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target}
-     *     @var int $stageNumber Номер этапа WF при скачивании промежуточного результата (доступен только если {type} = {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target})
+     * @param array $parameters {
+     * @var array $documentIds Идентификаторы документов
+     * @var string $type Тип экспортируемого документа, по умолчанию {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target}
+     * @var int $stageNumber Номер этапа WF при скачивании промежуточного результата (доступен только если {type} = {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target})
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ExportDocumentTaskModel
      */
@@ -35,16 +38,16 @@ class DocumentExportManager extends DocumentExportResource
         foreach ($parameters['documentIds'] as $documentId) {
             $qr[] = "documentIds=$documentId";
         }
-        if(!empty($parameters['type'])) {
+        if (!empty($parameters['type'])) {
             $qr[] = "type={$parameters['type']}";
         }
-        if(!empty($parameters['stageNumber'])) {
+        if (!empty($parameters['stageNumber'])) {
             $qr[] = "stageNumber={$parameters['stageNumber']}";
         }
 
         $url = $url . ('?' . implode("&", $qr));
 
-        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -54,7 +57,7 @@ class DocumentExportManager extends DocumentExportResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ExportDocumentTaskModel', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\ExportDocumentTaskModel', 'json');
             }
         }
         return $response;

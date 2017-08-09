@@ -9,7 +9,6 @@
 namespace SmartCAT\API\Manager;
 
 
-use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
@@ -20,6 +19,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
     use SmartCATManager;
 
     //TODO: Нет описания возвращаемых данных, API возращает кривоватый ответ заворачивая tmId в кавычки
+
     /**
      * @param \SmartCAT\API\Model\CreateTranslationMemoryModel $model
      * @param array $parameters
@@ -44,10 +44,10 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
     /**
      * @param string $tmId Идентификатор ТМ
      * @param array $parameters {
-     *      @var bool $replaceAllContent Необходимость полной замены содержимого ТМ
-     *      @var  $tmxFile {
-     *          @var string $fileName - optional
-     *          @var string $filePath | blob or stream $fileContent
+     * @var bool $replaceAllContent Необходимость полной замены содержимого ТМ
+     * @var  $tmxFile {
+     * @var string $fileName - optional
+     * @var string $filePath | blob or stream $fileContent
      *     }
      * }
      * @param string $fetch Fetch mode (object or response)
@@ -64,7 +64,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         $url = '/api/integration/v1/translationmemory/{tmId}';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
 
         $parameters['tmxFile'] = $this->prepareFile($parameters['tmxFile']);
@@ -107,7 +107,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         $url = '/api/integration/v1/translationmemory/{tmId}/targets';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => 'smartcat.ai'], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Host' => $this->host], $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($targetLanguages, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -119,13 +119,14 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
     }
 
     //TODO: bool передается в апи как 0 или 1, а должен как true или false
+
     /**
      *
      *
      * @param string $tmId Идентификатор ТМ
      * @param array $parameters {
-     *     @var bool $withTags Необходимость inline тегов после экспорта
-     *     @var bool $tradosCompatible Выгружать в формате, совместимом с Trados
+     * @var bool $withTags Необходимость inline тегов после экспорта
+     * @var bool $tradosCompatible Выгружать в формате, совместимом с Trados
      * }
      * @param string $fetch Fetch mode (object or response)
      *

@@ -35,7 +35,7 @@ class DocumentManager extends DocumentResource
         $url = '/api/integration/v1/document/assignFreelancers';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($freelancerUserIds, 'json');;
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -47,6 +47,7 @@ class DocumentManager extends DocumentResource
     }
 
     //TODO: PRX-21041 АПИ Не корректно обрабатывает ожидаемые параметры, массивы в get параметрах передаются в виде documentIds[0]=389134_9&documentIds[1]=389135_9, а апи ожидает documentIds=389134_9&documentIds=389135_9
+
     /**
      * @param array $parameters {
      * @var array $documentIds Массив идентификаторов документов
@@ -67,7 +68,7 @@ class DocumentManager extends DocumentResource
             $qr[] = "documentIds=$documentId";
         }
         $url = $url . ('?' . implode("&", $qr));
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -79,6 +80,7 @@ class DocumentManager extends DocumentResource
     }
 
     //TODO: Обертка для обработка слишком большого кол-ва ид для удаления
+
     /**
      * @param array $parameters {
      * @var array $documentIds Массив идентификаторов документов
@@ -125,17 +127,18 @@ class DocumentManager extends DocumentResource
     }
 
     //TODO: Генератор не умет работать с файлами
+
     /**
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор документа
-     *     @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
-     *     @var array $uploadedFile {
-     *          @var string $fileName - optional
-     *          @var string $filePath | blob or stream $fileContent
+     * @param array $parameters {
+     * @var string $documentId Идентификатор документа
+     * @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
+     * @var array $uploadedFile {
+     * @var string $fileName - optional
+     * @var string $filePath | blob or stream $fileContent
      *     }
-     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
+     * @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла.
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
      */
@@ -151,7 +154,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setFormParameters(array('uploadedFile'));
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => 'smartcat.ai', 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
 
         $parameters['uploadedFile'] = $this->prepareFile($parameters['uploadedFile']);
 
@@ -165,7 +168,7 @@ class DocumentManager extends DocumentResource
         }
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
-        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
         $url = '/api/integration/v1/document/update';
@@ -178,26 +181,27 @@ class DocumentManager extends DocumentResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;
     }
 
     //TODO: Генератор не умет работать с файлами
+
     /**
      * Доступно не для всех форматов файлов, а только для тех, которые поддерживают честное обновление
-    (де-факто на данный момент это ресурсные файлы с уникальными идентификаторами ресурсов).
-    Ставит задачу в процессинге. На момент завершения запроса перевод возможно не завершён
+     * (де-факто на данный момент это ресурсные файлы с уникальными идентификаторами ресурсов).
+     * Ставит задачу в процессинге. На момент завершения запроса перевод возможно не завершён
      *
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор переводимого документа
-     *     @var array $translationFile {
-     *         @var string $fileName - optional
-     *         @var string $filePath | blob or stream $fileContent
+     * @param array $parameters {
+     * @var string $documentId Идентификатор переводимого документа
+     * @var array $translationFile {
+     * @var string $fileName - optional
+     * @var string $filePath | blob or stream $fileContent
      *     }
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -208,7 +212,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
@@ -218,7 +222,7 @@ class DocumentManager extends DocumentResource
             ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
-        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
         $url = '/api/integration/v1/document/translate';
@@ -234,21 +238,22 @@ class DocumentManager extends DocumentResource
     }
 
     //TODO: Нет передается Content-Type: application/json
+
     /**
      * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-    где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
-    Пояснения к значениям AssignmentMode:<br />
-    AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
-    AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося исполнителя на все свободные от назначения сегменты документа.<br />
-    AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
-    Примечание: если количество сегментов не указано, задача будет разделена на равные блоки между всеми исполнителями.<br />
+     * где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+     * Пояснения к значениям AssignmentMode:<br />
+     * AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
+     * AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося исполнителя на все свободные от назначения сегменты документа.<br />
+     * AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
+     * Примечание: если количество сегментов не указано, задача будет разделена на равные блоки между всеми исполнителями.<br />
      *
      * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор документа
-     *     @var int $stageNumber Номер этапа workflow
+     * @param array $parameters {
+     * @var string $documentId Идентификатор документа
+     * @var int $stageNumber Номер этапа workflow
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -261,7 +266,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setHeaderParameters('Content-Type');
         $url = '/api/integration/v1/document/assign';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -277,16 +282,16 @@ class DocumentManager extends DocumentResource
     /**
      * Метод доступен только для возврата модифицированных XLIFF-файлов, экспортированных с помощью метода POST /api/integration/v1/document/export. Тело запроса может содержать только один XLIFF-файл.
      *
-     * @param array  $parameters {
-     *     @var string $documentId Идентификатор обновляемого документа
-     *     @var bool $confirmTranslation Подтверждать переводы
-     *     @var bool $overwriteUpdatedSegments Обновлять ли переводы в сегментах, которые успели измениться с момента выгрузки xliff файла
-     *     @var array $translationFile Xliff файл с переводами сегментов{
-     *          @var string $fileName - optional
-     *          @var string $filePath | blob or stream $fileContent
+     * @param array $parameters {
+     * @var string $documentId Идентификатор обновляемого документа
+     * @var bool $confirmTranslation Подтверждать переводы
+     * @var bool $overwriteUpdatedSegments Обновлять ли переводы в сегментах, которые успели измениться с момента выгрузки xliff файла
+     * @var array $translationFile Xliff файл с переводами сегментов{
+     * @var string $fileName - optional
+     * @var string $filePath | blob or stream $fileContent
      *     }
      * }
-     * @param string $fetch      Fetch mode (object or response)
+     * @param string $fetch Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -300,7 +305,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(['translationFile']);
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => 'smartcat.ai'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
@@ -310,7 +315,7 @@ class DocumentManager extends DocumentResource
             ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
-        $headers['Content-Type'] = 'multipart/form-data; boundary='.$boundary;
+        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
         $url = '/api/integration/v1/document/translateWithXliff';

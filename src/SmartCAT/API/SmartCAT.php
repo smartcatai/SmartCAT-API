@@ -55,6 +55,11 @@ class SmartCAT
     private $password;
 
     /**
+     * @var string
+     */
+    private $host;
+
+    /**
      * SmartCAT constructor.
      * @param string $login API логин
      * @param string $password API пароль
@@ -64,6 +69,7 @@ class SmartCAT
     {
         $this->login = $login;
         $this->password = $password;
+        $this->host = $host;
         $serializer = new Serializer(
             NormalizerFactory::create(),
             [
@@ -78,7 +84,7 @@ class SmartCAT
         $this->serializer = $serializer;
         $this->messageFactory = $messageFactory;
         $options = [
-            'remote_socket' => "tcp://$host:443",
+            'remote_socket' => "tcp://$this->host:443",
             'ssl' => true
         ];
 
@@ -112,6 +118,7 @@ class SmartCAT
     {
         if (null === $this->projectManager) {
             $this->projectManager = new ProjectManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->projectManager->setHost($this->host);
         }
         return $this->projectManager;
     }
@@ -130,6 +137,7 @@ class SmartCAT
     {
         if (null === $this->directoriesManager) {
             $this->directoriesManager = new DirectoriesManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->directoriesManager->setHost($this->host);
         }
         return $this->directoriesManager;
     }
@@ -148,6 +156,7 @@ class SmartCAT
     {
         if (null === $this->accountManager) {
             $this->accountManager = new AccountManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->accountManager->setHost($this->host);
         }
         return $this->accountManager;
     }
@@ -166,6 +175,7 @@ class SmartCAT
     {
         if (null === $this->callbackManager) {
             $this->callbackManager = new CallbackManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->callbackManager->setHost($this->host);
         }
         return $this->callbackManager;
     }
@@ -184,6 +194,7 @@ class SmartCAT
     {
         if (null === $this->documentExportManager) {
             $this->documentExportManager = new DocumentExportManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->documentExportManager->setHost($this->host);
         }
         return $this->documentExportManager;
     }
@@ -202,6 +213,7 @@ class SmartCAT
     {
         if (null === $this->documentManager) {
             $this->documentManager = new DocumentManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->documentManager->setHost($this->host);
         }
         return $this->documentManager;
     }
@@ -219,6 +231,7 @@ class SmartCAT
     {
         if (null === $this->translationMemoriesManager) {
             $this->translationMemoriesManager = new TranslationMemoriesManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->translationMemoriesManager->setHost($this->host);
         }
         return $this->translationMemoriesManager;
     }
@@ -236,6 +249,7 @@ class SmartCAT
     {
         if (null === $this->clientManager) {
             $this->clientManager = new ClientManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->clientManager->setHost($this->host);
         }
         return $this->clientManager;
     }

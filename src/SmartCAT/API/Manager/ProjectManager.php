@@ -27,7 +27,7 @@ class ProjectManager extends ProjectResource
         $queryParam = new QueryParam();
         $url = '/api/integration/v1/project/create';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => 'smartcat.ai'], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Host' => $this->host], $queryParam->buildHeaders($parameters));
 
         $streamFactory = StreamFactoryDiscovery::find();
         $builder = new MultipartStreamBuilder($streamFactory);
@@ -116,7 +116,7 @@ class ProjectManager extends ProjectResource
         $queryParam->setDefault('externalId', NULL);
         $queryParam->setDefault('metaInfo', NULL);
         $queryParam->setDefault('targetLanguages', NULL);
-        $headers = array_merge(['Host' => 'smartcat.ai', 'Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Host' => $this->host, 'Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $documentModel = isset($parameters['documentModel']) ? $parameters['documentModel'] : null;
 
@@ -184,7 +184,7 @@ class ProjectManager extends ProjectResource
         $url = '/api/integration/v1/project/{projectId}';
         $url = str_replace('{projectId}', urlencode($projectId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => 'smartcat.ai'], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Host' => $this->host], $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($model, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -264,7 +264,7 @@ class ProjectManager extends ProjectResource
         $url = '/api/integration/v1/project/{projectId}/translationmemories';
         $url = str_replace('{projectId}', urlencode($projectId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => 'smartcat.ai', 'Accept' => ['application/json'], 'Content-Type' => 'application/json'], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Host' => $this->host, 'Accept' => ['application/json'], 'Content-Type' => 'application/json'], $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -293,7 +293,7 @@ class ProjectManager extends ProjectResource
         $url = '/api/integration/v1/project/{projectId}/translationmemories/bylanguages';
         $url = str_replace('{projectId}', urlencode($projectId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => 'smartcat.ai', 'Accept' => ['application/json'], 'Content-Type' => 'application/json'], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Host' => $this->host, 'Accept' => ['application/json'], 'Content-Type' => 'application/json'], $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmForLanguagesModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

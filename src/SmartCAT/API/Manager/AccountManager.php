@@ -7,5 +7,5 @@ use SmartCAT\API\Resource\AccountResource;
 
 class AccountManager extends AccountResource
 {
-
+    use SmartCATManager;
 }

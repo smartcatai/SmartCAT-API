@@ -6,5 +6,6 @@ use SmartCAT\API\Resource\DirectoriesResource;
 
 class DirectoriesManager extends DirectoriesResource
 {
+    use SmartCATManager;
 
 }
