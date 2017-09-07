@@ -9,7 +9,7 @@ class ClientResource extends Resource
     /**
      * 
      *
-     * @param string $name имя клиента
+     * @param string $name client's name
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -33,9 +33,9 @@ class ClientResource extends Resource
     /**
      * 
      *
-     * @param string $clientId Идентификатор клиента
+     * @param string $clientId 
      * @param array  $parameters {
-     *     @var string $netRateId Идентификатор сетки скидок
+     *     @var string $netRateId 
      * }
      * @param string $fetch      Fetch mode (object or response)
      *

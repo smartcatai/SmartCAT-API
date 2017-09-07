@@ -25,6 +25,10 @@ class ProjectModel
      */
     protected $creationDate;
     /**
+     * @var string
+     */
+    protected $createdByUserId;
+    /**
      * @var \DateTime
      */
     protected $modificationDate;
@@ -64,6 +68,10 @@ class ProjectModel
      * @var DocumentModel[]
      */
     protected $documents;
+    /**
+     * @var string
+     */
+    protected $externalTag;
     /**
      * @return string
      */
@@ -147,6 +155,23 @@ class ProjectModel
     public function setCreationDate(\DateTime $creationDate = null)
     {
         $this->creationDate = $creationDate;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getCreatedByUserId()
+    {
+        return $this->createdByUserId;
+    }
+    /**
+     * @param string $createdByUserId
+     *
+     * @return self
+     */
+    public function setCreatedByUserId($createdByUserId = null)
+    {
+        $this->createdByUserId = $createdByUserId;
         return $this;
     }
     /**
@@ -317,6 +342,23 @@ class ProjectModel
     public function setDocuments(array $documents = null)
     {
         $this->documents = $documents;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getExternalTag()
+    {
+        return $this->externalTag;
+    }
+    /**
+     * @param string $externalTag
+     *
+     * @return self
+     */
+    public function setExternalTag($externalTag = null)
+    {
+        $this->externalTag = $externalTag;
         return $this;
     }
 }

@@ -31,6 +31,9 @@ class TranslationMemoryModelNormalizer extends SerializerAwareNormalizer impleme
         if (property_exists($data, 'accountId')) {
             $object->setAccountId($data->{'accountId'});
         }
+        if (property_exists($data, 'clientId')) {
+            $object->setClientId($data->{'clientId'});
+        }
         if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
@@ -70,6 +73,9 @@ class TranslationMemoryModelNormalizer extends SerializerAwareNormalizer impleme
         }
         if (null !== $object->getAccountId()) {
             $data->{'accountId'} = $object->getAccountId();
+        }
+        if (null !== $object->getClientId()) {
+            $data->{'clientId'} = $object->getClientId();
         }
         if (null !== $object->getName()) {
             $data->{'name'} = $object->getName();

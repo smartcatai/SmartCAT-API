@@ -38,6 +38,13 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
         if (property_exists($data, 'cost')) {
             $object->setCost($data->{'cost'});
         }
+        if (property_exists($data, 'documents')) {
+            $values_1 = array();
+            foreach ($data->{'documents'} as $value_1) {
+                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCAT\\API\\Model\\DocumentStatisticsModel', 'raw', $context);
+            }
+            $object->setDocuments($values_1);
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -55,6 +62,13 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
         }
         if (null !== $object->getCost()) {
             $data->{'cost'} = $object->getCost();
+        }
+        if (null !== $object->getDocuments()) {
+            $values_1 = array();
+            foreach ($object->getDocuments() as $value_1) {
+                $values_1[] = $this->serializer->serialize($value_1, 'raw', $context);
+            }
+            $data->{'documents'} = $values_1;
         }
         return $data;
     }

@@ -9,7 +9,7 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param string $tmId Идентификатор ТМ
+     * @param string $tmId TM ID
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -34,7 +34,7 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param string $tmId Идентификатор TM
+     * @param string $tmId TM ID
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -64,10 +64,10 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param string $tmId Идентификатор ТМ
+     * @param string $tmId TM ID
      * @param array  $parameters {
-     *     @var bool $replaceAllContent Необходимость полной замены содержимого ТМ
-     *     @var  $tmxFile Загружаемый tmx файл
+     *     @var bool $replaceAllContent Requirement to replace the contents of the TM completely
+     *     @var  $tmxFile Uploaded TMX file
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -96,11 +96,11 @@ class TranslationMemoriesResource extends Resource
      * 
      *
      * @param array  $parameters {
-     *     @var string $lastProcessedId Последний идентификатор, полученный из предыдущего запроса
-     *     @var int $batchSize Желаемый размер коллекции, которую необходимо вернуть
-     *     @var string $sourceLanguage необязательный фильтр по исходному языку
-     *     @var string $targetLanguage необязательный фильтр по целевому языку
-     *     @var string $clientId необязательный фильтр по клиенту
+     *     @var string $lastProcessedId The last ID obtained from the previous request
+     *     @var int $batchSize Desired size of the collection to be returned
+     *     @var string $sourceLanguage optional filtering by source language
+     *     @var string $targetLanguage optional filtering by target language
+     *     @var string $clientId optional filtering by client
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -137,7 +137,7 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\CreateTranslationMemoryModel $model Модель создания ТМ
+     * @param \SmartCAT\API\Model\CreateTranslationMemoryModel $model 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -189,10 +189,10 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param string $tmId Идентификатор ТМ
+     * @param string $tmId 
      * @param array  $parameters {
-     *     @var bool $withTags Необходимость inline тегов после экспорта
-     *     @var bool $tradosCompatible Выгружать в формате, совместимом с Trados
+     *     @var bool $withTags 
+     *     @var bool $tradosCompatible 
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -224,9 +224,9 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\TmMatchesRequest $request Запрос с сегментами для поиска матчей
+     * @param \SmartCAT\API\Model\TmMatchesRequest $request 
      * @param array  $parameters {
-     *     @var string $tmId Идентификатор ТМ, в которой необходимо искать матчи
+     *     @var string $tmId 
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -256,8 +256,8 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param string $tmId Идентификатор ТМ
-     * @param array $targetLanguages Массив требуемых таргет-языков
+     * @param string $tmId TM ID
+     * @param array $targetLanguages Array of the required target languages
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -282,7 +282,7 @@ class TranslationMemoriesResource extends Resource
     /**
      * 
      *
-     * @param string $taskId Идентификатор задачи на импорт в ТМ
+     * @param string $taskId ID of the task for import to the TM
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *

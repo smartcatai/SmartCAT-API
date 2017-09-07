@@ -9,7 +9,7 @@ class DocumentExportResource extends Resource
     /**
      * 
      *
-     * @param string $taskId Идентификатор задачи на экспорт
+     * @param string $taskId Export task ID
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -32,19 +32,17 @@ class DocumentExportResource extends Resource
         return $response;
     }
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
-               Пример запроса - ?documentIds=61331_25'ampersand'documentIds=61332_9.<br />
-    *
-    * @param array  $parameters {
-    *     @var array $documentIds Идентификаторы документов
-    *     @var string $type Тип экспортируемого документа, по умолчанию {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target}
-    *     @var int $stageNumber Номер этапа WF при скачивании промежуточного результата (доступен только если {type} = {AbbyyLS.SmartCat.AppIntegrations.WebApi.ExportDocumentRequestType.Target})
-    * }
-    * @param string $fetch      Fetch mode (object or response)
-    *
-    * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ExportDocumentTaskModel
-    */
+     * 
+     *
+     * @param array  $parameters {
+     *     @var array $documentIds 
+     *     @var string $type 
+     *     @var int $stageNumber 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ExportDocumentTaskModel
+     */
     public function documentExportRequestExport($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
@@ -53,6 +51,11 @@ class DocumentExportResource extends Resource
         $queryParam->setDefault('stageNumber', NULL);
         $url = '/api/integration/v1/document/export';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $search = [];
+        for ($i = 0; $i < count($parameters['documentIds']); $i++) {
+            $search[] = "documentIds%5B$i%5D";
+        }
+        $url = str_replace($search, 'documentIds', $url);
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);

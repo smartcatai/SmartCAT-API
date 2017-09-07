@@ -25,6 +25,10 @@ class CreateDocumentPropertyModel
      */
     protected $targetLanguages;
     /**
+     * @var bool
+     */
+    protected $enablePlaceholders;
+    /**
      * @return string
      */
     public function getExternalId()
@@ -107,6 +111,23 @@ class CreateDocumentPropertyModel
     public function setTargetLanguages(array $targetLanguages = null)
     {
         $this->targetLanguages = $targetLanguages;
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getEnablePlaceholders()
+    {
+        return $this->enablePlaceholders;
+    }
+    /**
+     * @param bool $enablePlaceholders
+     *
+     * @return self
+     */
+    public function setEnablePlaceholders($enablePlaceholders = null)
+    {
+        $this->enablePlaceholders = $enablePlaceholders;
         return $this;
     }
 }

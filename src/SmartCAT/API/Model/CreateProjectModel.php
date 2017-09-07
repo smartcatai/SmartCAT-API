@@ -77,6 +77,10 @@ class CreateProjectModel
      */
     protected $isForTesting;
     /**
+     * @var string
+     */
+    protected $externalTag;
+    /**
      * @return string
      */
     public function getName()
@@ -380,6 +384,23 @@ class CreateProjectModel
     public function setIsForTesting($isForTesting = null)
     {
         $this->isForTesting = $isForTesting;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getExternalTag()
+    {
+        return $this->externalTag;
+    }
+    /**
+     * @param string $externalTag
+     *
+     * @return self
+     */
+    public function setExternalTag($externalTag = null)
+    {
+        $this->externalTag = $externalTag;
         return $this;
     }
 }

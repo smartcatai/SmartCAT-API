@@ -41,6 +41,9 @@ class CreateTranslationMemoryModelNormalizer extends SerializerAwareNormalizer i
         if (property_exists($data, 'description')) {
             $object->setDescription($data->{'description'});
         }
+        if (property_exists($data, 'clientId')) {
+            $object->setClientId($data->{'clientId'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -61,6 +64,9 @@ class CreateTranslationMemoryModelNormalizer extends SerializerAwareNormalizer i
         }
         if (null !== $object->getDescription()) {
             $data->{'description'} = $object->getDescription();
+        }
+        if (null !== $object->getClientId()) {
+            $data->{'clientId'} = $object->getClientId();
         }
         return $data;
     }

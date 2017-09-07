@@ -1,4 +1,5 @@
 <?php
+
 namespace SmartCAT\API;
 
 use Http\Client\Common\Plugin\AuthenticationPlugin;
@@ -17,8 +18,11 @@ use SmartCAT\API\Manager\ClientManager;
 use SmartCAT\API\Manager\DirectoriesManager;
 use SmartCAT\API\Manager\DocumentExportManager;
 use SmartCAT\API\Manager\DocumentManager;
+use SmartCAT\API\Manager\InvoiceManager;
+use SmartCAT\API\Manager\PlaceholderFormatApiManager;
 use SmartCAT\API\Manager\ProjectManager;
 use SmartCAT\API\Manager\TranslationMemoriesManager;
+use SmartCAT\API\Manager\UserManager;
 use SmartCAT\API\Normalizer\NormalizerFactory;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
@@ -252,5 +256,59 @@ class SmartCAT
             $this->clientManager->setHost($this->host);
         }
         return $this->clientManager;
+    }
+
+    /**
+     * @var InvoiceManager
+     */
+    private $invoiceManager;
+
+    /**
+     *
+     * @return InvoiceManager
+     */
+    public function getInvoiceManager()
+    {
+        if (null === $this->invoiceManager) {
+            $this->invoiceManager = new InvoiceManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->invoiceManager->setHost($this->host);
+        }
+        return $this->invoiceManager;
+    }
+
+    /**
+     * @var PlaceholderFormatApiManager
+     */
+    private $placeholderFormatApiManager;
+
+    /**
+     *
+     * @return PlaceholderFormatApiManager
+     */
+    public function getPlaceholderFormatApiManager()
+    {
+        if (null === $this->placeholderFormatApiManager) {
+            $this->placeholderFormatApiManager = new PlaceholderFormatApiManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->placeholderFormatApiManager->setHost($this->host);
+        }
+        return $this->placeholderFormatApiManager;
+    }
+
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+
+    /**
+     *
+     * @return UserManager
+     */
+    public function getUserManager()
+    {
+        if (null === $this->userManager) {
+            $this->userManager = new UserManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->userManager->setHost($this->host);
+        }
+        return $this->userManager;
     }
 }

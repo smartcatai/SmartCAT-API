@@ -10,7 +10,7 @@ class DirectoriesResource extends Resource
      * 
      *
      * @param array  $parameters {
-     *     @var string $type Тип справочника
+     *     @var string $type Directory type
      * }
      * @param string $fetch      Fetch mode (object or response)
      *

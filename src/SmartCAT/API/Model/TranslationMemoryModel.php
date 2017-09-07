@@ -15,6 +15,10 @@ class TranslationMemoryModel
     /**
      * @var string
      */
+    protected $clientId;
+    /**
+     * @var string
+     */
     protected $name;
     /**
      * @var string
@@ -72,6 +76,23 @@ class TranslationMemoryModel
     public function setAccountId($accountId = null)
     {
         $this->accountId = $accountId;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+    /**
+     * @param string $clientId
+     *
+     * @return self
+     */
+    public function setClientId($clientId = null)
+    {
+        $this->clientId = $clientId;
         return $this;
     }
     /**

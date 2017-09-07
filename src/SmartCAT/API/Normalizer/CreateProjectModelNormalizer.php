@@ -95,6 +95,9 @@ class CreateProjectModelNormalizer extends SerializerAwareNormalizer implements 
         if (property_exists($data, 'isForTesting')) {
             $object->setIsForTesting($data->{'isForTesting'});
         }
+        if (property_exists($data, 'externalTag')) {
+            $object->setExternalTag($data->{'externalTag'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -169,6 +172,9 @@ class CreateProjectModelNormalizer extends SerializerAwareNormalizer implements 
         }
         if (null !== $object->getIsForTesting()) {
             $data->{'isForTesting'} = $object->getIsForTesting();
+        }
+        if (null !== $object->getExternalTag()) {
+            $data->{'externalTag'} = $object->getExternalTag();
         }
         return $data;
     }

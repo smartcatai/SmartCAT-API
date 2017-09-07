@@ -40,6 +40,9 @@ class ProjectModelNormalizer extends SerializerAwareNormalizer implements Denorm
         if (property_exists($data, 'creationDate')) {
             $object->setCreationDate(new \DateTime($data->{'creationDate'}));
         }
+        if (property_exists($data, 'createdByUserId')) {
+            $object->setCreatedByUserId($data->{'createdByUserId'});
+        }
         if (property_exists($data, 'modificationDate')) {
             $object->setModificationDate(new \DateTime($data->{'modificationDate'}));
         }
@@ -82,6 +85,9 @@ class ProjectModelNormalizer extends SerializerAwareNormalizer implements Denorm
             }
             $object->setDocuments($values_2);
         }
+        if (property_exists($data, 'externalTag')) {
+            $object->setExternalTag($data->{'externalTag'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -101,6 +107,9 @@ class ProjectModelNormalizer extends SerializerAwareNormalizer implements Denorm
         }
         if (null !== $object->getCreationDate()) {
             $data->{'creationDate'} = $object->getCreationDate()->format("Y-m-d\TH:i:sP");
+        }
+        if (null !== $object->getCreatedByUserId()) {
+            $data->{'createdByUserId'} = $object->getCreatedByUserId();
         }
         if (null !== $object->getModificationDate()) {
             $data->{'modificationDate'} = $object->getModificationDate()->format("Y-m-d\TH:i:sP");
@@ -143,6 +152,9 @@ class ProjectModelNormalizer extends SerializerAwareNormalizer implements Denorm
                 $values_2[] = $this->serializer->serialize($value_2, 'raw', $context);
             }
             $data->{'documents'} = $values_2;
+        }
+        if (null !== $object->getExternalTag()) {
+            $data->{'externalTag'} = $object->getExternalTag();
         }
         return $data;
     }

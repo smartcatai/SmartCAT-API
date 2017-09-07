@@ -47,7 +47,7 @@ class ExecutiveStatisticsModelNormalizer extends SerializerAwareNormalizer imple
         if (property_exists($data, 'documents')) {
             $values_1 = array();
             foreach ($data->{'documents'} as $value_1) {
-                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCAT\\API\\Model\\CompletedWorkStatisticsModel', 'raw', $context);
+                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCAT\\API\\Model\\DocumentStatisticsModel', 'raw', $context);
             }
             $object->setDocuments($values_1);
         }

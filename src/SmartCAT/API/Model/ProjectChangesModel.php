@@ -29,6 +29,10 @@ class ProjectChangesModel
      */
     protected $vendorAccountId;
     /**
+     * @var string
+     */
+    protected $externalTag;
+    /**
      * @return string
      */
     public function getName()
@@ -128,6 +132,23 @@ class ProjectChangesModel
     public function setVendorAccountId($vendorAccountId = null)
     {
         $this->vendorAccountId = $vendorAccountId;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getExternalTag()
+    {
+        return $this->externalTag;
+    }
+    /**
+     * @param string $externalTag
+     *
+     * @return self
+     */
+    public function setExternalTag($externalTag = null)
+    {
+        $this->externalTag = $externalTag;
         return $this;
     }
 }
