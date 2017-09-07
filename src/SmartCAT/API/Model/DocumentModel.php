@@ -61,6 +61,10 @@ class DocumentModel
      */
     protected $metaInfo;
     /**
+     * @var bool
+     */
+    protected $placeholdersAreEnabled;
+    /**
      * @return string
      */
     public function getId()
@@ -296,6 +300,23 @@ class DocumentModel
     public function setMetaInfo($metaInfo = null)
     {
         $this->metaInfo = $metaInfo;
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getPlaceholdersAreEnabled()
+    {
+        return $this->placeholdersAreEnabled;
+    }
+    /**
+     * @param bool $placeholdersAreEnabled
+     *
+     * @return self
+     */
+    public function setPlaceholdersAreEnabled($placeholdersAreEnabled = null)
+    {
+        $this->placeholdersAreEnabled = $placeholdersAreEnabled;
         return $this;
     }
 }

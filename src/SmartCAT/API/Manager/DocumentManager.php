@@ -11,74 +11,6 @@ class DocumentManager extends DocumentResource
 {
     use SmartCATManager;
 
-
-    //TODO: Нет передается Content-Type: application/json
-    //TODO: не правильная документация в swagger на самом деле ожидается json string, а в параметрах написано Array[string]
-    /**
-     * @deprecated old capability method, use documentAssignExecutives
-     * @param array $freelancerUserIds Идентификаторы назначаемых пользователей-фрилансеров.
-     * @param array $parameters {
-     * @var string $documentId Идентификатор переводимого документа.
-     * @var int $stageNumber Номер этапа workflow.
-     * }
-     * @param string $fetch Fetch mode (object or response)
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function documentAssignFreelancersToDocument(array $freelancerUserIds, $parameters = array(), $fetch = self::FETCH_OBJECT)
-    {
-        $queryParam = new QueryParam();
-        $queryParam->setRequired('documentId');
-        $queryParam->setRequired('stageNumber');
-        $queryParam->setDefault('Content-Type', 'application/json');
-        $queryParam->setHeaderParameters('Content-Type');
-        $url = '/api/integration/v1/document/assignFreelancers';
-        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
-        $body = $this->serializer->serialize($freelancerUserIds, 'json');;
-        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
-        if (self::FETCH_PROMISE === $fetch) {
-            return $promise;
-        }
-        $response = $promise->wait();
-        return $response;
-    }
-
-    //TODO: PRX-21041 АПИ Не корректно обрабатывает ожидаемые параметры, массивы в get параметрах передаются в виде documentIds[0]=389134_9&documentIds[1]=389135_9, а апи ожидает documentIds=389134_9&documentIds=389135_9
-
-    /**
-     * @param array $parameters {
-     * @var array $documentIds Массив идентификаторов документов
-     * }
-     * @param string $fetch Fetch mode (object or response)
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    private function documentDeleteRequest($parameters = array(), $fetch = self::FETCH_OBJECT)
-    {
-        $queryParam = new QueryParam();
-        $queryParam->setRequired('documentIds');
-        $url = '/api/integration/v1/document';
-        $query = $queryParam->buildQueryString($parameters);
-
-        $qr = [];
-        foreach ($parameters['documentIds'] as $documentId) {
-            $qr[] = "documentIds=$documentId";
-        }
-        $url = $url . ('?' . implode("&", $qr));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
-        $body = $queryParam->buildFormDataString($parameters);
-        $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
-        if (self::FETCH_PROMISE === $fetch) {
-            return $promise;
-        }
-        $response = $promise->wait();
-        return $response;
-    }
-
     //TODO: Обертка для обработка слишком большого кол-ва ид для удаления
 
     /**
@@ -112,7 +44,7 @@ class DocumentManager extends DocumentResource
         $responses = [];
         $response = null;
         foreach ($stack as $params) {
-            $response = $this->documentDeleteRequest(['documentIds' => $params], $fetch);
+            $response = parent::documentDelete(['documentIds' => $params], $fetch);
             if (self::FETCH_PROMISE === $fetch) {
                 $responses[] = $response;
             }
@@ -229,46 +161,6 @@ class DocumentManager extends DocumentResource
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
-        if (self::FETCH_PROMISE === $fetch) {
-            return $promise;
-        }
-        $response = $promise->wait();
-        return $response;
-    }
-
-    //TODO: Нет передается Content-Type: application/json
-
-    /**
-     * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-     * где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
-     * Пояснения к значениям AssignmentMode:<br />
-     * AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
-     * AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося исполнителя на все свободные от назначения сегменты документа.<br />
-     * AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
-     * Примечание: если количество сегментов не указано, задача будет разделена на равные блоки между всеми исполнителями.<br />
-     *
-     * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей
-     * @param array $parameters {
-     * @var string $documentId Идентификатор документа
-     * @var int $stageNumber Номер этапа workflow
-     * }
-     * @param string $fetch Fetch mode (object or response)
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function documentAssignExecutives(\SmartCAT\API\Model\AssignExecutivesRequestModel $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
-    {
-        $queryParam = new QueryParam();
-        $queryParam->setRequired('documentId');
-        $queryParam->setRequired('stageNumber');
-        $queryParam->setDefault('Content-Type', 'application/json');
-        $queryParam->setHeaderParameters('Content-Type');
-        $url = '/api/integration/v1/document/assign';
-        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
-        $body = $this->serializer->serialize($request, 'json');
-        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;

@@ -9,7 +9,7 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
+     * @param string $projectId Project ID
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -34,7 +34,7 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
+     * @param string $projectId Project ID
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -64,8 +64,8 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
-     * @param \SmartCAT\API\Model\ProjectChangesModel $model Модель изменений проекта
+     * @param string $projectId Project ID
+     * @param \SmartCAT\API\Model\ProjectChangesModel $model Project Changes Model
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -74,6 +74,8 @@ class ProjectResource extends Resource
     public function projectUpdateProject($projectId, \SmartCAT\API\Model\ProjectChangesModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
+        $queryParam->setDefault('Content-Type', 'application/json');
+        $queryParam->setHeaderParameters(['Content-Type']);
         $url = '/api/integration/v1/project/{projectId}';
         $url = str_replace('{projectId}', urlencode($projectId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
@@ -90,7 +92,9 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param array  $parameters List of parameters
+     * @param array  $parameters {
+     *     @var string $createdByUserId 
+     * }
      * @param string $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel[]
@@ -98,6 +102,7 @@ class ProjectResource extends Resource
     public function projectGetAll($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
+        $queryParam->setDefault('createdByUserId', NULL);
         $url = '/api/integration/v1/project/list';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
@@ -118,9 +123,9 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
+     * @param string $projectId Project ID
      * @param array  $parameters {
-     *     @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
+     *     @var bool $onlyExactMatches 100 or more matches requirement
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -146,9 +151,9 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
+     * @param string $projectId Project ID
      * @param array  $parameters {
-     *     @var bool $onlyExactMatches Необходимость только 100(и выше) матчей
+     *     @var bool $onlyExactMatches 100 or more matches requirement
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -182,7 +187,7 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId идентификатор проекта
+     * @param string $projectId project id
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -212,7 +217,7 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
+     * @param string $projectId Project ID
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -242,8 +247,8 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
-     * @param \SmartCAT\API\Model\TranslationMemoryForProjectModel[] $tmModels Коллекия ТМ
+     * @param string $projectId 
+     * @param \SmartCAT\API\Model\TranslationMemoryForProjectModel[] $tmModels 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -256,7 +261,7 @@ class ProjectResource extends Resource
         $url = str_replace('{projectId}', urlencode($projectId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
-        $body = $tmModels;
+        $body = $this->serializer->serialize($tmModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
@@ -269,7 +274,7 @@ class ProjectResource extends Resource
      * 
      *
      * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
+     *     @var string $projectId Project ID
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -295,7 +300,7 @@ class ProjectResource extends Resource
      * 
      *
      * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
+     *     @var string $projectId Project ID
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -318,9 +323,35 @@ class ProjectResource extends Resource
         return $response;
     }
     /**
-     * Принимает multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream). Swagger UI не поддерживает отображение и выполение таких запросов. В секции параметров описана модель, но отсутствуют параметры, соответствующие файлам. Для отправки запроса воспользуйтесь сторонними утилитами, например cURL.
+     * 
      *
-     * @param \SmartCAT\API\Model\CreateProjectModel $project Модель создания проекта с файлами
+     * @param array  $parameters {
+     *     @var string $projectId 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectCompleteProject($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('projectId');
+        $url = '/api/integration/v1/project/complete';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+    /**
+     * Accepts a multipart query containing a model in JSON format (Content-Type=application/json) and one or several files (Content-Type=application/octet-stream). Swagger UI does not support mapping and execution of such queries. The parameters section contains the model description, but no parameters corresponding to the files. To send the query, use third-party utilities like cURL.
+     *
+     * @param \SmartCAT\API\Model\CreateProjectModel $project Project Containing Files Creation Model
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -347,15 +378,15 @@ class ProjectResource extends Resource
         return $response;
     }
     /**
-     * Принимает multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream). Swagger UI не поддерживает отображение и выполение таких запросов. В секции параметров описана модель, но отсутствуют параметры, соответствующие файлам. Для отправки запроса воспользуйтесь сторонними утилитами, например cURL.
+     * Accepts a multipart query containing a model in JSON format (Content-Type=application/json) and one or several files (Content-Type=application/octet-stream). Swagger UI does not support mapping and execution of such queries. The parameters section contains the model description, but no parameters corresponding to the files. To send the query, use third-party utilities like cURL.
      *
-     * @param \SmartCAT\API\Model\CreateDocumentPropertyModel[] $documentModel Модель загрузки документа с файлом
+     * @param \SmartCAT\API\Model\CreateDocumentPropertyModel[] $documentModel 
      * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
-     *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
-     *     @var string $externalId Внешний идентификатор задаваемый клиентом при создании документа
-     *     @var string $metaInfo Дополнительная пользовательская информация о документе
-     *     @var string $targetLanguages Языки перевода всех документов, перечисленные через запятую, опционально. Могут быть переопределены в отдельных документах в теле запроса. По-умолчанию используются языки перевода проекта.
+     *     @var string $projectId 
+     *     @var string $disassembleAlgorithmName 
+     *     @var string $externalId 
+     *     @var string $metaInfo 
+     *     @var string $targetLanguages 
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -390,8 +421,8 @@ class ProjectResource extends Resource
      * 
      *
      * @param array  $parameters {
-     *     @var string $projectId Идентификатор проекта
-     *     @var string $targetLanguage Язык перевода
+     *     @var string $projectId Project ID
+     *     @var string $targetLanguage Target language
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -417,8 +448,8 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
-     * @param \SmartCAT\API\Model\TranslationMemoriesForLanguageModel[] $tmForLanguagesModels Коллекия языков и заданных для них коллекций ТМ
+     * @param string $projectId 
+     * @param \SmartCAT\API\Model\TranslationMemoriesForLanguageModel[] $tmForLanguagesModels 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -431,7 +462,7 @@ class ProjectResource extends Resource
         $url = str_replace('{projectId}', urlencode($projectId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
-        $body = $tmForLanguagesModels;
+        $body = $this->serializer->serialize($tmForLanguagesModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
@@ -443,11 +474,39 @@ class ProjectResource extends Resource
     /**
      * 
      *
-     * @param string $projectId Идентификатор проекта
+     * @param string $projectId 
      * @param array  $parameters {
-     *     @var string $groupName Название назначаемой группы
-     *     @var string $workflowStage Этап worflow, на который будет назначена группа
-     *     @var string $targetLanguage Целевой язык. Не обязателен для одноязычных проектов
+     *     @var bool $onlyExactMatches 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectBuildStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setDefault('onlyExactMatches', NULL);
+        $url = '/api/integration/v1/project/{projectId}/statistics/build';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId Project ID
+     * @param array  $parameters {
+     *     @var string $groupName Name of the assigned group
+     *     @var string $workflowStage Workflow stage to assign the group to
+     *     @var string $targetLanguage Target language. Optional for single-language projects
      * }
      * @param string $fetch      Fetch mode (object or response)
      *

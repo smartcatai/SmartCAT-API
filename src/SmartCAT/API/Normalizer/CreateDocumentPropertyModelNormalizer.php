@@ -44,6 +44,9 @@ class CreateDocumentPropertyModelNormalizer extends SerializerAwareNormalizer im
             }
             $object->setTargetLanguages($values);
         }
+        if (property_exists($data, 'enablePlaceholders')) {
+            $object->setEnablePlaceholders($data->{'enablePlaceholders'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -67,6 +70,9 @@ class CreateDocumentPropertyModelNormalizer extends SerializerAwareNormalizer im
                 $values[] = $value;
             }
             $data->{'targetLanguages'} = $values;
+        }
+        if (null !== $object->getEnablePlaceholders()) {
+            $data->{'enablePlaceholders'} = $object->getEnablePlaceholders();
         }
         return $data;
     }

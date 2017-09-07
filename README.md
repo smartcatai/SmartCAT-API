@@ -75,7 +75,7 @@ $clientId = $sc->getClientManager()->clientCreateClient('Test client');
  ```
 
  [Get details on a client specified within an account](https://smartcat.ai/api/methods/#!/Client/Client_GetClient)  
- **GET** /api/integration/v1/client
+ **GET** /api/integration/v1/client/{clientId}
  ```php
 $client = $sc->getClientManager()->clientGetClient($clientId);
  ```
@@ -144,16 +144,42 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  $sc->getDocumentManager()->documentTranslate([
     'documentId'=>$docId,
     'translationFile'=>[
-        'filePath'=>'Путь к файлу',
-        'fileName'=>'Имя файла'
+        'filePath'=>'file path',
+        'fileName'=>'file name'
     ]
  ])
+ ```
+
+ [Импортировать xliff-файл с переводами документа](https://smartcat.ai/api/methods/#!/Document/Document_TranslateWithXliff)    
+ **PUT** /api/integration/v1/document/translateWithXliff
+ ```php
+ $sc->getDocumentManager()->documentTranslateWithXliff([
+     'documentId' => $docId,
+     'confirmTranslation' => true,
+     'overwriteUpdatedSegments' => true,
+     'translationFile' => [
+         'filePath' => 'file path',
+         'fileName' => 'file.xliff'
+     ]
+ ]);
  ```
  
  [Receive the status of adding document translation](https://smartcat.ai/api/methods/#!/Document/Document_GetTranslationStatus)
  **GET** /api/integration/v1/document/translate/status
  ```php
  $sc->getDocumentManager()->documentGetTranslationStatus(['documentId'=>$docId])
+ ```
+ 
+ [Gets a detailed report about translation importing results](https://smartcat.ai/api/methods/#!/Document/Document_GetTranslationsImportResult)    
+ **GET** /api/integration/v1/document/translate/result
+ ```php
+ $sc->getDocumentManager()->documentGetTranslationsImportResult(['documentId' => $docsId]);
+ ```
+ 
+ [Gets statistics](https://smartcat.ai/api/methods/#!/Document/Document_GetTranslationsImportResult)    
+ **GET** /api/integration/v1/document/statistics
+ ```php
+ $sc->getDocumentManager()->documentGetStatistics(['documentId' => $docsId]);
  ```
  
  [Split document into equal segments according to the number of words and assign each freelancer to one segment](https://smartcat.ai/api/methods/#!/Document/Document_AssignFreelancersToDocument)
@@ -181,6 +207,46 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  $sc->getDocumentExportManager()->documentExportDownloadExportResult($taskId);
  ```
  
+## [Invoice](https://smartcat.ai/api/methods/#!/Invoice)
+ [Creates a payable for a freelancer](https://smartcat.ai/api/methods/#!/Invoice/Invoice_ImportJob)    
+ **POST** /api/integration/v1/invoice/job 
+ ```php
+ $importJobModel = new ImportJobModel();
+ $importJobModel->setFreelancerId($freelanceId)
+     ->setServiceType('translation')
+     ->setJobDescription('Test invoice')
+     ->setUnitsType('Any text')
+     ->setUnitsAmount(10)
+     ->setPricePerUnit(1)
+     ->setCurrency('usd');
+ $res=$sc->getInvoiceManager()->invoiceImportJob($importJobModel);
+ ```
+
+## [PlaceholderFormatApi](https://smartcat.ai/api/methods/#!/PlaceholderFormatApi)
+ [Gets all placeholder formats available in the current account](https://smartcat.ai/api/methods/#!/PlaceholderFormatApi/PlaceholderFormatApi_GetPlaceholderFormats)    
+ **GET** /api/integration/v1/placeholders  
+ ```php
+ $res = $sc->getPlaceholderFormatApiManager()->placeholderFormatApiGetPlaceholderFormats();
+ ```
+
+
+ [Saves a set of placeholder formats for the current account](https://smartcat.ai/api/methods/#!/PlaceholderFormatApi/PlaceholderFormatApi_UpdatePlaceholderFormats)    
+ **PUT** /api/integration/v1/placeholders  
+ ```php
+ $placeHolder1 = new PlaceholderFormatModel();
+ $placeHolder1->setRegex($regEx1);
+ $placeHolder2 = new PlaceholderFormatModel();
+ $placeHolder2->setRegex($regEx2);
+ $res = $sc->getPlaceholderFormatApiManager()->placeholderFormatApiUpdatePlaceholderFormats([$placeHolder1, $placeHolder2]);
+ ```
+
+
+ [Validates the specified placeholder format](https://smartcat.ai/api/methods/#!/PlaceholderFormatApi/PlaceholderFormatApi_ValidatePlaceholderFormat)    
+ **GET** /api/integration/v1/placeholders/validate   
+ ```php
+ $res = $this->sc->getPlaceholderFormatApiManager()->placeholderFormatApiValidatePlaceholderFormat(['format' => 'Stable\:(\s+)(.+)[\r|]\n']);
+ ```
+
 ## [Project](https://smartcat.ai/api/methods/#!/Project)
  [Delete project](https://smartcat.ai/api/methods/#!/Project/Project_Delete)
  **DELETE** /api/integration/v1/project/{projectId}
@@ -198,7 +264,7 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  **PUT** /api/integration/v1/project/{projectId}
  
  [Receive the list of all projects in account](https://smartcat.ai/api/methods/#!/Project/Project_GetAll)
- **GET** /api/integration/v1/project/list
+     **GET** /api/integration/v1/project/list
  ```php
  $sc->getProjectManager()->projectGetAll()
  ```
@@ -233,6 +299,12 @@ do {
  $translationMemoryForProjectModel->setIsWritable(true);
  $translationMemoryForProjectModel->setMatchThreshold(100);
  $res = $sc->getProjectManager()->projectSetTranslationMemoriesForWholeProject($projectId, [$translationMemoryForProjectModel]);
+ ```
+
+ [Starts generating statistics for the project](https://smartcat.ai/api/methods/#!/Project/Project_BuildStatistics)      
+ **POST** /api/integration/v1/project/{projectId}/statistics/build      
+ ```php
+ $sc->getProjectManager()->projectBuildStatistics($this->prj->getId());
  ```
 
  [Rewrite connected TMs — each target language with its own set of TMs](https://smartcat.ai/api/methods/#!/Project/Project_SetTranslationMemoriesForWholeProject)      
@@ -318,6 +390,12 @@ do {
  $sc->getProjectManager()->projectRestoreProject(['projectId'=>$projectId])
  ```
  
+ [Completes the workflow for all project documents. The project status will change to Completed.](https://smartcat.ai/api/methods/#!/Project/Project_CompleteProject)    
+ **POST** /api/integration/v1/project/restore  
+ ```php
+ $sc->getProjectManager()->projectCompleteProject(['projectId' => $this->prj->getId()]);
+ ```
+
 ## [TranslationMemories](https://smartcat.ai/api/methods/#!/TranslationMemories)
  [Deletes the TM](https://smartcat.ai/api/methods/#!/TranslationMemories/TranslationMemories_RemoveTranslationMemory)    
  **DELETE** /api/integration/v1/translationmemory/{tmId}    
@@ -412,3 +490,45 @@ $sc->getTranslationMemoriesManager()->translationMemoriesGetTMTranslations($tmMa
 $sc->getTranslationMemoriesManager()->translationMemoriesRemoveSpecificImportTask($last->getId())
  ```
 
+## [User](https://smartcat.ai/api/methods/#!/User)
+ [Creates a new user with the specified parameters](https://smartcat.ai/api/methods/#!/User/User_Create)    
+ **POST** /api/integration/v1/user     
+ ```php
+ $user = new CreateUserRequest();
+ $user->setEmail('test@test.com')
+     ->setFirstName('FirstName')
+     ->setLastName('LastName')
+     ->setExternalId('my-external-id')
+     ->setRightsGroup('executive');
+ $res = $sc->getUserManager()->userCreate($user);
+ ```
+
+
+ [Deletes a user](https://smartcat.ai/api/methods/#!/User/User_Delete)    
+ **DELETE** /api/integration/v1/user/{accountUserId} 
+ ```php
+ $sc->getUserManager()->userDelete($smartcatAccountUserId);
+ ```
+
+
+ [Gets a user model](https://smartcat.ai/api/methods/#!/User/User_Get)    
+ **GET** /api/integration/v1/user/{accountUserId} 
+ ```php
+ $res = $sc->getUserManager()->userGet($smartcatAccountUserId);
+ ```
+
+
+ [Updates user data](https://smartcat.ai/api/methods/#!/User/User_Update)    
+ **PUT** /api/integration/v1/user/{accountUserId} 
+ ```php
+ $updateModel = new UpdateUserRequest();
+ $updateModel->setFirstName($newName);
+ $sc->getUserManager()->userUpdate($smartcatAccountUserId, $updateModel);
+ ```
+
+
+ [Gets a user by its external ID](https://smartcat.ai/api/methods/#!/User/User_Get_0)    
+ **GET** /api/integration/v1/user/external  
+ ```php
+ $res = $sc->getUserManager()->userGetExternal(['id' => $externalId()]);
+ ```

@@ -43,6 +43,9 @@ class ProjectChangesModelNormalizer extends SerializerAwareNormalizer implements
         if (property_exists($data, 'vendorAccountId')) {
             $object->setVendorAccountId($data->{'vendorAccountId'});
         }
+        if (property_exists($data, 'externalTag')) {
+            $object->setExternalTag($data->{'externalTag'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -65,6 +68,9 @@ class ProjectChangesModelNormalizer extends SerializerAwareNormalizer implements
         }
         if (null !== $object->getVendorAccountId()) {
             $data->{'vendorAccountId'} = $object->getVendorAccountId();
+        }
+        if (null !== $object->getExternalTag()) {
+            $data->{'externalTag'} = $object->getExternalTag();
         }
         return $data;
     }

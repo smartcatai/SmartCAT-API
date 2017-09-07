@@ -25,7 +25,7 @@ class ExecutiveStatisticsModel
      */
     protected $total;
     /**
-     * @var CompletedWorkStatisticsModel[]
+     * @var DocumentStatisticsModel[]
      */
     protected $documents;
     /**
@@ -114,14 +114,14 @@ class ExecutiveStatisticsModel
         return $this;
     }
     /**
-     * @return CompletedWorkStatisticsModel[]
+     * @return DocumentStatisticsModel[]
      */
     public function getDocuments()
     {
         return $this->documents;
     }
     /**
-     * @param CompletedWorkStatisticsModel[] $documents
+     * @param DocumentStatisticsModel[] $documents
      *
      * @return self
      */

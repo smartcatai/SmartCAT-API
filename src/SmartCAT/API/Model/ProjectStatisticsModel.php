@@ -17,6 +17,10 @@ class ProjectStatisticsModel
      */
     protected $cost;
     /**
+     * @var DocumentStatisticsModel[]
+     */
+    protected $documents;
+    /**
      * @return string
      */
     public function getLanguage()
@@ -65,6 +69,23 @@ class ProjectStatisticsModel
     public function setCost($cost = null)
     {
         $this->cost = $cost;
+        return $this;
+    }
+    /**
+     * @return DocumentStatisticsModel[]
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+    /**
+     * @param DocumentStatisticsModel[] $documents
+     *
+     * @return self
+     */
+    public function setDocuments(array $documents = null)
+    {
+        $this->documents = $documents;
         return $this;
     }
 }

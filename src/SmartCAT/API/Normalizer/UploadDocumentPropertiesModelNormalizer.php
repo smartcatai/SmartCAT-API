@@ -28,6 +28,9 @@ class UploadDocumentPropertiesModelNormalizer extends SerializerAwareNormalizer 
         if (property_exists($data, 'bilingualFileImportSettings')) {
             $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCAT\\API\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
         }
+        if (property_exists($data, 'enablePlaceholders')) {
+            $object->setEnablePlaceholders($data->{'enablePlaceholders'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -35,6 +38,9 @@ class UploadDocumentPropertiesModelNormalizer extends SerializerAwareNormalizer 
         $data = new \stdClass();
         if (null !== $object->getBilingualFileImportSettings()) {
             $data->{'bilingualFileImportSettings'} = $this->serializer->serialize($object->getBilingualFileImportSettings(), 'raw', $context);
+        }
+        if (null !== $object->getEnablePlaceholders()) {
+            $data->{'enablePlaceholders'} = $object->getEnablePlaceholders();
         }
         return $data;
     }

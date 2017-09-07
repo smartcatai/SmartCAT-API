@@ -60,7 +60,7 @@ class CallbackResource extends Resource
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\CallbackPropertyModel $callbackProperty Настройки уведомлений
+     * @param \SmartCAT\API\Model\CallbackPropertyModel $callbackProperty Notification settings
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -69,6 +69,8 @@ class CallbackResource extends Resource
     public function callbackUpdate(\SmartCAT\API\Model\CallbackPropertyModel $callbackProperty, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
+        $queryParam->setDefault('Content-Type', 'application/json');
+        $queryParam->setHeaderParameters(['Content-Type']);
         $url = '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
@@ -85,7 +87,7 @@ class CallbackResource extends Resource
      * 
      *
      * @param array  $parameters {
-     *     @var int $limit Лимит возвращаемого списка ошибок (не более 100)
+     *     @var int $limit Limit on the number of returned errors (no more than 100)
      * }
      * @param string $fetch      Fetch mode (object or response)
      *

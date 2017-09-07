@@ -7,12 +7,12 @@ use Joli\Jane\OpenApi\Runtime\Client\Resource;
 class DocumentResource extends Resource
 {
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа,<br />
-               пример запроса - ?documentIds=61331_25'ampersand'documentIds=61332_9.<br />
+    * Document ID can have the form  int1 or int1_int2, <br />
+               where int1 is the document ID and int2 is the target language ID of the document, <br />
+               Example request: ?documentIds=61331_25'ampersand'documentIds=61332_9.<br />
     *
     * @param array  $parameters {
-    *     @var array $documentIds Массив идентификаторов документов
+    *     @var array $documentIds Array of document IDs
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
@@ -24,6 +24,11 @@ class DocumentResource extends Resource
         $queryParam->setRequired('documentIds');
         $url = '/api/integration/v1/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $search = [];
+        for ($i = 0; $i < count($parameters['documentIds']); $i++) {
+            $search[] = "documentIds%5B$i%5D";
+        }
+        $url = str_replace($search, 'documentIds', $url);
         $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
@@ -35,11 +40,11 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+    * Document ID can have the form  int1 or int1_int2, <br />
+               with int1 being the document ID and int2 being the document's target language ID.<br />
     *
     * @param array  $parameters {
-    *     @var string $documentId Идентификатор документа
+    *     @var string $documentId Document ID
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
@@ -67,11 +72,11 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+    * Document ID can have the form  int1 or int1_int2, <br />
+               with int1 being the document ID and int2 being the document's target language ID.<br />
     *
     * @param array  $parameters {
-    *     @var string $documentId Идентификатор документа
+    *     @var string $documentId Document ID
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
@@ -94,13 +99,77 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $documentId 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ObjectModel
+     */
+    public function documentGetTranslationsImportResult($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('documentId');
+        $url = '/api/integration/v1/document/translate/result';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ObjectModel', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $documentId 
+     *     @var bool $onlyExactMatches 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentStatisticsModel
+     */
+    public function documentGetStatistics($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('documentId');
+        $queryParam->setDefault('onlyExactMatches', NULL);
+        $url = '/api/integration/v1/document/statistics';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentStatisticsModel', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+    * Document ID can have the form  int1 or int1_int2, <br />
+               with int1 being the document ID and int2 being the document's target language ID.<br />
     *
-    * @param array $freelancerUserIds Идентификаторы назначаемых пользователей-фрилансеров
+    * @param array $freelancerUserIds Assignee IDs
     * @param array  $parameters {
-    *     @var string $documentId Идентификатор документа
-    *     @var int $stageNumber Номер этапа workflow
+    *     @var string $documentId Document ID
+    *     @var int $stageNumber Workflow stage number
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
@@ -109,12 +178,14 @@ class DocumentResource extends Resource
     public function documentAssignFreelancersToDocument(array $freelancerUserIds, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
+        $queryParam->setDefault('Content-Type', 'application/json');
+        $queryParam->setHeaderParameters(['Content-Type']);
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('stageNumber');
         $url = '/api/integration/v1/document/assignFreelancers';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
-        $body = $freelancerUserIds;
+        $body = $this->serializer->serialize($freelancerUserIds, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
@@ -124,18 +195,18 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
-               Пояснения к значениям AssignmentMode:<br />
-               AssignmentMode.DistributeAmongAll - распределить сегменты сразу между всеми переданными исполнителями<br />
-               AssignmentMode.Rocket - выслать приглашения, назначить первого согласившегося исполнителя на все свободные от назначения сегменты документа.<br />
-               AssignmentMode.InviteOnly - только пригласить исполнителей, сегменты распределяются позже руками.<br />
-               Примечание: если количество сегментов не указано, задача будет разделена на равные блоки между всеми исполнителями.<br />
+    * Document ID can have the form  int1 or int1_int2, <br />
+               with int1 being the document ID and int2 being the document's target language ID.<br />
+    			Notes to the AssignmentMode values:<br />
+    			AssignmentMode.DistributeAmongAll — assign segments automatically to all selected freelancers.<br />
+    			AssignmentMode.Rocket — send invitations to all selected freelancers and assign all unassigned segments to the first freelancer to accept the offer.<br />
+    			AssignmentMode.InviteOnly — send invitations and assign segments manually after the freelancers accept the offer.<br />
+    			Note: if the number of segments is not set, the document will be split into equal segments among the freelancers who will accept the offer.<br />
     *
-    * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Запрос для назначения - список назначаемых исполнителей
+    * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Assignment request —List of assignees
     * @param array  $parameters {
-    *     @var string $documentId Идентификатор документа
-    *     @var int $stageNumber Номер этапа workflow
+    *     @var string $documentId Document ID
+    *     @var int $stageNumber Workflow stage number
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
@@ -144,6 +215,8 @@ class DocumentResource extends Resource
     public function documentAssignExecutives(\SmartCAT\API\Model\AssignExecutivesRequestModel $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
+        $queryParam->setDefault('Content-Type', 'application/json');
+        $queryParam->setHeaderParameters(['Content-Type']);
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('stageNumber');
         $url = '/api/integration/v1/document/assign';
@@ -159,18 +232,17 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
-    *
-    * @param \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
-    * @param array  $parameters {
-    *     @var string $documentId Идентификатор документа
-    *     @var string $disassembleAlgorithmName Опциональный алгоритм разбора файла
-    * }
-    * @param string $fetch      Fetch mode (object or response)
-    *
-    * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
-    */
+     * Accepts a multipart query containing a model in JSON format (Content-Type=application/json) and one or several files (Content-Type=application/octet-stream). Swagger UI does not support mapping and execution of such queries. The parameters section contains the model description, but no parameters corresponding to the files. To send the query, use third-party utilities like cURL.
+     *
+     * @param \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel 
+     * @param array  $parameters {
+     *     @var string $documentId 
+     *     @var string $disassembleAlgorithmName 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
+     */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
@@ -194,12 +266,12 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
+    * Document ID can have the form  int1 or int1_int2, <br />
+               with int1 being the document ID and int2 being the document's target language ID.<br />
     *
     * @param array  $parameters {
-    *     @var string $documentId Идентификатор документа
-    *     @var string $name Новое название
+    *     @var string $documentId Document ID
+    *     @var string $name New name
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
@@ -223,26 +295,26 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Доступно не для всех форматов файлов, а только для тех, которые поддерживают честное обновление<br />
-               (де-факто на данный момент это ресурсные файлы с уникальными идентификаторами ресурсов).<br />
-               Ставит задачу в процессинге, на момент завершения запроса перевод возможно не завершён.<br /><br />
-               Идентификатор документа может иметь вид: int1 или int1_int2,<br />
-               где int1 - id документа, int2 - идентификатор таргет языка документа.<br />
-    *
-    * @param array  $parameters {
-    *     @var string $documentId Идентификатор документа
-    *     @var  $translationFile Файл с переводом
-    * }
-    * @param string $fetch      Fetch mode (object or response)
-    *
-    * @return \Psr\Http\Message\ResponseInterface
-    */
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $documentId 
+     *     @var  $translationFile 
+     *     @var bool $overwrite 
+     *     @var bool $confirmTranslation 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function documentTranslate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
+        $queryParam->setDefault('overwrite', NULL);
+        $queryParam->setDefault('confirmTranslation', NULL);
         $url = '/api/integration/v1/document/translate';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
@@ -256,19 +328,18 @@ class DocumentResource extends Resource
         return $response;
     }
     /**
-    * Метод доступен только для возврата модифицированных XLIFF-файлов, экспортированных с помощью метода POST /api/integration/v1/document/export. 
-               Тело запроса может содержать только один XLIFF-файл.
-    *
-    * @param array  $parameters {
-    *     @var string $documentId Идентификатор обновляемого документа
-    *     @var bool $confirmTranslation Подтверждать переводы
-    *     @var bool $overwriteUpdatedSegments Обновлять ли переводы в сегментах, которые успели измениться с момента выгрузки xliff файла
-    *     @var  $translationFile Xliff файл с переводами сегментов
-    * }
-    * @param string $fetch      Fetch mode (object or response)
-    *
-    * @return \Psr\Http\Message\ResponseInterface
-    */
+     * The endpoint is available only for the re-import of the modified XLIFF files exported via POST /api/integration/v1/document/export. The request body can contain only one XLIFF file per request.
+     *
+     * @param array  $parameters {
+     *     @var string $documentId ID of the document to update
+     *     @var bool $confirmTranslation Confirm updated segments
+     *     @var bool $overwriteUpdatedSegments Overwrite the segments that have been updated since the last export of the XLIFF file
+     *     @var  $translationFile XLIFF file with updated segments
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function documentTranslateWithXliff($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
@@ -282,6 +353,34 @@ class DocumentResource extends Resource
         $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param array  $parameters {
+     *     @var string $accountUserId 
+     *     @var string $documentId 
+     * }
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function documentGetAuthUrl($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setRequired('accountUserId');
+        $queryParam->setRequired('documentId');
+        $url = '/api/integration/v1/document/getAuthUrl';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;

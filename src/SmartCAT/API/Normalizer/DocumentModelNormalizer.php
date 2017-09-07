@@ -71,6 +71,9 @@ class DocumentModelNormalizer extends SerializerAwareNormalizer implements Denor
         if (property_exists($data, 'metaInfo')) {
             $object->setMetaInfo($data->{'metaInfo'});
         }
+        if (property_exists($data, 'placeholdersAreEnabled')) {
+            $object->setPlaceholdersAreEnabled($data->{'placeholdersAreEnabled'});
+        }
         return $object;
     }
     public function normalize($object, $format = null, array $context = array())
@@ -121,6 +124,9 @@ class DocumentModelNormalizer extends SerializerAwareNormalizer implements Denor
         }
         if (null !== $object->getMetaInfo()) {
             $data->{'metaInfo'} = $object->getMetaInfo();
+        }
+        if (null !== $object->getPlaceholdersAreEnabled()) {
+            $data->{'placeholdersAreEnabled'} = $object->getPlaceholdersAreEnabled();
         }
         return $data;
     }

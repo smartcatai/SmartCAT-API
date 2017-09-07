@@ -21,6 +21,10 @@ class CreateTranslationMemoryModel
      */
     protected $description;
     /**
+     * @var string
+     */
+    protected $clientId;
+    /**
      * @return string
      */
     public function getName()
@@ -86,6 +90,23 @@ class CreateTranslationMemoryModel
     public function setDescription($description = null)
     {
         $this->description = $description;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+    /**
+     * @param string $clientId
+     *
+     * @return self
+     */
+    public function setClientId($clientId = null)
+    {
+        $this->clientId = $clientId;
         return $this;
     }
 }
