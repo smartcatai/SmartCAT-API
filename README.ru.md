@@ -222,6 +222,13 @@ $res=$sc->getDocumentManager()->documentAssignExecutives(
  $sc->getDocumentExportManager()->documentExportDownloadExportResult($taskId);
  ```
  
+## [Glossary](https://smartcat.ai/api/methods/#!/Glossary)
+ [Получить набор глоссариев](https://smartcat.ai/api/methods/#!/Glossary/Glossary_GetGlossaries)    
+ **GET** /api/integration/v1/glossaries  
+ ```php
+ $res = $sc->getGlossaryManager()->glossaryGetGlossaries();
+ ```
+
 ## [Invoice](https://smartcat.ai/api/methods/#!/Invoice)
  [Создание начисления фрилансеру](https://smartcat.ai/api/methods/#!/Invoice/Invoice_ImportJob)    
  **POST** /api/integration/v1/invoice/job 
@@ -314,6 +321,18 @@ do {
  $translationMemoryForProjectModel->setIsWritable(true);
  $translationMemoryForProjectModel->setMatchThreshold(100);
  $res = $sc->getProjectManager()->projectSetTranslationMemoriesForWholeProject($projectId, [$translationMemoryForProjectModel]);
+ ```
+
+ [Получить набор подключённых глоссариев к проекту](https://smartcat.ai/api/methods/#!/Project/Project_GetGlossaries)      
+ **GET** /api/integration/v1/project/{projectId}/glossaries    
+ ```php
+ $res = $sc->getProjectManager()->projectGetGlossaries($projectId);
+ ```
+
+ [Установить набор подключённых глоссариев к проекту](https://smartcat.ai/api/methods/#!/Project/Project_SetGlossaries)      
+ **PUT** /api/integration/v1/project/{projectId}/glossaries    
+ ```php
+ $res = $this->sc->getProjectManager()->projectSetGlossaries($projectId, [$glossaryId1, $glossaryId2]);
  ```
 
  [Запустить построение статистики по проекту](https://smartcat.ai/api/methods/#!/Project/Project_BuildStatistics)      
@@ -450,7 +469,7 @@ $sc->getTranslationMemoriesManager()->translationMemoriesImport(
  **GET** /api/integration/v1/translationmemory    
  ```php
 $thirstRes = $sc->getTranslationMemoriesManager()->translationMemoriesGetTranslationMemoriesBatch([
-    'lastProcessedId' => 0,
+    'lastProcessedId' => '',
     'batchSize' => 10
 ]);
 $last = array_pop($thirstRes);

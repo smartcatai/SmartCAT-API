@@ -34,6 +34,7 @@ class NormalizerFactory
         $normalizers[] = new UploadedFileNormalizer();
         $normalizers[] = new BilingualFileImportSettingsModelNormalizer();
         $normalizers[] = new ExportDocumentTaskModelNormalizer();
+        $normalizers[] = new GlossaryModelNormalizer();
         $normalizers[] = new ImportJobModelNormalizer();
         $normalizers[] = new CreateInvoiceModelNormalizer();
         $normalizers[] = new CancelInvoiceModelNormalizer();

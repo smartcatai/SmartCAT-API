@@ -18,6 +18,7 @@ use SmartCAT\API\Manager\ClientManager;
 use SmartCAT\API\Manager\DirectoriesManager;
 use SmartCAT\API\Manager\DocumentExportManager;
 use SmartCAT\API\Manager\DocumentManager;
+use SmartCAT\API\Manager\GlossaryManager;
 use SmartCAT\API\Manager\InvoiceManager;
 use SmartCAT\API\Manager\PlaceholderFormatApiManager;
 use SmartCAT\API\Manager\ProjectManager;
@@ -300,7 +301,6 @@ class SmartCAT
     private $userManager;
 
     /**
-     *
      * @return UserManager
      */
     public function getUserManager()
@@ -310,5 +310,22 @@ class SmartCAT
             $this->userManager->setHost($this->host);
         }
         return $this->userManager;
+    }
+
+    /**
+     * @var GlossaryManager
+     */
+    private $glossaryManager;
+
+    /**
+     * @return GlossaryManager
+     */
+    public function getGlossaryManager()
+    {
+        if (null === $this->glossaryManager) {
+            $this->glossaryManager = new GlossaryManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->glossaryManager->setHost($this->host);
+        }
+        return $this->glossaryManager;
     }
 }

@@ -94,6 +94,9 @@ class ProjectResource extends Resource
      *
      * @param array  $parameters {
      *     @var string $createdByUserId 
+     *     @var string $projectName 
+     *     @var string $externalTag 
+     *     @var array $clientIds 
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -103,6 +106,9 @@ class ProjectResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('createdByUserId', NULL);
+        $queryParam->setDefault('projectName', NULL);
+        $queryParam->setDefault('externalTag', NULL);
+        $queryParam->setDefault('clientIds', NULL);
         $url = '/api/integration/v1/project/list';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
@@ -263,6 +269,64 @@ class ProjectResource extends Resource
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId 
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\GlossaryModel[]
+     */
+    public function projectGetGlossaries($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $url = '/api/integration/v1/project/{projectId}/glossaries';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\GlossaryModel[]', 'json');
+            }
+        }
+        return $response;
+    }
+    /**
+     * 
+     *
+     * @param string $projectId 
+     * @param array $glossaryIds 
+     * @param array  $parameters List of parameters
+     * @param string $fetch      Fetch mode (object or response)
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function projectSetGlossaries($projectId, array $glossaryIds, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setDefault('Content-Type', 'application/json');
+        $queryParam->setHeaderParameters(['Content-Type']);
+        $url = '/api/integration/v1/project/{projectId}/glossaries';
+        $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $body = $this->serializer->serialize($glossaryIds, 'json');
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
