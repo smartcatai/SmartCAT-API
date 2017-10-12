@@ -4,7 +4,7 @@ PHP клиент для SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Версия от 12.05.2017
+Версия от 08.09.2017
 [PHP оболочка для SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## Как использовать?
