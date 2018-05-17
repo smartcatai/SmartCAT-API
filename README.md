@@ -150,7 +150,7 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ])
  ```
 
- [Импортировать xliff-файл с переводами документа](https://smartcat.ai/api/methods/#!/Document/Document_TranslateWithXliff)    
+ [Import XLIFF file with translations](https://smartcat.ai/api/methods/#!/Document/Document_TranslateWithXliff)    
  **PUT** /api/integration/v1/document/translateWithXliff
  ```php
  $sc->getDocumentManager()->documentTranslateWithXliff([
@@ -208,7 +208,7 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ```
  
 ## [Glossary](https://smartcat.ai/api/methods/#!/Glossary)
- [Получить набор глоссариев](https://smartcat.ai/api/methods/#!/Glossary/Glossary_GetGlossaries)    
+ [Get available glossaries](https://smartcat.ai/api/methods/#!/Glossary/Glossary_GetGlossaries)    
  **GET** /api/integration/v1/glossaries  
  ```php
  $res = $sc->getGlossaryManager()->glossaryGetGlossaries();
