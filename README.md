@@ -4,7 +4,6 @@ PHP client SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Version from 08.09.2017
 [PHP client SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## How to use:
@@ -31,6 +30,12 @@ $sc=new SmartCAT($login, $password);
   **GET** /api/integration/v1/account/mtengines   
   ```php
   $sc->getAccountManager()->accountGetMTEnginesForAccount();
+  ```
+
+  Gets LSP's services available for the account](https://smartcat.ai/api/methods/#!/Account/Account_GetLSPServicesForAccount)    
+  **GET** /api/integration/v1/account/lsp/services   
+  ```php
+  $sc->getAccountManager()->accountGetLSPServicesForAccount();
   ```
  
   [Gets available assignees (MyTeam freelancers or internal account users)](https://smartcat.ai/api/methods/#!/Account/Account_GetAssignableExecutives)    
@@ -150,7 +155,7 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ])
  ```
 
- [Import XLIFF file with translations](https://smartcat.ai/api/methods/#!/Document/Document_TranslateWithXliff)    
+ [Импортировать xliff-файл с переводами документа](https://smartcat.ai/api/methods/#!/Document/Document_TranslateWithXliff)    
  **PUT** /api/integration/v1/document/translateWithXliff
  ```php
  $sc->getDocumentManager()->documentTranslateWithXliff([
@@ -208,7 +213,7 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ```
  
 ## [Glossary](https://smartcat.ai/api/methods/#!/Glossary)
- [Get available glossaries](https://smartcat.ai/api/methods/#!/Glossary/Glossary_GetGlossaries)    
+ [Получить набор глоссариев](https://smartcat.ai/api/methods/#!/Glossary/Glossary_GetGlossaries)    
  **GET** /api/integration/v1/glossaries  
  ```php
  $res = $sc->getGlossaryManager()->glossaryGetGlossaries();
@@ -549,5 +554,5 @@ $sc->getTranslationMemoriesManager()->translationMemoriesRemoveSpecificImportTas
  [Gets a user by its external ID](https://smartcat.ai/api/methods/#!/User/User_Get_0)    
  **GET** /api/integration/v1/user/external  
  ```php
- $res = $sc->getUserManager()->userGetExternal(['id' => $externalId()]);
+ $res = $sc->getUserManager()->userGetExternal(['id' => $externalId]);
  ```

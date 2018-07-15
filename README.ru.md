@@ -4,7 +4,6 @@ PHP клиент для SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-Версия от 08.09.2017
 [PHP оболочка для SmartCAT API](https://smartcat.ai/api/methods/)
 
 ## Как использовать?
@@ -31,6 +30,12 @@ $sc=new SmartCAT($login, $password);
  **GET** /api/integration/v1/account/mtengines   
  ```php
  $sc->getAccountManager()->accountGetMTEnginesForAccount();
+ ```
+
+[Получение списка услуг доступных для аккаунта](https://smartcat.ai/api/methods/#!/Account/Account_GetLSPServicesForAccount)    
+ **GET** /api/integration/v1/account/lsp/services   
+ ```php
+ $sc->getAccountManager()->accountGetLSPServicesForAccount();
  ```
 
  [Метод получения доступных для назначения исполнителей (фрилансеров из MyTeam или внутренних пользователей из аккаунта)](https://smartcat.ai/api/methods/#!/Account/Account_GetAssignableExecutives)    
@@ -572,5 +577,5 @@ $sc->getTranslationMemoriesManager()->translationMemoriesRemoveSpecificImportTas
  [Получить пользователя по его внешнему идентификатору](https://smartcat.ai/api/methods/#!/User/User_Get_0)    
  **GET** /api/integration/v1/user/external  
  ```php
- $res = $sc->getUserManager()->userGetExternal(['id' => $externalId()]);
+ $res = $sc->getUserManager()->userGetExternal(['id' => $externalId]);
  ```
