@@ -1,10 +1,10 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-use SmartCAT\API\Resource\GlossaryResource;
+use SmartCat\Client\Resource\GlossaryResource;
 
 class GlossaryManager extends GlossaryResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 }

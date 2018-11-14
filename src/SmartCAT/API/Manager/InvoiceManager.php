@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Diversant_
- * Date: 01.09.2017
- * Time: 17:53
- */
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-
-use SmartCAT\API\Resource\InvoiceResource;
+use SmartCat\Client\Resource\InvoiceResource;
 
 class InvoiceManager extends InvoiceResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 }

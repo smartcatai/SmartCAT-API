@@ -1,11 +1,10 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-use SmartCAT\API\Resource\AccountResource;
-
+use SmartCat\Client\Resource\AccountResource;
 
 class AccountManager extends AccountResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 }

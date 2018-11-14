@@ -1,24 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Diversant_
- * Date: 09.01.2017
- * Time: 10:59
- */
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-
-use SmartCAT\API\Resource\ClientResource;
+use SmartCat\Client\Resource\ClientResource;
 
 class ClientManager extends ClientResource
 {
-
-    use SmartCATManager;
+    use SmartCatManager;
 
     /**
-     *
-     *
      * @param string $name имя клиента
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)

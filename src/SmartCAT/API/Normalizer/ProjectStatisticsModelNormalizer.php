@@ -1,37 +1,35 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ProjectStatisticsModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\ProjectStatisticsModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\ProjectStatisticsModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\ProjectStatisticsModel) {
+        if ($data instanceof \SmartCat\Client\Model\ProjectStatisticsModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\ProjectStatisticsModel();
+        $object = new \SmartCat\Client\Model\ProjectStatisticsModel();
         if (property_exists($data, 'language')) {
             $object->setLanguage($data->{'language'});
         }
         if (property_exists($data, 'statistics')) {
             $values = array();
             foreach ($data->{'statistics'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\StatisticsRowModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\StatisticsRowModel', 'raw', $context);
             }
             $object->setStatistics($values);
         }
@@ -41,12 +39,13 @@ class ProjectStatisticsModelNormalizer extends SerializerAwareNormalizer impleme
         if (property_exists($data, 'documents')) {
             $values_1 = array();
             foreach ($data->{'documents'} as $value_1) {
-                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCAT\\API\\Model\\DocumentStatisticsModel', 'raw', $context);
+                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCat\\Client\\Model\\DocumentStatisticsModel', 'raw', $context);
             }
             $object->setDocuments($values_1);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

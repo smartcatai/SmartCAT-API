@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class NetRateModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class NetRateModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\NetRateModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\NetRateModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\NetRateModel) {
+        if ($data instanceof \SmartCat\Client\Model\NetRateModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\NetRateModel();
+        $object = new \SmartCat\Client\Model\NetRateModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -40,12 +38,13 @@ class NetRateModelNormalizer extends SerializerAwareNormalizer implements Denorm
         if (property_exists($data, 'tmMatchRates')) {
             $values = array();
             foreach ($data->{'tmMatchRates'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\TMRangeRateModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\TMRangeRateModel', 'raw', $context);
             }
             $object->setTmMatchRates($values);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

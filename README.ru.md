@@ -14,7 +14,7 @@ PHP клиент для SmartCAT API
  [Сценарии использования](https://ru.smartcat.ai/api/docs/)
  
 ```php
-use SmartCAT\API\SmartCAT;
+use SmartCat\Client\SmartCAT;
 
 $sc=new SmartCAT($login, $password);
 ```

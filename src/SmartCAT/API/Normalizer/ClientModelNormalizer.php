@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class ClientModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ClientModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\ClientModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\ClientModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\ClientModel) {
+        if ($data instanceof \SmartCat\Client\Model\ClientModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\ClientModel();
+        $object = new \SmartCat\Client\Model\ClientModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -32,10 +30,11 @@ class ClientModelNormalizer extends SerializerAwareNormalizer implements Denorma
             $object->setName($data->{'name'});
         }
         if (property_exists($data, 'netRate')) {
-            $object->setNetRate($this->serializer->deserialize($data->{'netRate'}, 'SmartCAT\\API\\Model\\NetRateModel', 'raw', $context));
+            $object->setNetRate($this->serializer->deserialize($data->{'netRate'}, 'SmartCat\\Client\\Model\\NetRateModel', 'raw', $context));
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

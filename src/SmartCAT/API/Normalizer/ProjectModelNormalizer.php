@@ -1,30 +1,50 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class ProjectModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+use SmartCat\Client\Model\DocumentModel;
+use SmartCat\Client\Model\ProjectModel;
+use SmartCat\Client\Model\ProjectWorkflowStageModel;
+
+class ProjectModelNormalizer extends AbstractNormalizer
 {
+    /**
+     * @param mixed $data
+     * @param string $type
+     * @param null $format
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\ProjectModel') {
+        if ($type !== ProjectModel::class) {
             return false;
         }
         return true;
     }
+
+    /**
+     * @param mixed $data
+     * @param null $format
+     * @return bool
+     */
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\ProjectModel) {
+        if ($data instanceof ProjectModel) {
             return true;
         }
         return false;
     }
+
+    /**
+     * @param mixed $data
+     * @param string $class
+     * @param null $format
+     * @param array $context
+     * @return object|ProjectModel
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\ProjectModel();
+        $object = new \SmartCat\Client\Model\ProjectModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -74,22 +94,30 @@ class ProjectModelNormalizer extends SerializerAwareNormalizer implements Denorm
         if (property_exists($data, 'workflowStages')) {
             $values_1 = array();
             foreach ($data->{'workflowStages'} as $value_1) {
-                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCAT\\API\\Model\\ProjectWorkflowStageModel', 'raw', $context);
+                $values_1[] = $this->serializer->deserialize($value_1, ProjectWorkflowStageModel::class, 'raw', $context);
             }
             $object->setWorkflowStages($values_1);
         }
         if (property_exists($data, 'documents')) {
             $values_2 = array();
             foreach ($data->{'documents'} as $value_2) {
-                $values_2[] = $this->serializer->deserialize($value_2, 'SmartCAT\\API\\Model\\DocumentModel', 'raw', $context);
+                $values_2[] = $this->serializer->deserialize($value_2, DocumentModel::class, 'raw', $context);
             }
             $object->setDocuments($values_2);
         }
         if (property_exists($data, 'externalTag')) {
             $object->setExternalTag($data->{'externalTag'});
         }
+
         return $object;
     }
+
+    /**
+     * @param $object ProjectModel
+     * @param null $format
+     * @param array $context
+     * @return \stdClass
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

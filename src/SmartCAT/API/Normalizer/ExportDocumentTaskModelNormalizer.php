@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class ExportDocumentTaskModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ExportDocumentTaskModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\ExportDocumentTaskModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\ExportDocumentTaskModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\ExportDocumentTaskModel) {
+        if ($data instanceof \SmartCat\Client\Model\ExportDocumentTaskModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\ExportDocumentTaskModel();
+        $object = new \SmartCat\Client\Model\ExportDocumentTaskModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -37,6 +35,7 @@ class ExportDocumentTaskModelNormalizer extends SerializerAwareNormalizer implem
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

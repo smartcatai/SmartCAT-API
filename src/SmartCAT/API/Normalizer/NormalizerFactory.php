@@ -1,13 +1,15 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
+
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 
 class NormalizerFactory
 {
     public static function create()
     {
-        $normalizers = array();
-        $normalizers[] = new \Joli\Jane\Runtime\Normalizer\ArrayDenormalizer();
+        $normalizers = [];
+        $normalizers[] = new ArrayDenormalizer();
         $normalizers[] = new AccountModelNormalizer();
         $normalizers[] = new MTEngineModelNormalizer();
         $normalizers[] = new AssignableExecutiveModelNormalizer();

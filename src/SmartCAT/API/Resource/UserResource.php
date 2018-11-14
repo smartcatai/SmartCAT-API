@@ -1,21 +1,21 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class UserResource extends Resource
 {
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\CreateUserRequest $request 
+     * @param \SmartCat\Client\Model\CreateUserRequest $request 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\UserModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
      */
-    public function userCreate(\SmartCAT\API\Model\CreateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function userCreate(\SmartCat\Client\Model\CreateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $url = '/api/integration/v1/user';
@@ -30,7 +30,7 @@ class UserResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\UserModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\UserModel', 'json');
             }
         }
         return $response;
@@ -68,7 +68,7 @@ class UserResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\UserModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
      */
     public function userGetExternal($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -86,7 +86,7 @@ class UserResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\UserModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\UserModel', 'json');
             }
         }
         return $response;
@@ -95,13 +95,13 @@ class UserResource extends Resource
      * 
      *
      * @param string $accountUserId 
-     * @param \SmartCAT\API\Model\UpdateUserRequest $request 
+     * @param \SmartCat\Client\Model\UpdateUserRequest $request 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function userUpdate($accountUserId, \SmartCAT\API\Model\UpdateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function userUpdate($accountUserId, \SmartCat\Client\Model\UpdateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');

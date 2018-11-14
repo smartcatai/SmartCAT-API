@@ -1,32 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Diversant_
- * Date: 23.11.2016
- * Time: 17:07
- */
 
-namespace SmartCAT\API\Manager;
-
+namespace SmartCat\Client\Manager;
 
 use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Resource\TranslationMemoriesResource;
+use SmartCat\Client\Helper\QueryParam;
+use SmartCat\Client\Resource\TranslationMemoriesResource;
 
 class TranslationMemoriesManager extends TranslationMemoriesResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 
     //TODO: Нет описания возвращаемых данных, API возращает кривоватый ответ заворачивая tmId в кавычки
 
     /**
-     * @param \SmartCAT\API\Model\CreateTranslationMemoryModel $model
+     * @param \SmartCat\Client\Model\CreateTranslationMemoryModel $model
      * @param array $parameters
      * @param string $fetch
      * @return \Psr\Http\Message\ResponseInterface | string
      */
-    public function translationMemoriesCreateEmptyTM(\SmartCAT\API\Model\CreateTranslationMemoryModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function translationMemoriesCreateEmptyTM(\SmartCat\Client\Model\CreateTranslationMemoryModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $res = parent::translationMemoriesCreateEmptyTM($model, $parameters, $fetch);
 

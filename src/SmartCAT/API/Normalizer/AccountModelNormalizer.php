@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class AccountModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class AccountModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\AccountModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\AccountModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\AccountModel) {
+        if ($data instanceof \SmartCat\Client\Model\AccountModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\AccountModel();
+        $object = new \SmartCat\Client\Model\AccountModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -39,6 +37,7 @@ class AccountModelNormalizer extends SerializerAwareNormalizer implements Denorm
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

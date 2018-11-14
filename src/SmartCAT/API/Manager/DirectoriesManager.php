@@ -1,11 +1,10 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-use SmartCAT\API\Resource\DirectoriesResource;
+use SmartCat\Client\Resource\DirectoriesResource;
 
 class DirectoriesManager extends DirectoriesResource
 {
-    use SmartCATManager;
-
+    use SmartCatManager;
 }

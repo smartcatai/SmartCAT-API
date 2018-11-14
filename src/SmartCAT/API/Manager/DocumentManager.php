@@ -1,15 +1,15 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
 use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Resource\DocumentResource;
+use SmartCat\Client\Helper\QueryParam;
+use SmartCat\Client\Resource\DocumentResource;
 
 class DocumentManager extends DocumentResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 
     //TODO: Обертка для обработка слишком большого кол-ва ид для удаления
 
@@ -63,7 +63,7 @@ class DocumentManager extends DocumentResource
     /**
      * @param array $parameters {
      * @var string $documentId Идентификатор документа
-     * @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
+     * @var \SmartCat\Client\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
      * @var array $uploadedFile {
      * @var string $fileName - optional
      * @var string $filePath | blob or stream $fileContent
@@ -72,7 +72,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -113,7 +113,7 @@ class DocumentManager extends DocumentResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCat\\Client\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;

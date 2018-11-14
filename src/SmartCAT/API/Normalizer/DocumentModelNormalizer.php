@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class DocumentModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class DocumentModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\DocumentModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\DocumentModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\DocumentModel) {
+        if ($data instanceof \SmartCat\Client\Model\DocumentModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\DocumentModel();
+        $object = new \SmartCat\Client\Model\DocumentModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -61,7 +59,7 @@ class DocumentModelNormalizer extends SerializerAwareNormalizer implements Denor
         if (property_exists($data, 'workflowStages')) {
             $values = array();
             foreach ($data->{'workflowStages'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\DocumentWorkflowStageModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\DocumentWorkflowStageModel', 'raw', $context);
             }
             $object->setWorkflowStages($values);
         }
@@ -76,6 +74,7 @@ class DocumentModelNormalizer extends SerializerAwareNormalizer implements Denor
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

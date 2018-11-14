@@ -1,21 +1,21 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class InvoiceResource extends Resource
 {
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\ImportJobModel $model 
+     * @param \SmartCat\Client\Model\ImportJobModel $model 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function invoiceImportJob(\SmartCAT\API\Model\ImportJobModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function invoiceImportJob(\SmartCat\Client\Model\ImportJobModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $url = '/api/integration/v1/invoice/job';

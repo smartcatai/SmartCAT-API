@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class CreateUserRequestNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class CreateUserRequestNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\CreateUserRequest') {
+        if ($type !== 'SmartCat\\Client\\Model\\CreateUserRequest') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\CreateUserRequest) {
+        if ($data instanceof \SmartCat\Client\Model\CreateUserRequest) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\CreateUserRequest();
+        $object = new \SmartCat\Client\Model\CreateUserRequest();
         if (property_exists($data, 'email')) {
             $object->setEmail($data->{'email'});
         }
@@ -42,6 +40,7 @@ class CreateUserRequestNormalizer extends SerializerAwareNormalizer implements D
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class ClientResource extends Resource
 {
     /**
@@ -39,7 +39,7 @@ class ClientResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ClientModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ClientModel
      */
     public function clientSetClientNetRate($clientId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -58,7 +58,7 @@ class ClientResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ClientModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\ClientModel', 'json');
             }
         }
         return $response;
@@ -70,7 +70,7 @@ class ClientResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ClientModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ClientModel
      */
     public function clientGetClient($clientId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -88,7 +88,7 @@ class ClientResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ClientModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\ClientModel', 'json');
             }
         }
         return $response;

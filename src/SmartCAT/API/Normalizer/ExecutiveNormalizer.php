@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class ExecutiveNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ExecutiveNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\Executive') {
+        if ($type !== 'SmartCat\\Client\\Model\\Executive') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\Executive) {
+        if ($data instanceof \SmartCat\Client\Model\Executive) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\Executive();
+        $object = new \SmartCat\Client\Model\Executive();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }
@@ -36,6 +34,7 @@ class ExecutiveNormalizer extends SerializerAwareNormalizer implements Denormali
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

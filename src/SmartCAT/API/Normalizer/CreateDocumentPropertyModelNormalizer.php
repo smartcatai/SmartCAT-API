@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class CreateDocumentPropertyModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class CreateDocumentPropertyModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\CreateDocumentPropertyModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\CreateDocumentPropertyModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\CreateDocumentPropertyModel) {
+        if ($data instanceof \SmartCat\Client\Model\CreateDocumentPropertyModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\CreateDocumentPropertyModel();
+        $object = new \SmartCat\Client\Model\CreateDocumentPropertyModel();
         if (property_exists($data, 'externalId')) {
             $object->setExternalId($data->{'externalId'});
         }
@@ -35,7 +33,7 @@ class CreateDocumentPropertyModelNormalizer extends SerializerAwareNormalizer im
             $object->setDisassembleAlgorithmName($data->{'disassembleAlgorithmName'});
         }
         if (property_exists($data, 'bilingualFileImportSettings')) {
-            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCAT\\API\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
+            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
         }
         if (property_exists($data, 'targetLanguages')) {
             $values = array();
@@ -49,6 +47,7 @@ class CreateDocumentPropertyModelNormalizer extends SerializerAwareNormalizer im
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

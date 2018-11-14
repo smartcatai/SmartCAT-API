@@ -1,42 +1,41 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class DirectoryModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class DirectoryModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\DirectoryModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\DirectoryModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\DirectoryModel) {
+        if ($data instanceof \SmartCat\Client\Model\DirectoryModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\DirectoryModel();
+        $object = new \SmartCat\Client\Model\DirectoryModel();
         if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }
         if (property_exists($data, 'items')) {
             $values = array();
             foreach ($data->{'items'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\DirectoryItemModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\DirectoryItemModel', 'raw', $context);
             }
             $object->setItems($values);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

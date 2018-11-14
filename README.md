@@ -14,7 +14,7 @@ PHP client SmartCAT API
  [Use Case](https://www.smartcat.ai/api/docs/)
 
 ```php 
-use SmartCAT\API\SmartCAT;
+use SmartCat\Client\SmartCAT;
 
 $sc=new SmartCAT($login, $password);
 ```

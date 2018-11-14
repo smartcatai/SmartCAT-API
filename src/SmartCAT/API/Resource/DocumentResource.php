@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class DocumentResource extends Resource
 {
     /**
@@ -48,7 +48,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel
+    * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel
     */
     public function documentGet($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -66,7 +66,7 @@ class DocumentResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\DocumentModel', 'json');
             }
         }
         return $response;
@@ -106,7 +106,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ObjectModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ObjectModel
      */
     public function documentGetTranslationsImportResult($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -124,7 +124,7 @@ class DocumentResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ObjectModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\ObjectModel', 'json');
             }
         }
         return $response;
@@ -138,7 +138,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentStatisticsModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentStatisticsModel
      */
     public function documentGetStatistics($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -157,7 +157,7 @@ class DocumentResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentStatisticsModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\DocumentStatisticsModel', 'json');
             }
         }
         return $response;
@@ -203,7 +203,7 @@ class DocumentResource extends Resource
     			AssignmentMode.InviteOnly — send invitations and assign segments manually after the freelancers accept the offer.<br />
     			Note: if the number of segments is not set, the document will be split into equal segments among the freelancers who will accept the offer.<br />
     *
-    * @param \SmartCAT\API\Model\AssignExecutivesRequestModel $request Assignment request —List of assignees
+    * @param \SmartCat\Client\Model\AssignExecutivesRequestModel $request Assignment request —List of assignees
     * @param array  $parameters {
     *     @var string $documentId Document ID
     *     @var int $stageNumber Workflow stage number
@@ -212,7 +212,7 @@ class DocumentResource extends Resource
     *
     * @return \Psr\Http\Message\ResponseInterface
     */
-    public function documentAssignExecutives(\SmartCAT\API\Model\AssignExecutivesRequestModel $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function documentAssignExecutives(\SmartCat\Client\Model\AssignExecutivesRequestModel $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');
@@ -234,14 +234,14 @@ class DocumentResource extends Resource
     /**
      * Accepts a multipart query containing a model in JSON format (Content-Type=application/json) and one or several files (Content-Type=application/octet-stream). Swagger UI does not support mapping and execution of such queries. The parameters section contains the model description, but no parameters corresponding to the files. To send the query, use third-party utilities like cURL.
      *
-     * @param \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel 
+     * @param \SmartCat\Client\Model\UploadDocumentPropertiesModel $updateDocumentModel
      * @param array  $parameters {
      *     @var string $documentId 
      *     @var string $disassembleAlgorithmName 
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -260,7 +260,7 @@ class DocumentResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;

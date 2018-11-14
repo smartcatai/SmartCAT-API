@@ -1,7 +1,7 @@
 {
-    "name": "smartcat/smartcat-api",
+    "name": "smartcatai/smartcat-api",
     "description": "PHP client for SmartCAT API https://smartcat.ai/api/methods/",
-    "version": "1.7.1",
+    "version": "2.0.0",
     "type": "library",
     "keywords": [
         "php",
@@ -15,12 +15,12 @@
     },
     "require": {
 	"php": ">=5.6",
-        "jane-php/open-api": "^4.0",
-        "php-http/socket-client": "^1.1",
-        "php-http/client-common": "^1.0.1",
+        "php-http/socket-client": "^1.4",
+        "php-http/client-common": "^1.8",
         "php-http/message": "^1.0",
         "guzzlehttp/psr7": "^1.2",
-        "php-http/multipart-stream-builder": "^1.0"
+        "php-http/multipart-stream-builder": "^1.0",
+        "symfony/serializer": "^3.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.5"
@@ -33,7 +33,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SmartCAT\\API\\": "src/SmartCAT/API/"
+            "SmartCat\\Client\\": "src/SmartCAT/API"
         }
     }
 

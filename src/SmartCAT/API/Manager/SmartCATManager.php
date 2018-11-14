@@ -1,9 +1,8 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-
-trait SmartCATManager
+trait SmartCatManager
 {
     protected $host;
 

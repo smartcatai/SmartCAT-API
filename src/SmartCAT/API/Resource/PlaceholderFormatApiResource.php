@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class PlaceholderFormatApiResource extends Resource
 {
     /**
@@ -12,7 +12,7 @@ class PlaceholderFormatApiResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\PlaceholderFormatModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\PlaceholderFormatModel[]
      */
     public function placeholderFormatApiGetPlaceholderFormats($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -29,7 +29,7 @@ class PlaceholderFormatApiResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\PlaceholderFormatModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\PlaceholderFormatModel[]', 'json');
             }
         }
         return $response;
@@ -37,7 +37,7 @@ class PlaceholderFormatApiResource extends Resource
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\PlaceholderFormatModel[] $formats 
+     * @param \SmartCat\Client\Model\PlaceholderFormatModel[] $formats 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *

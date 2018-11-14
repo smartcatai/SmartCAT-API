@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class TmMatchesRequestNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class TmMatchesRequestNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\TmMatchesRequest') {
+        if ($type !== 'SmartCat\\Client\\Model\\TmMatchesRequest') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\TmMatchesRequest) {
+        if ($data instanceof \SmartCat\Client\Model\TmMatchesRequest) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\TmMatchesRequest();
+        $object = new \SmartCat\Client\Model\TmMatchesRequest();
         if (property_exists($data, 'sourceLanguage')) {
             $object->setSourceLanguage($data->{'sourceLanguage'});
         }
@@ -32,13 +30,14 @@ class TmMatchesRequestNormalizer extends SerializerAwareNormalizer implements De
             $object->setTargetLanguage($data->{'targetLanguage'});
         }
         if (property_exists($data, 'segmentModel')) {
-            $object->setSegmentModel($this->serializer->deserialize($data->{'segmentModel'}, 'SmartCAT\\API\\Model\\SegmentModel', 'raw', $context));
+            $object->setSegmentModel($this->serializer->deserialize($data->{'segmentModel'}, 'SmartCat\\Client\\Model\\SegmentModel', 'raw', $context));
         }
         if (property_exists($data, 'checkFuzzyMatches')) {
             $object->setCheckFuzzyMatches($data->{'checkFuzzyMatches'});
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class AccountResource extends Resource
 {
     /**
@@ -12,7 +12,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\AccountModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\AccountModel
      */
     public function accountGetAccountInfo($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -29,7 +29,7 @@ class AccountResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\AccountModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\AccountModel', 'json');
             }
         }
         return $response;
@@ -40,7 +40,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\MTEngineModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\MTEngineModel[]
      */
     public function accountGetMTEnginesForAccount($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -57,7 +57,7 @@ class AccountResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\MTEngineModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\MTEngineModel[]', 'json');
             }
         }
         return $response;
@@ -68,7 +68,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters (targetLanguage, sourceLanguage)
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\LSPServicesModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\LSPServicesModel[]
      */
     public function accountGetLSPServicesForAccount($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -85,7 +85,7 @@ class AccountResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\LSPServicesModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\LSPServicesModel[]', 'json');
             }
         }
         return $response;
@@ -96,7 +96,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\AssignableExecutiveModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\AssignableExecutiveModel[]
      */
     public function accountGetAssignableExecutives($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -113,7 +113,7 @@ class AccountResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\AssignableExecutiveModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\AssignableExecutiveModel[]', 'json');
             }
         }
         return $response;

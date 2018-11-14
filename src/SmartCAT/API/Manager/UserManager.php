@@ -1,29 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Diversant_
- * Date: 01.09.2017
- * Time: 17:53
- */
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Resource\UserResource;
+use SmartCat\Client\Helper\QueryParam;
+use SmartCat\Client\Resource\UserResource;
 
 class UserManager extends UserResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 
     /**
-     *
-     *
      * @param string $accountUserId
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Http\Promise\Promise|\Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\UserModel
+     * @return \Http\Promise\Promise|\Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
      */
     public function userGet($accountUserId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -41,7 +32,7 @@ class UserManager extends UserResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\UserModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\UserModel', 'json');
             }
         }
         return $response;
