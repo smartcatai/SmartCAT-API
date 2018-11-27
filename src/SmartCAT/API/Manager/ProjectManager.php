@@ -2,7 +2,6 @@
 
 namespace SmartCat\Client\Manager;
 
-use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Http\Message\StreamFactory\GuzzleStreamFactory;
 use SmartCat\Client\Helper\QueryParam;
@@ -31,8 +30,7 @@ class ProjectManager extends ProjectResource
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(['Host' => $this->host], $queryParam->buildHeaders($parameters));
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('model', $this->serializer->serialize($project, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
         $projectFiles = $project->getFiles();

@@ -2,7 +2,7 @@
 
 namespace SmartCat\Client\Manager;
 
-use Http\Discovery\StreamFactoryDiscovery;
+use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use SmartCat\Client\Helper\QueryParam;
 use SmartCat\Client\Resource\TranslationMemoriesResource;
@@ -62,8 +62,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
 
         $parameters['tmxFile'] = $this->prepareFile($parameters['tmxFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('uploadedFile', $parameters['tmxFile']['fileContent'], ['filename' => (isset($parameters['tmxFile']['fileName']) ? $parameters['tmxFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();

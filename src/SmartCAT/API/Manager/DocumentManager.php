@@ -2,7 +2,7 @@
 
 namespace SmartCat\Client\Manager;
 
-use Http\Discovery\StreamFactoryDiscovery;
+use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use SmartCat\Client\Helper\QueryParam;
 use SmartCat\Client\Resource\DocumentResource;
@@ -90,8 +90,7 @@ class DocumentManager extends DocumentResource
 
         $parameters['uploadedFile'] = $this->prepareFile($parameters['uploadedFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => (isset($parameters['uploadedFile']['fileName']) ? $parameters['uploadedFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         if ($updateDocumentModel) {
@@ -148,8 +147,7 @@ class DocumentManager extends DocumentResource
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
@@ -201,8 +199,7 @@ class DocumentManager extends DocumentResource
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
