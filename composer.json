@@ -9,7 +9,7 @@
         "api"
     ],
     "homepage": "https://github.com/smartcatai/SmartCAT-API",
-    "license": "GPL v3",
+    "license": "GPL-3.0-or-later",
     "support": {
         "issues": "https://github.com/smartcatai/SmartCAT-API/issues"
     },
