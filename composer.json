@@ -1,7 +1,7 @@
 {
     "name": "smartcat/smartcat-api",
     "description": "PHP client for SmartCAT API https://smartcat.ai/api/methods/",
-    "version": "1.7.2",
+    "version": "1.7.3",
     "type": "library",
     "keywords": [
         "php",
@@ -15,9 +15,9 @@
     },
     "require": {
 	"php": ">=5.6",
-        "jane-php/open-api": "^4.0",
+        "jane/open-api": "^1.2",
         "php-http/socket-client": "^1.1",
-        "php-http/client-common": "^1.0.1",
+        "php-http/plugins": "^1.0.1",
         "php-http/message": "^1.0",
         "guzzlehttp/psr7": "^1.2",
         "php-http/multipart-stream-builder": "^1.0"
