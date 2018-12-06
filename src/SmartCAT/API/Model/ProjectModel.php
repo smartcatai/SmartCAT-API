@@ -57,9 +57,9 @@ class ProjectModel
      */
     protected $clientId;
     /**
-     * @var string
+     * @var ProjectVendorModel[]
      */
-    protected $vendorAccountId;
+    protected $vendors;
     /**
      * @var ProjectWorkflowStageModel[]
      */
@@ -294,20 +294,20 @@ class ProjectModel
         return $this;
     }
     /**
-     * @return string
+     * @return ProjectVendorModel[]
      */
-    public function getVendorAccountId()
+    public function getVendors()
     {
-        return $this->vendorAccountId;
+        return $this->vendors;
     }
     /**
-     * @param string $vendorAccountId
+     * @param ProjectVendorModel[] $vendors
      *
      * @return self
      */
-    public function setVendorAccountId($vendorAccountId = null)
+    public function setVendors($vendors = null)
     {
-        $this->vendorAccountId = $vendorAccountId;
+        $this->vendors = $vendors;
         return $this;
     }
     /**

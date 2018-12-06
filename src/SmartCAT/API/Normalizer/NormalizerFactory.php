@@ -8,7 +8,7 @@ class NormalizerFactory
 {
     public static function create()
     {
-        $normalizers = [];
+        $normalizers = array();
         $normalizers[] = new ArrayDenormalizer();
         $normalizers[] = new AccountModelNormalizer();
         $normalizers[] = new MTEngineModelNormalizer();
@@ -43,6 +43,7 @@ class NormalizerFactory
         $normalizers[] = new PlaceholderFormatModelNormalizer();
         $normalizers[] = new ProjectModelNormalizer();
         $normalizers[] = new ProjectWorkflowStageModelNormalizer();
+        $normalizers[] = new ProjectVendorModelNormalizer();
         $normalizers[] = new ProjectChangesModelNormalizer();
         $normalizers[] = new ProjectStatisticsObsoleteModelNormalizer();
         $normalizers[] = new ProjectStatisticsModelNormalizer();
