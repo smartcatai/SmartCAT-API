@@ -50,8 +50,12 @@ class CreateProjectModelNormalizer extends SerializerAwareNormalizer implements 
         if (property_exists($data, 'clientId')) {
             $object->setClientId($data->{'clientId'});
         }
-        if (property_exists($data, 'vendorAccountId')) {
-            $object->setVendorAccountId($data->{'vendorAccountId'});
+        if (property_exists($data, 'vendorAccountIds')) {
+            $values_1 = array();
+            foreach ($data->{'vendorAccountIds'} as $value_1) {
+                $values_1[] = $value_1;
+            }
+            $object->setVendorAccountIds($values_1);
         }
         if (property_exists($data, 'assignToVendor')) {
             $object->setAssignToVendor($data->{'assignToVendor'});
@@ -128,8 +132,12 @@ class CreateProjectModelNormalizer extends SerializerAwareNormalizer implements 
         if (null !== $object->getClientId()) {
             $data->{'clientId'} = $object->getClientId();
         }
-        if (null !== $object->getVendorAccountId()) {
-            $data->{'vendorAccountId'} = $object->getVendorAccountId();
+        if (null !== $object->getVendorAccountIds()) {
+            $values_1 = array();
+            foreach ($object->getVendorAccountIds() as $value_1) {
+                $values_1[] = $value_1;
+            }
+            $data->{'vendorAccountIds'} = $values_1;
         }
         if (null !== $object->getAssignToVendor()) {
             $data->{'assignToVendor'} = $object->getAssignToVendor();

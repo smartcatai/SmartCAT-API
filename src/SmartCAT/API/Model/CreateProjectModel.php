@@ -33,9 +33,9 @@ class CreateProjectModel
      */
     protected $clientId;
     /**
-     * @var string
+     * @var string[]
      */
-    protected $vendorAccountId;
+    protected $vendorAccountIds;
     /**
      * @var bool
      */
@@ -200,20 +200,20 @@ class CreateProjectModel
         return $this;
     }
     /**
-     * @return string
+     * @return string[]
      */
-    public function getVendorAccountId()
+    public function getVendorAccountIds()
     {
-        return $this->vendorAccountId;
+        return $this->vendorAccountIds;
     }
     /**
-     * @param string $vendorAccountId
+     * @param string[] $vendorAccountIds
      *
      * @return self
      */
-    public function setVendorAccountId($vendorAccountId = null)
+    public function setVendorAccountIds($vendorAccountIds = null)
     {
-        $this->vendorAccountId = $vendorAccountId;
+        $this->vendorAccountIds = $vendorAccountIds;
         return $this;
     }
     /**

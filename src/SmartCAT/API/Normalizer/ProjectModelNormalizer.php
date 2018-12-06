@@ -68,8 +68,12 @@ class ProjectModelNormalizer extends SerializerAwareNormalizer implements Denorm
         if (property_exists($data, 'clientId')) {
             $object->setClientId($data->{'clientId'});
         }
-        if (property_exists($data, 'vendorAccountId')) {
-            $object->setVendorAccountId($data->{'vendorAccountId'});
+        if (property_exists($data, 'vendors')) {
+            $values_3 = array();
+            foreach ($data->{'vendors'} as $value_3) {
+                $values_3[] = $this->serializer->deserialize($value_3, 'SmartCAT\\API\\Model\\ProjectVendorModel', 'raw', $context);
+            }
+            $object->setVendors($values_3);
         }
         if (property_exists($data, 'workflowStages')) {
             $values_1 = array();
@@ -136,8 +140,12 @@ class ProjectModelNormalizer extends SerializerAwareNormalizer implements Denorm
         if (null !== $object->getClientId()) {
             $data->{'clientId'} = $object->getClientId();
         }
-        if (null !== $object->getVendorAccountId()) {
-            $data->{'vendorAccountId'} = $object->getVendorAccountId();
+        if (null !== $object->getVendors()) {
+            $values_3 = array();
+            foreach ($object->getVendors() as $value_3) {
+                $values_3[] = $this->serializer->serialize($value_3, 'raw', $context);
+            }
+            $data->{'vendors'} = $values_3;
         }
         if (null !== $object->getWorkflowStages()) {
             $values_1 = array();

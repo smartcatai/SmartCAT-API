@@ -41,6 +41,7 @@ class NormalizerFactory
         $normalizers[] = new PlaceholderFormatModelNormalizer();
         $normalizers[] = new ProjectModelNormalizer();
         $normalizers[] = new ProjectWorkflowStageModelNormalizer();
+        $normalizers[] = new ProjectVendorModelNormalizer();
         $normalizers[] = new ProjectChangesModelNormalizer();
         $normalizers[] = new ProjectStatisticsObsoleteModelNormalizer();
         $normalizers[] = new ProjectStatisticsModelNormalizer();
