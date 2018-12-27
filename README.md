@@ -355,7 +355,6 @@ do {
  $prjCreate->setAssignToVendor(false);
  $prjCreate->setUseMT(false);
  $prjCreate->setPretranslate(false);
- $prjCreate->setUseTranslationMemory(false);
  $prjCreate->setAutoPropagateRepetitions(false);
  $prjCreate->setIsForTesting(true);
  $prjCreate->setWorkflowStages(['translation']);
