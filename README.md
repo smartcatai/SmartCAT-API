@@ -32,7 +32,7 @@ $sc=new SmartCAT($login, $password);
   $sc->getAccountManager()->accountGetMTEnginesForAccount();
   ```
 
-  Gets LSP's services available for the account](https://smartcat.ai/api/methods/#!/Account/Account_GetLSPServicesForAccount)    
+  [Gets LSP's services available for the account](https://smartcat.ai/api/methods/#!/Account/Account_GetLSPServicesForAccount)    
   **GET** /api/integration/v1/account/lsp/services   
   ```php
   $sc->getAccountManager()->accountGetLSPServicesForAccount();
