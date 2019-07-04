@@ -53,6 +53,7 @@ class NormalizerFactory
         $normalizers[] = new TranslationMemoryForProjectModelNormalizer();
         $normalizers[] = new ModelWithFilesCreateProjectModelNormalizer();
         $normalizers[] = new CreateProjectModelNormalizer();
+        $normalizers[] = new DisassembleSettingsModelNormalizer();
         $normalizers[] = new CreateDocumentPropertyModelNormalizer();
         $normalizers[] = new ModelWithFilesIReadOnlyListCreateDocumentPropertyModelNormalizer();
         $normalizers[] = new TranslationMemoriesForLanguageModelNormalizer();
