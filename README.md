@@ -379,6 +379,28 @@ do {
      'projectId' => $projectId
  ]);
  ```
+ If you want to set Disassemble Settings, you should set Disassemble Algorithm. For example:
+ ```php
+ $bilingualFileImportSettings = new BilingualFileImportSettingsModel();
+ $bilingualFileImportSettings
+     ->setConfirmMode('none')
+     ->setLockMode('none')
+     ->setTargetSubstitutionMode('all');
+
+ $disassembleSettings = (new DisassembleSettingsModel())
+      ->setTranslatableAttributes(['img'=>['data-caption']]);
+
+ $documentModel = new CreateDocumentPropertyWithFilesModel();
+ $documentModel->setDisassembleAlgorithmName('html');
+ $documentModel->setDisassembleSettings($disassembleSettings);
+ $documentModel->setBilingualFileImportSettings($bilingualFileImportSettings);
+ $documentModel->attachFile(fopen(__DIR__ . '\Resources\File2_EN.docx'), 'File2_EN.docx');
+ $res = $sc->getProjectManager()->projectAddDocument([
+     'documentModel' => [$documentModel],
+     'projectId' => $projectId
+ ]);
+ ```
+ 
  Deprecated:
  ```php
  $sc->getProjectManager()->projectAddDocument([

@@ -29,6 +29,10 @@ class CreateDocumentPropertyModel
      */
     protected $enablePlaceholders;
     /**
+     * @var DisassembleSettingsModel
+     */
+    protected $disassembleSettings;
+    /**
      * @return string
      */
     public function getExternalId()
@@ -128,6 +132,23 @@ class CreateDocumentPropertyModel
     public function setEnablePlaceholders($enablePlaceholders = null)
     {
         $this->enablePlaceholders = $enablePlaceholders;
+        return $this;
+    }
+    /**
+     * @return bool
+     */
+    public function getDisassembleSettings()
+    {
+        return $this->disassembleSettings;
+    }
+    /**
+     * @param bool $disassembleSettings
+     *
+     * @return self
+     */
+    public function setDisassembleSettings($disassembleSettings = null)
+    {
+        $this->disassembleSettings = $disassembleSettings;
         return $this;
     }
 }
