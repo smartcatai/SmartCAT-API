@@ -7,7 +7,7 @@ use SmartCat\Client\Helper\QueryParam;
 class TranslationMemoriesResource extends Resource
 {
     /**
-     * 
+     *
      *
      * @param string $tmId TM ID
      * @param array  $parameters List of parameters
@@ -32,7 +32,7 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param string $tmId TM ID
      * @param array  $parameters List of parameters
@@ -62,7 +62,7 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param string $tmId TM ID
      * @param array  $parameters {
@@ -93,7 +93,7 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param array  $parameters {
      *     @var string $lastProcessedId The last ID obtained from the previous request
@@ -101,6 +101,7 @@ class TranslationMemoriesResource extends Resource
      *     @var string $sourceLanguage optional filtering by source language
      *     @var string $targetLanguage optional filtering by target language
      *     @var string $clientId optional filtering by client
+     *     @var string $searchName optional filtering by part of TM name
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -114,6 +115,7 @@ class TranslationMemoriesResource extends Resource
         $queryParam->setDefault('sourceLanguage', NULL);
         $queryParam->setDefault('targetLanguage', NULL);
         $queryParam->setDefault('clientId', NULL);
+        $queryParam->setDefault('searchName', NULL);
         $url = '/api/integration/v1/translationmemory';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
@@ -135,7 +137,7 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param \SmartCat\Client\Model\CreateTranslationMemoryModel $model
      * @param array  $parameters List of parameters
@@ -159,7 +161,7 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
@@ -187,12 +189,12 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
      *
-     * @param string $tmId 
+     *
+     * @param string $tmId
      * @param array  $parameters {
-     *     @var bool $withTags 
-     *     @var bool $tradosCompatible 
+     *     @var bool $withTags
+     *     @var bool $tradosCompatible
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -222,11 +224,11 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param \SmartCat\Client\Model\TmMatchesRequest $request
      * @param array  $parameters {
-     *     @var string $tmId 
+     *     @var string $tmId
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -254,7 +256,7 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param string $tmId TM ID
      * @param array $targetLanguages Array of the required target languages
@@ -280,7 +282,7 @@ class TranslationMemoriesResource extends Resource
         return $response;
     }
     /**
-     * 
+     *
      *
      * @param string $taskId ID of the task for import to the TM
      * @param array  $parameters List of parameters
