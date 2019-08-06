@@ -107,7 +107,7 @@ abstract class ProjectResource extends Resource
         $queryParam->setDefault('projectName', NULL);
         $queryParam->setDefault('externalTag', NULL);
         $queryParam->setDefault('clientIds', NULL);
-        if (is_array($parameters['clientIds'])) {
+        if (!empty($parameters['clientIds']) && is_array($parameters['clientIds'])) {
           $parameters['clientIds'] = implode(',', $parameters['clientIds']);
         }
         $url = '/api/integration/v1/project/list';
