@@ -253,6 +253,7 @@ abstract class ProjectResource extends Resource
         $queryParam = new QueryParam();
         $url = '/api/integration/v1/project/{projectId}/translationmemories';
         $url = str_replace('{projectId}', urlencode($projectId), $url);
+        $queryParam->setDefined(['onlyExactSourceLanguageMatch', 'onlyExactTargetLanguageMatch']);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmModels, 'json');
