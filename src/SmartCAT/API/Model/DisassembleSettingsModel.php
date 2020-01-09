@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartCAT\Client\Model;
+namespace SmartCat\Client\Model;
 
 class DisassembleSettingsModel
 {
@@ -10,12 +10,13 @@ class DisassembleSettingsModel
     protected $translatableAttributes;
 
     /**
-     * @return string
+     * @return array
      */
     public function getTranslatableAttributes()
     {
         return $this->translatableAttributes;
     }
+
     /**
      * @param array $translatableAttributes
      *  format: ['htmlTagName'=>['data-attr1', 'data-attr2']]
