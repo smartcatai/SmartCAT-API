@@ -99,7 +99,7 @@ class SmartCat
         $this->serializer = $serializer;
         $this->messageFactory = $messageFactory;
         $options = [
-            'remote_socket' => "tcp://$this->host:443",
+            'remote_socket' => "tcp://" . str_replace("https://", "", $this->host) . ":443",
             'ssl' => true,
         ];
 
