@@ -22,14 +22,14 @@ class DocumentResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentIds');
-        $url = '/api/integration/v1/document';
+        $url = $this->host . '/api/integration/v1/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $search = [];
         for ($i = 0; $i < count($parameters['documentIds']); $i++) {
             $search[] = "documentIds%5B$i%5D";
         }
         $url = str_replace($search, 'documentIds', $url);
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -54,9 +54,9 @@ class DocumentResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
-        $url = '/api/integration/v1/document';
+        $url = $this->host . '/api/integration/v1/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -86,9 +86,9 @@ class DocumentResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
-        $url = '/api/integration/v1/document/translate/status';
+        $url = $this->host . '/api/integration/v1/document/translate/status';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -112,9 +112,9 @@ class DocumentResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
-        $url = '/api/integration/v1/document/translate/result';
+        $url = $this->host . '/api/integration/v1/document/translate/result';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -145,9 +145,9 @@ class DocumentResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
         $queryParam->setDefault('onlyExactMatches', NULL);
-        $url = '/api/integration/v1/document/statistics';
+        $url = $this->host . '/api/integration/v1/document/statistics';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -182,9 +182,9 @@ class DocumentResource extends Resource
         $queryParam->setHeaderParameters(['Content-Type']);
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('stageNumber');
-        $url = '/api/integration/v1/document/assignFreelancers';
+        $url = $this->host . '/api/integration/v1/document/assignFreelancers';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($freelancerUserIds, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -219,9 +219,9 @@ class DocumentResource extends Resource
         $queryParam->setHeaderParameters(['Content-Type']);
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('stageNumber');
-        $url = '/api/integration/v1/document/assign';
+        $url = $this->host . '/api/integration/v1/document/assign';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -248,9 +248,9 @@ class DocumentResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
-        $url = '/api/integration/v1/document/update';
+        $url = $this->host . '/api/integration/v1/document/update';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($updateDocumentModel, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -282,9 +282,9 @@ class DocumentResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('name');
-        $url = '/api/integration/v1/document/rename';
+        $url = $this->host . '/api/integration/v1/document/rename';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -315,9 +315,9 @@ class DocumentResource extends Resource
         $queryParam->setFormParameters(array('translationFile'));
         $queryParam->setDefault('overwrite', NULL);
         $queryParam->setDefault('confirmTranslation', NULL);
-        $url = '/api/integration/v1/document/translate';
+        $url = $this->host . '/api/integration/v1/document/translate';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -348,9 +348,9 @@ class DocumentResource extends Resource
         $queryParam->setRequired('overwriteUpdatedSegments');
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
-        $url = '/api/integration/v1/document/translateWithXliff';
+        $url = $this->host . '/api/integration/v1/document/translateWithXliff';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -376,9 +376,9 @@ class DocumentResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setRequired('accountUserId');
         $queryParam->setRequired('documentId');
-        $url = '/api/integration/v1/document/getAuthUrl';
+        $url = $this->host . '/api/integration/v1/document/getAuthUrl';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

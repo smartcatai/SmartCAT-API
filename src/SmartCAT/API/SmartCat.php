@@ -33,9 +33,9 @@ use Symfony\Component\Serializer\Serializer;
 
 class SmartCat
 {
-    const SC_USA = 'us.smartcat.ai';
-    const SC_EUROPE = 'smartcat.ai';
-    const SC_ASIA = 'ea.smartcat.ai';
+    const SC_USA = 'https://us.smartcat.ai';
+    const SC_EUROPE = 'https://smartcat.ai';
+    const SC_ASIA = 'https://ea.smartcat.ai';
 
     /**
      * @var HttpClient
@@ -100,7 +100,7 @@ class SmartCat
         $this->messageFactory = $messageFactory;
         $options = [
             'remote_socket' => "tcp://$this->host:443",
-            'ssl' => true
+            'ssl' => true,
         ];
 
         $socketClient = new SocketHttpClient($messageFactory, $options);

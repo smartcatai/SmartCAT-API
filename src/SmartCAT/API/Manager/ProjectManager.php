@@ -26,9 +26,9 @@ class ProjectManager extends ProjectResource
     public function projectCreateProjectWithFiles(\SmartCat\Client\Model\CreateProjectWithFilesModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/project/create';
+        $url = $this->host . '/api/integration/v1/project/create';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => $this->host], $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
 
         $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
@@ -102,12 +102,12 @@ class ProjectManager extends ProjectResource
         $queryParam->setDefault('externalId', NULL);
         $queryParam->setDefault('metaInfo', NULL);
         $queryParam->setDefault('targetLanguages', NULL);
-        $headers = array_merge(['Host' => $this->host, 'Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         /** @var CreateDocumentPropertyWithFilesModel[] $documentModel */
         $documentModel = isset($parameters['documentModel']) ? $parameters['documentModel'] : null;
 
-        $url = '/api/integration/v1/project/document';
+        $url = $this->host . '/api/integration/v1/project/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
         $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());

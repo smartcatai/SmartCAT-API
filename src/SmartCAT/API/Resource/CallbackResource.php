@@ -17,9 +17,9 @@ class CallbackResource extends Resource
     public function callbackDelete($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/callback';
+        $url = $this->host . '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -40,9 +40,9 @@ class CallbackResource extends Resource
     public function callbackGet($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/callback';
+        $url = $this->host . '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -71,9 +71,9 @@ class CallbackResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');
         $queryParam->setHeaderParameters(['Content-Type']);
-        $url = '/api/integration/v1/callback';
+        $url = $this->host . '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($callbackProperty, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -97,9 +97,9 @@ class CallbackResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('limit', NULL);
-        $url = '/api/integration/v1/callback/lastErrors';
+        $url = $this->host . '/api/integration/v1/callback/lastErrors';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

@@ -86,7 +86,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setFormParameters(array('uploadedFile'));
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
 
         $parameters['uploadedFile'] = $this->prepareFile($parameters['uploadedFile']);
 
@@ -102,7 +102,7 @@ class DocumentManager extends DocumentResource
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
-        $url = '/api/integration/v1/document/update';
+        $url = $this->host . '/api/integration/v1/document/update';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -143,7 +143,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
@@ -155,7 +155,7 @@ class DocumentManager extends DocumentResource
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
-        $url = '/api/integration/v1/document/translate';
+        $url = $this->host . '/api/integration/v1/document/translate';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
@@ -195,7 +195,7 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(['translationFile']);
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
@@ -207,7 +207,7 @@ class DocumentManager extends DocumentResource
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
-        $url = '/api/integration/v1/document/translateWithXliff';
+        $url = $this->host . '/api/integration/v1/document/translateWithXliff';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

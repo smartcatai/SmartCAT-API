@@ -4,10 +4,12 @@ namespace SmartCAT\Client\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
+use Symfony\Component\Serializer\SerializerAwareTrait;
 
-class DisassembleSettingsModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class DisassembleSettingsModelNormalizer implements DenormalizerInterface, NormalizerInterface
 {
+    use SerializerAwareTrait;
+
     public function supportsDenormalization($data, $type, $format = null)
     {
         if ($type !== 'SmartCAT\\Client\\Model\\DisassembleSettingsModel') {

@@ -18,10 +18,10 @@ class DocumentExportResource extends Resource
     public function documentExportDownloadExportResult($taskId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/document/export/{taskId}';
+        $url = $this->host . '/api/integration/v1/document/export/{taskId}';
         $url = str_replace('{taskId}', urlencode($taskId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -49,14 +49,14 @@ class DocumentExportResource extends Resource
         $queryParam->setRequired('documentIds');
         $queryParam->setDefault('type', NULL);
         $queryParam->setDefault('stageNumber', NULL);
-        $url = '/api/integration/v1/document/export';
+        $url = $this->host . '/api/integration/v1/document/export';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $search = [];
         for ($i = 0; $i < count($parameters['documentIds']); $i++) {
             $search[] = "documentIds%5B$i%5D";
         }
         $url = str_replace($search, 'documentIds', $url);
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

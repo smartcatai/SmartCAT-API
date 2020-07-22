@@ -38,6 +38,7 @@ class NormalizerFactory
         $normalizers[] = new ExportDocumentTaskModelNormalizer();
         $normalizers[] = new GlossaryModelNormalizer();
         $normalizers[] = new ImportJobModelNormalizer();
+        $normalizers[] = new ImportJobModelV2Normalizer();
         $normalizers[] = new CreateInvoiceModelNormalizer();
         $normalizers[] = new CancelInvoiceModelNormalizer();
         $normalizers[] = new PlaceholderFormatModelNormalizer();

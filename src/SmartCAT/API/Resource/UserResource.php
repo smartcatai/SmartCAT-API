@@ -18,9 +18,9 @@ class UserResource extends Resource
     public function userCreate(\SmartCat\Client\Model\CreateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/user';
+        $url = $this->host . '/api/integration/v1/user';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -47,10 +47,10 @@ class UserResource extends Resource
     public function userDelete($accountUserId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/user/{accountUserId}';
+        $url = $this->host . '/api/integration/v1/user/{accountUserId}';
         $url = str_replace('{accountUserId}', urlencode($accountUserId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -74,9 +74,9 @@ class UserResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('id');
-        $url = '/api/integration/v1/user/external';
+        $url = $this->host . '/api/integration/v1/user/external';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -106,10 +106,10 @@ class UserResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');
         $queryParam->setHeaderParameters(['Content-Type']);
-        $url = '/api/integration/v1/user/{accountUserId}';
+        $url = $this->host . '/api/integration/v1/user/{accountUserId}';
         $url = str_replace('{accountUserId}', urlencode($accountUserId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

@@ -17,9 +17,9 @@ class GlossaryResource extends Resource
     public function glossaryGetGlossaries($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/glossaries';
+        $url = $this->host . '/api/integration/v1/glossaries';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

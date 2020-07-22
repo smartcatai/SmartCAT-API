@@ -18,10 +18,10 @@ class TranslationMemoriesResource extends Resource
     public function translationMemoriesRemoveTranslationMemory($tmId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/translationmemory/{tmId}';
+        $url = $this->host . '/api/integration/v1/translationmemory/{tmId}';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -43,10 +43,10 @@ class TranslationMemoriesResource extends Resource
     public function translationMemoriesGetMetaInfo($tmId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/translationmemory/{tmId}';
+        $url = $this->host . '/api/integration/v1/translationmemory/{tmId}';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -79,10 +79,10 @@ class TranslationMemoriesResource extends Resource
         $queryParam->setRequired('replaceAllContent');
         $queryParam->setRequired('tmxFile');
         $queryParam->setFormParameters(array('tmxFile'));
-        $url = '/api/integration/v1/translationmemory/{tmId}';
+        $url = $this->host . '/api/integration/v1/translationmemory/{tmId}';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -114,9 +114,9 @@ class TranslationMemoriesResource extends Resource
         $queryParam->setDefault('sourceLanguage', NULL);
         $queryParam->setDefault('targetLanguage', NULL);
         $queryParam->setDefault('clientId', NULL);
-        $url = '/api/integration/v1/translationmemory';
+        $url = $this->host . '/api/integration/v1/translationmemory';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -146,9 +146,9 @@ class TranslationMemoriesResource extends Resource
     public function translationMemoriesCreateEmptyTM(\SmartCat\Client\Model\CreateTranslationMemoryModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/translationmemory';
+        $url = $this->host . '/api/integration/v1/translationmemory';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($model, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -169,9 +169,9 @@ class TranslationMemoriesResource extends Resource
     public function translationMemoriesGetPendingTasks($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/translationmemory/task';
+        $url = $this->host . '/api/integration/v1/translationmemory/task';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -203,10 +203,10 @@ class TranslationMemoriesResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setDefault('withTags', NULL);
         $queryParam->setDefault('tradosCompatible', NULL);
-        $url = '/api/integration/v1/translationmemory/{tmId}/file';
+        $url = $this->host . '/api/integration/v1/translationmemory/{tmId}/file';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -236,9 +236,9 @@ class TranslationMemoriesResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('tmId');
-        $url = '/api/integration/v1/translationmemory/matches';
+        $url = $this->host . '/api/integration/v1/translationmemory/matches';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -266,10 +266,10 @@ class TranslationMemoriesResource extends Resource
     public function translationMemoriesSetTMTargetLanguages($tmId, array $targetLanguages, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/translationmemory/{tmId}/targets';
+        $url = $this->host . '/api/integration/v1/translationmemory/{tmId}/targets';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $targetLanguages;
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -291,10 +291,10 @@ class TranslationMemoriesResource extends Resource
     public function translationMemoriesRemoveSpecificImportTask($taskId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/translationmemory/task/{taskId}';
+        $url = $this->host . '/api/integration/v1/translationmemory/task/{taskId}';
         $url = str_replace('{taskId}', urlencode($taskId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

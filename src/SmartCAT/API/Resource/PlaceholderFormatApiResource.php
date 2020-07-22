@@ -17,9 +17,9 @@ class PlaceholderFormatApiResource extends Resource
     public function placeholderFormatApiGetPlaceholderFormats($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/placeholders';
+        $url = $this->host . '/api/integration/v1/placeholders';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -48,9 +48,9 @@ class PlaceholderFormatApiResource extends Resource
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');
         $queryParam->setHeaderParameters(['Content-Type']);
-        $url = '/api/integration/v1/placeholders';
+        $url = $this->host . '/api/integration/v1/placeholders';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($formats, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -74,9 +74,9 @@ class PlaceholderFormatApiResource extends Resource
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('format');
-        $url = '/api/integration/v1/placeholders/validate';
+        $url = $this->host . '/api/integration/v1/placeholders/validate';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
