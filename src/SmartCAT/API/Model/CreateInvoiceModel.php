@@ -7,28 +7,32 @@ class CreateInvoiceModel
     /**
      * @var string
      */
-    protected $userId;
+    protected $targetCurrency;
+
     /**
      * @var string[]
      */
     protected $jobIds;
+
     /**
      * @return string
      */
-    public function getUserId()
+    public function getTargetCurrency()
     {
-        return $this->userId;
+        return $this->targetCurrency;
     }
+
     /**
-     * @param string $userId
+     * @param string $targetCurrency
      *
      * @return self
      */
-    public function setUserId($userId = null)
+    public function setTargetCurrency(string $targetCurrency = null)
     {
-        $this->userId = $userId;
+        $this->targetCurrency = $targetCurrency;
         return $this;
     }
+
     /**
      * @return string[]
      */
@@ -36,6 +40,7 @@ class CreateInvoiceModel
     {
         return $this->jobIds;
     }
+    
     /**
      * @param string[] $jobIds
      *

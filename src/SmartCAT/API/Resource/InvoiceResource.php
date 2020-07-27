@@ -7,9 +7,9 @@ use SmartCat\Client\Helper\QueryParam;
 class InvoiceResource extends Resource
 {
     /**
-     * 
      *
-     * @param \SmartCat\Client\Model\ImportJobModel $model 
+     *
+     * @param \SmartCat\Client\Model\ImportJobModel $model
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -76,6 +76,12 @@ class InvoiceResource extends Resource
             return $promise;
         }
         $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                $body = (string) $response->getBody();
+                return json_decode($body);
+            }
+        }
         return $response;
     }
 
