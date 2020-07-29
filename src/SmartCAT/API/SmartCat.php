@@ -20,6 +20,7 @@ use SmartCat\Client\Manager\DocumentExportManager;
 use SmartCat\Client\Manager\DocumentManager;
 use SmartCat\Client\Manager\GlossaryManager;
 use SmartCat\Client\Manager\InvoiceManager;
+use SmartCat\Client\Manager\MyTeamManager;
 use SmartCat\Client\Manager\PlaceholderFormatApiManager;
 use SmartCat\Client\Manager\ProjectManager;
 use SmartCat\Client\Manager\TranslationMemoriesManager;
@@ -155,6 +156,24 @@ class SmartCat
             $this->directoriesManager->setHost($this->host);
         }
         return $this->directoriesManager;
+    }
+
+    /**
+     * @var MyTeamManager
+     */
+    private $myTeamManager;
+    /**
+     * Интерфейс для работы со справочниками
+     *
+     * @return MyTeamManager
+     */
+    public function getMyTeamManager()
+    {
+        if (null === $this->myTeamManager) {
+            $this->myTeamManager = new MyTeamManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->myTeamManager->setHost($this->host);
+        }
+        return $this->myTeamManager;
     }
 
     /**

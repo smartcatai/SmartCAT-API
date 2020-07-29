@@ -69,6 +69,8 @@ class NormalizerFactory
         $normalizers[] = new CreateUserRequestNormalizer();
         $normalizers[] = new UserModelNormalizer();
         $normalizers[] = new UpdateUserRequestNormalizer();
+        $normalizers[] = new InhouseTranslatorModelNormalizer();
+        $normalizers[] = new ServiceModelNormalizer();
         return $normalizers;
     }
 }
