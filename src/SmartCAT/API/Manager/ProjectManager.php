@@ -144,7 +144,8 @@ class ProjectManager extends ProjectResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCat\\Client\\Model\\DocumentModel[]', 'json');
+                $body = (string) $response->getBody();
+                return $body;
             }
         }
         return $response;
