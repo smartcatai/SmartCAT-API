@@ -46,7 +46,7 @@ class CreateDocumentPropertyModelNormalizer extends AbstractNormalizer
             $object->setEnablePlaceholders($data->{'enablePlaceholders'});
         }
         if (property_exists($data, 'disassembleSettings')) {
-            $object->setDisassembleSettingsModel($this->serializer->deserialize($data->{'disassembleSettings'}, 'SmartCAT\\API\\Model\\DisassembleSettingsModel', 'raw', $context));
+            $object->setDisassembleSettingsModel($this->serializer->deserialize($data->{'disassembleSettings'}, 'SmartCat\\API\\Model\\DisassembleSettingsModel', 'raw', $context));
         }
         return $object;
     }

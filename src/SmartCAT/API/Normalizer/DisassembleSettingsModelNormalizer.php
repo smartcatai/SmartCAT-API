@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartCAT\Client\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -12,7 +12,7 @@ class DisassembleSettingsModelNormalizer implements DenormalizerInterface, Norma
 
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\Client\\Model\\DisassembleSettingsModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\DisassembleSettingsModel') {
             return false;
         }
         return true;
