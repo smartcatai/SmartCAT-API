@@ -83,7 +83,7 @@ class CreateProjectModelNormalizer extends AbstractNormalizer
         if (property_exists($data, 'documentProperties')) {
             $values_2 = array();
             foreach ($data->{'documentProperties'} as $value_2) {
-                $values_2[] = $this->serializer->deserialize($value_2, 'SmartCat\\Client\\Model\\CreateDocumentPropertyModel', 'raw', $context);
+                $values_2[] = $this->serializer->deserialize(json_encode($value_2), 'SmartCat\\Client\\Model\\CreateDocumentPropertyModel', 'json', $context);
             }
             $object->setDocumentProperties($values_2);
         }

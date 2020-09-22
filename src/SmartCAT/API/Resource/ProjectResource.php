@@ -91,10 +91,10 @@ abstract class ProjectResource extends Resource
     }
     /**
      * @param array  $parameters {
-     *     @var string $createdByUserId 
-     *     @var string $projectName 
-     *     @var string $externalTag 
-     *     @var array $clientIds 
+     *     @var string $createdByUserId
+     *     @var string $projectName
+     *     @var string $externalTag
+     *     @var array $clientIds
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -241,8 +241,8 @@ abstract class ProjectResource extends Resource
         return $response;
     }
     /**
-     * @param string $projectId 
-     * @param \SmartCat\Client\Model\TranslationMemoryForProjectModel[] $tmModels 
+     * @param string $projectId
+     * @param \SmartCat\Client\Model\TranslationMemoryForProjectModel[] $tmModels
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -266,7 +266,7 @@ abstract class ProjectResource extends Resource
         return $response;
     }
     /**
-     * @param string $projectId 
+     * @param string $projectId
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -294,8 +294,8 @@ abstract class ProjectResource extends Resource
         return $response;
     }
     /**
-     * @param string $projectId 
-     * @param array $glossaryIds 
+     * @param string $projectId
+     * @param array $glossaryIds
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -372,7 +372,7 @@ abstract class ProjectResource extends Resource
     }
     /**
      * @param array  $parameters {
-     *     @var string $projectId 
+     *     @var string $projectId
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -501,8 +501,8 @@ abstract class ProjectResource extends Resource
         return $response;
     }
     /**
-     * @param string $projectId 
-     * @param \SmartCat\Client\Model\TranslationMemoriesForLanguageModel[] $tmForLanguagesModels 
+     * @param string $projectId
+     * @param \SmartCat\Client\Model\TranslationMemoriesForLanguageModel[] $tmForLanguagesModels
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
@@ -525,9 +525,9 @@ abstract class ProjectResource extends Resource
         return $response;
     }
     /**
-     * @param string $projectId 
+     * @param string $projectId
      * @param array  $parameters {
-     *     @var bool $onlyExactMatches 
+     *     @var bool $onlyExactMatches
      * }
      * @param string $fetch      Fetch mode (object or response)
      *

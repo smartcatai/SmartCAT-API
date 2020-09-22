@@ -26,7 +26,7 @@ class AssignExecutivesRequestModelNormalizer extends AbstractNormalizer
         if (property_exists($data, 'executives')) {
             $values = array();
             foreach ($data->{'executives'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\Executive', 'raw', $context);
+                $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\Executive', 'json', $context);
             }
             $object->setExecutives($values);
         }

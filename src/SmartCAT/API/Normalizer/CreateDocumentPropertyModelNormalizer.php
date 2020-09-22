@@ -33,7 +33,7 @@ class CreateDocumentPropertyModelNormalizer extends AbstractNormalizer
             $object->setDisassembleAlgorithmName($data->{'disassembleAlgorithmName'});
         }
         if (property_exists($data, 'bilingualFileImportSettings')) {
-            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
+            $object->setBilingualFileImportSettings($this->serializer->deserialize(json_encode($data->{'bilingualFileImportSettings'}), 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'json', $context));
         }
         if (property_exists($data, 'targetLanguages')) {
             $values = array();

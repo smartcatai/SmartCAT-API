@@ -29,7 +29,7 @@ class CallbackPropertyModelNormalizer extends AbstractNormalizer
         if (property_exists($data, 'additionalHeaders')) {
             $values = array();
             foreach ($data->{'additionalHeaders'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\AdditionalHeaderModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\AdditionalHeaderModel', 'json', $context);
             }
             $object->setAdditionalHeaders($values);
         }

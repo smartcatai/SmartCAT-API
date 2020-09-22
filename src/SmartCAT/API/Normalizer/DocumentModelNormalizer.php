@@ -59,7 +59,7 @@ class DocumentModelNormalizer extends AbstractNormalizer
         if (property_exists($data, 'workflowStages')) {
             $values = array();
             foreach ($data->{'workflowStages'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\DocumentWorkflowStageModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\DocumentWorkflowStageModel', 'json', $context);
             }
             $object->setWorkflowStages($values);
         }

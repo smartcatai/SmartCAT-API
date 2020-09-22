@@ -30,7 +30,7 @@ class ClientModelNormalizer extends AbstractNormalizer
             $object->setName($data->{'name'});
         }
         if (property_exists($data, 'netRate')) {
-            $object->setNetRate($this->serializer->deserialize($data->{'netRate'}, 'SmartCat\\Client\\Model\\NetRateModel', 'raw', $context));
+            $object->setNetRate($this->serializer->deserialize(json_encode($data->{'netRate'}), 'SmartCat\\Client\\Model\\NetRateModel', 'json', $context));
         }
         return $object;
     }

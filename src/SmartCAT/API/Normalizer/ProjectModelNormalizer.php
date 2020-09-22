@@ -92,21 +92,21 @@ class ProjectModelNormalizer extends AbstractNormalizer
         if (property_exists($data, 'vendors')) {
             $values_3 = array();
             foreach ($data->{'vendors'} as $value_3) {
-                $values_3[] = $this->serializer->deserialize($value_3, ProjectVendorModel::class, 'raw', $context);
+                $values_3[] = $this->serializer->deserialize(json_encode($value_3), ProjectVendorModel::class, 'json', $context);
             }
             $object->setVendors($values_3);
         }
         if (property_exists($data, 'workflowStages')) {
             $values_1 = array();
             foreach ($data->{'workflowStages'} as $value_1) {
-                $values_1[] = $this->serializer->deserialize($value_1, ProjectWorkflowStageModel::class, 'raw', $context);
+                $values_1[] = $this->serializer->deserialize(json_encode($value_1), ProjectWorkflowStageModel::class, 'json', $context);
             }
             $object->setWorkflowStages($values_1);
         }
         if (property_exists($data, 'documents')) {
             $values_2 = array();
             foreach ($data->{'documents'} as $value_2) {
-                $values_2[] = $this->serializer->deserialize($value_2, DocumentModel::class, 'raw', $context);
+                $values_2[] = $this->serializer->deserialize(json_encode($value_2), DocumentModel::class, 'json', $context);
             }
             $object->setDocuments($values_2);
         }
