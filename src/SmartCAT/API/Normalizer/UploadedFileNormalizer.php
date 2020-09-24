@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class UploadedFileNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class UploadedFileNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\UploadedFile') {
+        if ($type !== 'SmartCat\\Client\\Model\\UploadedFile') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\UploadedFile) {
+        if ($data instanceof \SmartCat\Client\Model\UploadedFile) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\UploadedFile();
+        $object = new \SmartCat\Client\Model\UploadedFile();
         if (property_exists($data, 'FullName')) {
             $object->setFullName($data->{'FullName'});
         }
@@ -42,6 +40,7 @@ class UploadedFileNormalizer extends SerializerAwareNormalizer implements Denorm
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

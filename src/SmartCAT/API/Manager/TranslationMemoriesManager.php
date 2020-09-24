@@ -1,32 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Diversant_
- * Date: 23.11.2016
- * Time: 17:07
- */
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-
-use Http\Discovery\StreamFactoryDiscovery;
+use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Resource\TranslationMemoriesResource;
+use SmartCat\Client\Helper\QueryParam;
+use SmartCat\Client\Resource\TranslationMemoriesResource;
 
 class TranslationMemoriesManager extends TranslationMemoriesResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 
     //TODO: Нет описания возвращаемых данных, API возращает кривоватый ответ заворачивая tmId в кавычки
 
     /**
-     * @param \SmartCAT\API\Model\CreateTranslationMemoryModel $model
+     * @param \SmartCat\Client\Model\CreateTranslationMemoryModel $model
      * @param array $parameters
      * @param string $fetch
      * @return \Psr\Http\Message\ResponseInterface | string
      */
-    public function translationMemoriesCreateEmptyTM(\SmartCAT\API\Model\CreateTranslationMemoryModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function translationMemoriesCreateEmptyTM(\SmartCat\Client\Model\CreateTranslationMemoryModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $res = parent::translationMemoriesCreateEmptyTM($model, $parameters, $fetch);
 
@@ -61,16 +54,15 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         $queryParam->setRequired('replaceAllContent');
         $queryParam->setRequired('tmxFile');
         $queryParam->setFormParameters(array('tmxFile'));
-        $url = '/api/integration/v1/translationmemory/{tmId}';
+        $url = $this->host . '/api/integration/v1/translationmemory/{tmId}';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
 
         $parameters['tmxFile'] = $this->prepareFile($parameters['tmxFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('uploadedFile', $parameters['tmxFile']['fileContent'], ['filename' => (isset($parameters['tmxFile']['fileName']) ? $parameters['tmxFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
@@ -104,10 +96,10 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');
         $queryParam->setHeaderParameters(['Content-Type']);
-        $url = '/api/integration/v1/translationmemory/{tmId}/targets';
+        $url = $this->host . '/api/integration/v1/translationmemory/{tmId}/targets';
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => $this->host], $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($targetLanguages, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

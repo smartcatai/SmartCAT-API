@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class CreateTranslationMemoryModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class CreateTranslationMemoryModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\CreateTranslationMemoryModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\CreateTranslationMemoryModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\CreateTranslationMemoryModel) {
+        if ($data instanceof \SmartCat\Client\Model\CreateTranslationMemoryModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\CreateTranslationMemoryModel();
+        $object = new \SmartCat\Client\Model\CreateTranslationMemoryModel();
         if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
@@ -46,6 +44,7 @@ class CreateTranslationMemoryModelNormalizer extends SerializerAwareNormalizer i
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

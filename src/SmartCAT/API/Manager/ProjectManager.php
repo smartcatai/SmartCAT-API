@@ -1,45 +1,45 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-use Http\Discovery\StreamFactoryDiscovery;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Model\CreateDocumentPropertyWithFilesModel;
-use SmartCAT\API\Resource\ProjectResource;
+use Http\Message\StreamFactory\GuzzleStreamFactory;
+use SmartCat\Client\Helper\QueryParam;
+use SmartCat\Client\Model\CreateDocumentPropertyWithFilesModel;
+use SmartCat\Client\Model\ProjectModel;
+use SmartCat\Client\Resource\ProjectResource;
 
 class ProjectManager extends ProjectResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 
     //TODO: Генератор не умет работать с файлами и multipart-запросами
 
     /**
      * Создать проект, генерирует multipart-запрос, содержащий модель в формате JSON (Content-Type=application/json) и один или несколько файлов (Content-Type=application/octet-stream).
-     * @param \SmartCAT\API\Model\CreateProjectWithFilesModel $project Модель создания проекта с файлами
+     * @param \SmartCat\Client\Model\CreateProjectWithFilesModel $project Модель создания проекта с файлами
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel
      */
-    public function projectCreateProjectWithFiles(\SmartCAT\API\Model\CreateProjectWithFilesModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function projectCreateProjectWithFiles(\SmartCat\Client\Model\CreateProjectWithFilesModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/project/create';
+        $url = $this->host . '/api/integration/v1/project/create';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(['Host' => $this->host], $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('model', $this->serializer->serialize($project, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
-        $projectFile = $project->getFiles();
+        $projectFiles = $project->getFiles();
         $i = 0;
-        foreach ($projectFile as $fileName => $file) {
+        foreach ($projectFiles as $fileName => $file) {
             $i++;
             $builder
                 ->addResource(
-                    'file' . $i,
+                    'file_' . $i,
                     $file['fileContent'],
                     [
                         'filename' => isset($file['fileName']) ? $file['fileName'] : null,
@@ -50,10 +50,9 @@ class ProjectManager extends ProjectResource
 
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
-        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
-        $body = $multipartStream->getContents();
+        $headers['Content-Type'] = 'multipart/form-data; boundary="' . $boundary . '"';
 
-        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $multipartStream);
         $promise = $this->httpClient->sendAsyncRequest($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -61,7 +60,7 @@ class ProjectManager extends ProjectResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\ProjectModel', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), ProjectModel::class, 'json');
             }
         }
         return $response;
@@ -74,7 +73,7 @@ class ProjectManager extends ProjectResource
      *
      * @param array $parameters {
      * @var string $projectId Идентификатор проекта
-     * @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $documentModel - optional Модель загрузки документа с файлом
+     * @var \SmartCat\Client\Model\UploadDocumentPropertiesModel $documentModel - optional Модель загрузки документа с файлом
      * @var  $file - optional {
      *      @var string $fileName - optional
      *      @var string $filePath | blob or stream $fileContent
@@ -85,7 +84,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -103,16 +102,15 @@ class ProjectManager extends ProjectResource
         $queryParam->setDefault('externalId', NULL);
         $queryParam->setDefault('metaInfo', NULL);
         $queryParam->setDefault('targetLanguages', NULL);
-        $headers = array_merge(['Host' => $this->host, 'Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
+        $headers = array_merge(['Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         /** @var CreateDocumentPropertyWithFilesModel[] $documentModel */
         $documentModel = isset($parameters['documentModel']) ? $parameters['documentModel'] : null;
 
-        $url = '/api/integration/v1/project/document';
+        $url = $this->host . '/api/integration/v1/project/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         if ($documentModel) {
             $prepareDocumentModel = array_map(function (CreateDocumentPropertyWithFilesModel $n) {
                 return $n->toCreateDocumentPropertyModel();
@@ -146,7 +144,7 @@ class ProjectManager extends ProjectResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCat\\Client\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;
@@ -182,7 +180,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ProjectStatisticsModel[]|string
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]|string
      */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -194,7 +192,7 @@ class ProjectManager extends ProjectResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\ProjectStatisticsModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCat\\Client\\Model\\ProjectStatisticsModel[]', 'json');
             }
             if ('202' == $response->getStatusCode()) {
                 return (string)$response->getBody();

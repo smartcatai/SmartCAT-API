@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class DirectoriesResource extends Resource
 {
     /**
@@ -14,15 +14,15 @@ class DirectoriesResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DirectoryModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DirectoryModel
      */
     public function directoriesGet($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('type');
-        $url = '/api/integration/v1/directory';
+        $url = $this->host . '/api/integration/v1/directory';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -32,7 +32,7 @@ class DirectoriesResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\DirectoryModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\DirectoryModel', 'json');
             }
         }
         return $response;
@@ -43,14 +43,14 @@ class DirectoriesResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\FileFormatModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\FileFormatModel[]
      */
     public function directoriesGetSupportedFormatsForAccount($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/directory/formats';
+        $url = $this->host . '/api/integration/v1/directory/formats';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -60,7 +60,7 @@ class DirectoriesResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\FileFormatModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\FileFormatModel[]', 'json');
             }
         }
         return $response;

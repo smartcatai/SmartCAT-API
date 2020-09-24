@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class GlossaryResource extends Resource
 {
     /**
@@ -12,14 +12,14 @@ class GlossaryResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\GlossaryModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\GlossaryModel[]
      */
     public function glossaryGetGlossaries($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/glossaries';
+        $url = $this->host . '/api/integration/v1/glossaries';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -29,7 +29,7 @@ class GlossaryResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\GlossaryModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\GlossaryModel[]', 'json');
             }
         }
         return $response;

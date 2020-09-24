@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class CallbackResource extends Resource
 {
     /**
@@ -17,9 +17,9 @@ class CallbackResource extends Resource
     public function callbackDelete($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/callback';
+        $url = $this->host . '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -35,14 +35,14 @@ class CallbackResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\CallbackPropertyModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\CallbackPropertyModel
      */
     public function callbackGet($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/callback';
+        $url = $this->host . '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -52,7 +52,7 @@ class CallbackResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\CallbackPropertyModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\CallbackPropertyModel', 'json');
             }
         }
         return $response;
@@ -60,20 +60,20 @@ class CallbackResource extends Resource
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\CallbackPropertyModel $callbackProperty Notification settings
+     * @param \SmartCat\Client\Model\CallbackPropertyModel $callbackProperty Notification settings
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function callbackUpdate(\SmartCAT\API\Model\CallbackPropertyModel $callbackProperty, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function callbackUpdate(\SmartCat\Client\Model\CallbackPropertyModel $callbackProperty, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');
         $queryParam->setHeaderParameters(['Content-Type']);
-        $url = '/api/integration/v1/callback';
+        $url = $this->host . '/api/integration/v1/callback';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($callbackProperty, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -91,15 +91,15 @@ class CallbackResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\CallbackErrorModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\CallbackErrorModel[]
      */
     public function callbackGetLastErrors($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('limit', NULL);
-        $url = '/api/integration/v1/callback/lastErrors';
+        $url = $this->host . '/api/integration/v1/callback/lastErrors';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -109,7 +109,7 @@ class CallbackResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\CallbackErrorModel[]', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\CallbackErrorModel[]', 'json');
             }
         }
         return $response;

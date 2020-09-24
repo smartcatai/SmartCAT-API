@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class ClientResource extends Resource
 {
     /**
@@ -18,9 +18,9 @@ class ClientResource extends Resource
     public function clientCreateClient($name, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/client/create';
+        $url = $this->host . '/api/integration/v1/client/create';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $name;
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -39,16 +39,16 @@ class ClientResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ClientModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ClientModel
      */
     public function clientSetClientNetRate($clientId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('netRateId');
-        $url = '/api/integration/v1/client/{clientId}/set';
+        $url = $this->host . '/api/integration/v1/client/{clientId}/set';
         $url = str_replace('{clientId}', urlencode($clientId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -58,7 +58,7 @@ class ClientResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ClientModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\ClientModel', 'json');
             }
         }
         return $response;
@@ -70,15 +70,15 @@ class ClientResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\ClientModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ClientModel
      */
     public function clientGetClient($clientId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/client/{clientId}';
+        $url = $this->host . '/api/integration/v1/client/{clientId}';
         $url = str_replace('{clientId}', urlencode($clientId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -88,7 +88,7 @@ class ClientResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\ClientModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\ClientModel', 'json');
             }
         }
         return $response;

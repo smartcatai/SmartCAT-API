@@ -1,42 +1,41 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class DocumentStatisticsModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class DocumentStatisticsModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\DocumentStatisticsModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\DocumentStatisticsModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\DocumentStatisticsModel) {
+        if ($data instanceof \SmartCat\Client\Model\DocumentStatisticsModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\DocumentStatisticsModel();
+        $object = new \SmartCat\Client\Model\DocumentStatisticsModel();
         if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
         if (property_exists($data, 'statistics')) {
             $values = array();
             foreach ($data->{'statistics'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\StatisticsRowModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\StatisticsRowModel', 'raw', $context);
             }
             $object->setStatistics($values);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

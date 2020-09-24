@@ -1,34 +1,32 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class AssignExecutivesRequestModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class AssignExecutivesRequestModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\AssignExecutivesRequestModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\AssignExecutivesRequestModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\AssignExecutivesRequestModel) {
+        if ($data instanceof \SmartCat\Client\Model\AssignExecutivesRequestModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\AssignExecutivesRequestModel();
+        $object = new \SmartCat\Client\Model\AssignExecutivesRequestModel();
         if (property_exists($data, 'executives')) {
             $values = array();
             foreach ($data->{'executives'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\Executive', 'raw', $context);
+                $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\Executive', 'json', $context);
             }
             $object->setExecutives($values);
         }
@@ -40,6 +38,7 @@ class AssignExecutivesRequestModelNormalizer extends SerializerAwareNormalizer i
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

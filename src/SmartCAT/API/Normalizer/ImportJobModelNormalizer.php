@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class ImportJobModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ImportJobModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\ImportJobModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\ImportJobModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\ImportJobModel) {
+        if ($data instanceof \SmartCat\Client\Model\ImportJobModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\ImportJobModel();
+        $object = new \SmartCat\Client\Model\ImportJobModel();
         if (property_exists($data, 'freelancerId')) {
             $object->setFreelancerId($data->{'freelancerId'});
         }
@@ -48,6 +46,7 @@ class ImportJobModelNormalizer extends SerializerAwareNormalizer implements Deno
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

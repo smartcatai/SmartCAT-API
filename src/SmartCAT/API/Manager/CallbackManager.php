@@ -1,11 +1,10 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Resource\CallbackResource;
+use SmartCat\Client\Resource\CallbackResource;
 
 class CallbackManager extends CallbackResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 }

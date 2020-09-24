@@ -1,13 +1,15 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
+
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 
 class NormalizerFactory
 {
     public static function create()
     {
         $normalizers = array();
-        $normalizers[] = new \Joli\Jane\Runtime\Normalizer\ArrayDenormalizer();
+        $normalizers[] = new ArrayDenormalizer();
         $normalizers[] = new AccountModelNormalizer();
         $normalizers[] = new MTEngineModelNormalizer();
         $normalizers[] = new AssignableExecutiveModelNormalizer();
@@ -36,6 +38,7 @@ class NormalizerFactory
         $normalizers[] = new ExportDocumentTaskModelNormalizer();
         $normalizers[] = new GlossaryModelNormalizer();
         $normalizers[] = new ImportJobModelNormalizer();
+        $normalizers[] = new ImportJobModelV2Normalizer();
         $normalizers[] = new CreateInvoiceModelNormalizer();
         $normalizers[] = new CancelInvoiceModelNormalizer();
         $normalizers[] = new PlaceholderFormatModelNormalizer();
@@ -51,6 +54,7 @@ class NormalizerFactory
         $normalizers[] = new TranslationMemoryForProjectModelNormalizer();
         $normalizers[] = new ModelWithFilesCreateProjectModelNormalizer();
         $normalizers[] = new CreateProjectModelNormalizer();
+        $normalizers[] = new DisassembleSettingsModelNormalizer();
         $normalizers[] = new CreateDocumentPropertyModelNormalizer();
         $normalizers[] = new ModelWithFilesIReadOnlyListCreateDocumentPropertyModelNormalizer();
         $normalizers[] = new TranslationMemoriesForLanguageModelNormalizer();
@@ -65,6 +69,8 @@ class NormalizerFactory
         $normalizers[] = new CreateUserRequestNormalizer();
         $normalizers[] = new UserModelNormalizer();
         $normalizers[] = new UpdateUserRequestNormalizer();
+        $normalizers[] = new InhouseTranslatorModelNormalizer();
+        $normalizers[] = new ServiceModelNormalizer();
         return $normalizers;
     }
 }

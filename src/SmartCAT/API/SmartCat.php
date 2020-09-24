@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartCAT\API;
+namespace SmartCat\Client;
 
 use Http\Client\Common\Plugin\AuthenticationPlugin;
 use Http\Client\Common\Plugin\ContentLengthPlugin;
@@ -11,30 +11,32 @@ use Http\Client\HttpClient;
 use Http\Client\Socket\Client as SocketHttpClient;
 use Http\Message\Authentication\BasicAuth;
 use Http\Message\MessageFactory;
-use Joli\Jane\Runtime\Encoder\RawEncoder;
-use SmartCAT\API\Manager\AccountManager;
-use SmartCAT\API\Manager\CallbackManager;
-use SmartCAT\API\Manager\ClientManager;
-use SmartCAT\API\Manager\DirectoriesManager;
-use SmartCAT\API\Manager\DocumentExportManager;
-use SmartCAT\API\Manager\DocumentManager;
-use SmartCAT\API\Manager\GlossaryManager;
-use SmartCAT\API\Manager\InvoiceManager;
-use SmartCAT\API\Manager\PlaceholderFormatApiManager;
-use SmartCAT\API\Manager\ProjectManager;
-use SmartCAT\API\Manager\TranslationMemoriesManager;
-use SmartCAT\API\Manager\UserManager;
-use SmartCAT\API\Normalizer\NormalizerFactory;
+use SmartCat\Client\Helper\RawEncoder;
+use SmartCat\Client\Manager\AccountManager;
+use SmartCat\Client\Manager\CallbackManager;
+use SmartCat\Client\Manager\ClientManager;
+use SmartCat\Client\Manager\DirectoriesManager;
+use SmartCat\Client\Manager\DocumentExportManager;
+use SmartCat\Client\Manager\DocumentManager;
+use SmartCat\Client\Manager\GlossaryManager;
+use SmartCat\Client\Manager\InvoiceManager;
+use SmartCat\Client\Manager\MyTeamManager;
+use SmartCat\Client\Manager\PlaceholderFormatApiManager;
+use SmartCat\Client\Manager\ProjectManager;
+use SmartCat\Client\Manager\TranslationMemoriesManager;
+use SmartCat\Client\Manager\UserManager;
+use SmartCat\Client\Normalizer\AbstractNormalizer;
+use SmartCat\Client\Normalizer\NormalizerFactory;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Serializer;
 
-class SmartCAT
+class SmartCat
 {
-    const SC_USA = 'us.smartcat.ai';
-    const SC_EUROPE = 'smartcat.ai';
-    const SC_ASIA = 'ea.smartcat.ai';
+    const SC_USA = 'https://us.smartcat.ai';
+    const SC_EUROPE = 'https://smartcat.ai';
+    const SC_ASIA = 'https://ea.smartcat.ai';
 
     /**
      * @var HttpClient
@@ -75,8 +77,10 @@ class SmartCAT
         $this->login = $login;
         $this->password = $password;
         $this->host = $host;
+
+        $normalizers = NormalizerFactory::create();
         $serializer = new Serializer(
-            NormalizerFactory::create(),
+            $normalizers,
             [
                 new JsonEncoder(
                     new JsonEncode(),
@@ -85,12 +89,19 @@ class SmartCAT
                 new RawEncoder()
             ]
         );
+
+        /** @var AbstractNormalizer $normalizer */
+        foreach ($normalizers as $normalizer) {
+            $normalizer->setSerializer($serializer);
+        }
+
         $messageFactory = new MessageFactory\GuzzleMessageFactory();
+
         $this->serializer = $serializer;
         $this->messageFactory = $messageFactory;
         $options = [
-            'remote_socket' => "tcp://$this->host:443",
-            'ssl' => true
+            'remote_socket' => "tcp://" . str_replace("https://", "", $this->host) . ":443",
+            'ssl' => true,
         ];
 
         $socketClient = new SocketHttpClient($messageFactory, $options);
@@ -145,6 +156,24 @@ class SmartCAT
             $this->directoriesManager->setHost($this->host);
         }
         return $this->directoriesManager;
+    }
+
+    /**
+     * @var MyTeamManager
+     */
+    private $myTeamManager;
+    /**
+     * Интерфейс для работы со справочниками
+     *
+     * @return MyTeamManager
+     */
+    public function getMyTeamManager()
+    {
+        if (null === $this->myTeamManager) {
+            $this->myTeamManager = new MyTeamManager($this->httpClient, $this->messageFactory, $this->serializer);
+            $this->myTeamManager->setHost($this->host);
+        }
+        return $this->myTeamManager;
     }
 
     /**

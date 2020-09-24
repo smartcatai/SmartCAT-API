@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class StatisticsRowModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class StatisticsRowModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\StatisticsRowModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\StatisticsRowModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\StatisticsRowModel) {
+        if ($data instanceof \SmartCat\Client\Model\StatisticsRowModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\StatisticsRowModel();
+        $object = new \SmartCat\Client\Model\StatisticsRowModel();
         if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
@@ -54,6 +52,7 @@ class StatisticsRowModelNormalizer extends SerializerAwareNormalizer implements 
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

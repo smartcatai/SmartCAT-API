@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class SegmentWithMatchesModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class SegmentWithMatchesModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\SegmentWithMatchesModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\SegmentWithMatchesModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\SegmentWithMatchesModel) {
+        if ($data instanceof \SmartCat\Client\Model\SegmentWithMatchesModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\SegmentWithMatchesModel();
+        $object = new \SmartCat\Client\Model\SegmentWithMatchesModel();
         if (property_exists($data, 'sourceText')) {
             $object->setSourceText($data->{'sourceText'});
         }
@@ -37,12 +35,13 @@ class SegmentWithMatchesModelNormalizer extends SerializerAwareNormalizer implem
         if (property_exists($data, 'tags')) {
             $values = array();
             foreach ($data->{'tags'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\TagsFromUnit', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\TagsFromUnit', 'raw', $context);
             }
             $object->setTags($values);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

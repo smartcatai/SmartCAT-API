@@ -1,15 +1,15 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-use Http\Discovery\StreamFactoryDiscovery;
+use Http\Message\StreamFactory\GuzzleStreamFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Resource\DocumentResource;
+use SmartCat\Client\Helper\QueryParam;
+use SmartCat\Client\Resource\DocumentResource;
 
 class DocumentManager extends DocumentResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 
     //TODO: Обертка для обработка слишком большого кол-ва ид для удаления
 
@@ -63,7 +63,7 @@ class DocumentManager extends DocumentResource
     /**
      * @param array $parameters {
      * @var string $documentId Идентификатор документа
-     * @var \SmartCAT\API\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
+     * @var \SmartCat\Client\Model\UploadDocumentPropertiesModel $updateDocumentModel Модель обновления документа с файлом
      * @var array $uploadedFile {
      * @var string $fileName - optional
      * @var string $filePath | blob or stream $fileContent
@@ -72,7 +72,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\DocumentModel[]
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -86,12 +86,11 @@ class DocumentManager extends DocumentResource
         $queryParam->setFormParameters(array('uploadedFile'));
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
 
         $parameters['uploadedFile'] = $this->prepareFile($parameters['uploadedFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => (isset($parameters['uploadedFile']['fileName']) ? $parameters['uploadedFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         if ($updateDocumentModel) {
@@ -103,7 +102,7 @@ class DocumentManager extends DocumentResource
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
-        $url = '/api/integration/v1/document/update';
+        $url = $this->host . '/api/integration/v1/document/update';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -113,7 +112,7 @@ class DocumentManager extends DocumentResource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCAT\\API\\Model\\DocumentModel[]', 'json');
+                return $this->serializer->deserialize((string)$response->getBody(), 'SmartCat\\Client\\Model\\DocumentModel[]', 'json');
             }
         }
         return $response;
@@ -144,12 +143,11 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
@@ -157,7 +155,7 @@ class DocumentManager extends DocumentResource
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
-        $url = '/api/integration/v1/document/translate';
+        $url = $this->host . '/api/integration/v1/document/translate';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
@@ -197,12 +195,11 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(['translationFile']);
         $body = $queryParam->buildFormDataString($parameters);
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
-        $streamFactory = StreamFactoryDiscovery::find();
-        $builder = new MultipartStreamBuilder($streamFactory);
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
             ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         $multipartStream = $builder->build();
@@ -210,7 +207,7 @@ class DocumentManager extends DocumentResource
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
-        $url = '/api/integration/v1/document/translateWithXliff';
+        $url = $this->host . '/api/integration/v1/document/translateWithXliff';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

@@ -1,38 +1,37 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class UploadDocumentPropertiesModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class UploadDocumentPropertiesModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\UploadDocumentPropertiesModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\UploadDocumentPropertiesModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\UploadDocumentPropertiesModel) {
+        if ($data instanceof \SmartCat\Client\Model\UploadDocumentPropertiesModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\UploadDocumentPropertiesModel();
+        $object = new \SmartCat\Client\Model\UploadDocumentPropertiesModel();
         if (property_exists($data, 'bilingualFileImportSettings')) {
-            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCAT\\API\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
+            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
         }
         if (property_exists($data, 'enablePlaceholders')) {
             $object->setEnablePlaceholders($data->{'enablePlaceholders'});
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

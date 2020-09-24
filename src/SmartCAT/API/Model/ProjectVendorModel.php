@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartCAT\API\Model;
+namespace SmartCat\Client\Model;
 
 class ProjectVendorModel
 {
@@ -8,10 +8,12 @@ class ProjectVendorModel
      * @var string
      */
     protected $vendorAccountId;
+
     /**
      * @var boolean
      */
     protected $removedFromProject;
+
     /**
      * @return string
      */
@@ -19,6 +21,7 @@ class ProjectVendorModel
     {
         return $this->vendorAccountId;
     }
+
     /**
      * @param string $vendorAccountId
      *
@@ -29,6 +32,7 @@ class ProjectVendorModel
         $this->vendorAccountId = $vendorAccountId;
         return $this;
     }
+
     /**
      * @return boolean
      */
@@ -36,6 +40,7 @@ class ProjectVendorModel
     {
         return $this->removedFromProject;
     }
+
     /**
      * @param boolean $removedFromProject
      *

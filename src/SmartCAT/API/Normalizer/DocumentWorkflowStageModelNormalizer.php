@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class DocumentWorkflowStageModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class DocumentWorkflowStageModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\DocumentWorkflowStageModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\DocumentWorkflowStageModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\DocumentWorkflowStageModel) {
+        if ($data instanceof \SmartCat\Client\Model\DocumentWorkflowStageModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\DocumentWorkflowStageModel();
+        $object = new \SmartCat\Client\Model\DocumentWorkflowStageModel();
         if (property_exists($data, 'progress')) {
             $object->setProgress($data->{'progress'});
         }
@@ -40,12 +38,13 @@ class DocumentWorkflowStageModelNormalizer extends SerializerAwareNormalizer imp
         if (property_exists($data, 'executives')) {
             $values = array();
             foreach ($data->{'executives'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\AssignedExecutiveModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\AssignedExecutiveModel', 'raw', $context);
             }
             $object->setExecutives($values);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

@@ -1,32 +1,30 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class ExecutiveStatisticsModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ExecutiveStatisticsModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\ExecutiveStatisticsModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\ExecutiveStatisticsModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\ExecutiveStatisticsModel) {
+        if ($data instanceof \SmartCat\Client\Model\ExecutiveStatisticsModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\ExecutiveStatisticsModel();
+        $object = new \SmartCat\Client\Model\ExecutiveStatisticsModel();
         if (property_exists($data, 'executive')) {
-            $object->setExecutive($this->serializer->deserialize($data->{'executive'}, 'SmartCAT\\API\\Model\\ExecutiveModel', 'raw', $context));
+            $object->setExecutive($this->serializer->deserialize($data->{'executive'}, 'SmartCat\\Client\\Model\\ExecutiveModel', 'raw', $context));
         }
         if (property_exists($data, 'stageType')) {
             $object->setStageType($data->{'stageType'});
@@ -40,19 +38,20 @@ class ExecutiveStatisticsModelNormalizer extends SerializerAwareNormalizer imple
         if (property_exists($data, 'total')) {
             $values = array();
             foreach ($data->{'total'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\StatisticsRowModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\StatisticsRowModel', 'raw', $context);
             }
             $object->setTotal($values);
         }
         if (property_exists($data, 'documents')) {
             $values_1 = array();
             foreach ($data->{'documents'} as $value_1) {
-                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCAT\\API\\Model\\DocumentStatisticsModel', 'raw', $context);
+                $values_1[] = $this->serializer->deserialize($value_1, 'SmartCat\\Client\\Model\\DocumentStatisticsModel', 'raw', $context);
             }
             $object->setDocuments($values_1);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

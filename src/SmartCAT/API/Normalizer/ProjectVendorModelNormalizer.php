@@ -1,14 +1,10 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use SmartCAT\API\Model\ProjectVendorModel;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
+use SmartCat\Client\Model\ProjectVendorModel;
 
-class ProjectVendorModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class ProjectVendorModelNormalizer extends AbstractNormalizer
 {
     /**
      * @param $data
@@ -18,11 +14,12 @@ class ProjectVendorModelNormalizer extends SerializerAwareNormalizer implements 
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\ProjectVendorModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\ProjectVendorModel') {
             return false;
         }
         return true;
     }
+
     /**
      * @param $data
      * @param null $format
@@ -30,11 +27,12 @@ class ProjectVendorModelNormalizer extends SerializerAwareNormalizer implements 
      */
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\ProjectVendorModel) {
+        if ($data instanceof \SmartCat\Client\Model\ProjectVendorModel) {
             return true;
         }
         return false;
     }
+
     /**
      * @param $data
      * @param $class
@@ -44,7 +42,7 @@ class ProjectVendorModelNormalizer extends SerializerAwareNormalizer implements 
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\ProjectVendorModel();
+        $object = new \SmartCat\Client\Model\ProjectVendorModel();
         if (property_exists($data, 'vendorAccountId')) {
             $object->setVendorAccountId($data->{'vendorAccountId'});
         }
@@ -53,6 +51,7 @@ class ProjectVendorModelNormalizer extends SerializerAwareNormalizer implements 
         }
         return $object;
     }
+
     /**
      * @param ProjectVendorModel $object
      * @param null $format

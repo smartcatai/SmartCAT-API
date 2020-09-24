@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class CallbackErrorModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class CallbackErrorModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\CallbackErrorModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\CallbackErrorModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\CallbackErrorModel) {
+        if ($data instanceof \SmartCat\Client\Model\CallbackErrorModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\CallbackErrorModel();
+        $object = new \SmartCat\Client\Model\CallbackErrorModel();
         if (property_exists($data, 'created')) {
             $object->setCreated(new \DateTime($data->{'created'}));
         }
@@ -49,6 +47,7 @@ class CallbackErrorModelNormalizer extends SerializerAwareNormalizer implements 
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

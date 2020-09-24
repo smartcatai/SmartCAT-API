@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartCAT\API\Model;
+namespace SmartCat\Client\Model;
 
 //TODO: В ручную созданая модель
 

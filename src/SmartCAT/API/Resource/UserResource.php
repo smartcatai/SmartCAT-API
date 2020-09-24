@@ -1,26 +1,26 @@
 <?php
 
-namespace SmartCAT\API\Resource;
+namespace SmartCat\Client\Resource;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use Joli\Jane\OpenApi\Runtime\Client\Resource;
+use SmartCat\Client\Helper\QueryParam;
+
 class UserResource extends Resource
 {
     /**
      * 
      *
-     * @param \SmartCAT\API\Model\CreateUserRequest $request 
+     * @param \SmartCat\Client\Model\CreateUserRequest $request 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\UserModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
      */
-    public function userCreate(\SmartCAT\API\Model\CreateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function userCreate(\SmartCat\Client\Model\CreateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/user';
+        $url = $this->host . '/api/integration/v1/user';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -30,7 +30,7 @@ class UserResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\UserModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\UserModel', 'json');
             }
         }
         return $response;
@@ -47,10 +47,10 @@ class UserResource extends Resource
     public function userDelete($accountUserId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
-        $url = '/api/integration/v1/user/{accountUserId}';
+        $url = $this->host . '/api/integration/v1/user/{accountUserId}';
         $url = str_replace('{accountUserId}', urlencode($accountUserId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -68,15 +68,15 @@ class UserResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCAT\API\Model\UserModel
+     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
      */
     public function userGetExternal($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setRequired('id');
-        $url = '/api/integration/v1/user/external';
+        $url = $this->host . '/api/integration/v1/user/external';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host, 'Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);
@@ -86,7 +86,7 @@ class UserResource extends Resource
         $response = $promise->wait();
         if (self::FETCH_OBJECT == $fetch) {
             if ('200' == $response->getStatusCode()) {
-                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCAT\\API\\Model\\UserModel', 'json');
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\UserModel', 'json');
             }
         }
         return $response;
@@ -95,21 +95,21 @@ class UserResource extends Resource
      * 
      *
      * @param string $accountUserId 
-     * @param \SmartCAT\API\Model\UpdateUserRequest $request 
+     * @param \SmartCat\Client\Model\UpdateUserRequest $request 
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function userUpdate($accountUserId, \SmartCAT\API\Model\UpdateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
+    public function userUpdate($accountUserId, \SmartCat\Client\Model\UpdateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
         $queryParam = new QueryParam();
         $queryParam->setDefault('Content-Type', 'application/json');
         $queryParam->setHeaderParameters(['Content-Type']);
-        $url = '/api/integration/v1/user/{accountUserId}';
+        $url = $this->host . '/api/integration/v1/user/{accountUserId}';
         $url = str_replace('{accountUserId}', urlencode($accountUserId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $headers = array_merge(array('Host' => $this->host), $queryParam->buildHeaders($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
         $promise = $this->httpClient->sendAsyncRequest($request);

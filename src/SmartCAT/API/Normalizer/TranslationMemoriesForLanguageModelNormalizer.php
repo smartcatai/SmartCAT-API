@@ -1,42 +1,41 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class TranslationMemoriesForLanguageModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class TranslationMemoriesForLanguageModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\TranslationMemoriesForLanguageModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\TranslationMemoriesForLanguageModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\TranslationMemoriesForLanguageModel) {
+        if ($data instanceof \SmartCat\Client\Model\TranslationMemoriesForLanguageModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\TranslationMemoriesForLanguageModel();
+        $object = new \SmartCat\Client\Model\TranslationMemoriesForLanguageModel();
         if (property_exists($data, 'language')) {
             $object->setLanguage($data->{'language'});
         }
         if (property_exists($data, 'translationMemories')) {
             $values = array();
             foreach ($data->{'translationMemories'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\TranslationMemoryForProjectModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\TranslationMemoryForProjectModel', 'raw', $context);
             }
             $object->setTranslationMemories($values);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

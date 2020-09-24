@@ -1,40 +1,41 @@
 {
-    "name": "smartcat/smartcat-api",
-    "description": "PHP client for SmartCAT API https://smartcat.ai/api/methods/",
-    "version": "1.7.3",
-    "type": "library",
-    "keywords": [
-        "php",
-        "smartcat",
-        "api"
-    ],
-    "homepage": "https://github.com/smartcatai/SmartCAT-API",
-    "license": "GPL-3.0-or-later",
-    "support": {
-        "issues": "https://github.com/smartcatai/SmartCAT-API/issues"
-    },
-    "require": {
-	"php": ">=5.6",
-        "jane/open-api": "^1.2",
-        "php-http/socket-client": "^1.1",
-        "php-http/plugins": "^1.0.1",
-        "php-http/message": "^1.0",
-        "guzzlehttp/psr7": "^1.2",
-        "php-http/multipart-stream-builder": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^5.5"
-    },
-    "authors": [
-        {
-            "name": "Andrey Rybnikov",
-            "email": "a.rybnikov@smartcat.pro"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "SmartCAT\\API\\": "src/SmartCAT/API/"
-        }
+  "name": "smartcat/smartcat-api",
+  "description": "PHP client for SmartCAT API https://smartcat.ai/api/methods/",
+  "version": "2.1.0",
+  "type": "library",
+  "keywords": [
+    "php",
+    "smartcat",
+    "api"
+  ],
+  "homepage": "https://github.com/smartcatai/SmartCAT-API",
+  "license": "GPL-3.0-or-later",
+  "support": {
+    "issues": "https://github.com/smartcatai/SmartCAT-API/issues"
+  },
+  "require": {
+    "php": "^7.1",
+    "php-http/socket-client": "2.0.0-beta1",
+    "php-http/client-common": "~2.3",
+    "php-http/message": "~1.0",
+    "guzzlehttp/psr7": "~1.2",
+    "php-http/multipart-stream-builder": "~1.0",
+    "symfony/serializer": "^4.0 || ^5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.5"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Andrey Rybnikov",
+      "email": "a.rybnikov@smartcat.pro"
     }
-
+  ],
+  "autoload": {
+    "psr-4": {
+      "SmartCat\\Client\\": "src/SmartCAT/API"
+    }
+  }
 }

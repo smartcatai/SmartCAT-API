@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class AssignedExecutiveModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class AssignedExecutiveModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\AssignedExecutiveModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\AssignedExecutiveModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\AssignedExecutiveModel) {
+        if ($data instanceof \SmartCat\Client\Model\AssignedExecutiveModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\AssignedExecutiveModel();
+        $object = new \SmartCat\Client\Model\AssignedExecutiveModel();
         if (property_exists($data, 'assignedWordsCount')) {
             $object->setAssignedWordsCount($data->{'assignedWordsCount'});
         }
@@ -39,6 +37,7 @@ class AssignedExecutiveModelNormalizer extends SerializerAwareNormalizer impleme
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

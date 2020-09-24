@@ -1,12 +1,10 @@
 <?php
 
-namespace SmartCAT\API\Manager;
+namespace SmartCat\Client\Manager;
 
-use Joli\Jane\OpenApi\Runtime\Client\QueryParam;
-use SmartCAT\API\Resource\DocumentExportResource;
-
+use SmartCat\Client\Resource\DocumentExportResource;
 
 class DocumentExportManager extends DocumentExportResource
 {
-    use SmartCATManager;
+    use SmartCatManager;
 }

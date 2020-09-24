@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class CreateProjectModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class CreateProjectModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\CreateProjectModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\CreateProjectModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\CreateProjectModel) {
+        if ($data instanceof \SmartCat\Client\Model\CreateProjectModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\CreateProjectModel();
+        $object = new \SmartCat\Client\Model\CreateProjectModel();
         if (property_exists($data, 'name')) {
             $object->setName($data->{'name'});
         }
@@ -85,7 +83,7 @@ class CreateProjectModelNormalizer extends SerializerAwareNormalizer implements 
         if (property_exists($data, 'documentProperties')) {
             $values_2 = array();
             foreach ($data->{'documentProperties'} as $value_2) {
-                $values_2[] = $this->serializer->deserialize($value_2, 'SmartCAT\\API\\Model\\CreateDocumentPropertyModel', 'raw', $context);
+                $values_2[] = $this->serializer->deserialize(json_encode($value_2), 'SmartCat\\Client\\Model\\CreateDocumentPropertyModel', 'json', $context);
             }
             $object->setDocumentProperties($values_2);
         }
@@ -104,6 +102,7 @@ class CreateProjectModelNormalizer extends SerializerAwareNormalizer implements 
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

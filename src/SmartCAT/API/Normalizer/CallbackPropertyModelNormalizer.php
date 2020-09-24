@@ -1,42 +1,41 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class CallbackPropertyModelNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class CallbackPropertyModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\CallbackPropertyModel') {
+        if ($type !== 'SmartCat\\Client\\Model\\CallbackPropertyModel') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\CallbackPropertyModel) {
+        if ($data instanceof \SmartCat\Client\Model\CallbackPropertyModel) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\CallbackPropertyModel();
+        $object = new \SmartCat\Client\Model\CallbackPropertyModel();
         if (property_exists($data, 'url')) {
             $object->setUrl($data->{'url'});
         }
         if (property_exists($data, 'additionalHeaders')) {
             $values = array();
             foreach ($data->{'additionalHeaders'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCAT\\API\\Model\\AdditionalHeaderModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\AdditionalHeaderModel', 'json', $context);
             }
             $object->setAdditionalHeaders($values);
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();

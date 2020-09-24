@@ -1,30 +1,28 @@
 <?php
 
-namespace SmartCAT\API\Normalizer;
+namespace SmartCat\Client\Normalizer;
 
-use Joli\Jane\Runtime\Reference;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\SerializerAwareNormalizer;
-class TagsFromUnitNormalizer extends SerializerAwareNormalizer implements DenormalizerInterface, NormalizerInterface
+class TagsFromUnitNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if ($type !== 'SmartCAT\\API\\Model\\TagsFromUnit') {
+        if ($type !== 'SmartCat\\Client\\Model\\TagsFromUnit') {
             return false;
         }
         return true;
     }
+
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCAT\API\Model\TagsFromUnit) {
+        if ($data instanceof \SmartCat\Client\Model\TagsFromUnit) {
             return true;
         }
         return false;
     }
+
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCAT\API\Model\TagsFromUnit();
+        $object = new \SmartCat\Client\Model\TagsFromUnit();
         if (property_exists($data, 'position')) {
             $object->setPosition($data->{'position'});
         }
@@ -33,6 +31,7 @@ class TagsFromUnitNormalizer extends SerializerAwareNormalizer implements Denorm
         }
         return $object;
     }
+
     public function normalize($object, $format = null, array $context = array())
     {
         $data = new \stdClass();
