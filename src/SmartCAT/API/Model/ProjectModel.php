@@ -15,6 +15,10 @@ class ProjectModel
     /**
      * @var string
      */
+    protected $number;
+    /**
+     * @var string
+     */
     protected $description;
     /**
      * @var \DateTime
@@ -104,6 +108,23 @@ class ProjectModel
     public function setName($name = null)
     {
         $this->name = $name;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+    /**
+     * @param string $number
+     *
+     * @return self
+     */
+    public function setNumber($number = null)
+    {
+        $this->number = $number;
         return $this;
     }
     /**
