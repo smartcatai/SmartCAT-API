@@ -13,6 +13,12 @@
   "support": {
     "issues": "https://github.com/smartcatai/SmartCAT-API/issues"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/panjiwiramanik/SmartCAT-API"
+    }
+  ],
   "require": {
     "php": "^7.1",
     "php-http/socket-client": "~2.0",
