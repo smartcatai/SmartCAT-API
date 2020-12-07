@@ -13,11 +13,11 @@ class DocumentModel
      */
     protected $name;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $creationDate;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $deadline;
     /**
@@ -41,7 +41,7 @@ class DocumentModel
      */
     protected $wordsCount;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $statusModificationDate;
     /**
@@ -99,35 +99,35 @@ class DocumentModel
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getCreationDate()
     {
         return $this->creationDate;
     }
     /**
-     * @param \DateTime $creationDate
+     * @param string $creationDate
      *
      * @return self
      */
-    public function setCreationDate(\DateTime $creationDate = null)
+    public function setCreationDate(string $creationDate = null)
     {
         $this->creationDate = $creationDate;
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDeadline()
     {
         return $this->deadline;
     }
     /**
-     * @param \DateTime $deadline
+     * @param string $deadline
      *
      * @return self
      */
-    public function setDeadline(\DateTime $deadline = null)
+    public function setDeadline(string $deadline = null)
     {
         $this->deadline = $deadline;
         return $this;
@@ -218,18 +218,18 @@ class DocumentModel
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getStatusModificationDate()
     {
         return $this->statusModificationDate;
     }
     /**
-     * @param \DateTime $statusModificationDate
+     * @param string $statusModificationDate
      *
      * @return self
      */
-    public function setStatusModificationDate(\DateTime $statusModificationDate = null)
+    public function setStatusModificationDate(string $statusModificationDate = null)
     {
         $this->statusModificationDate = $statusModificationDate;
         return $this;

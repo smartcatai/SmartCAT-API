@@ -2,6 +2,7 @@
 
 namespace SmartCat\Client\Normalizer;
 
+use Carbon\Carbon;
 use SmartCat\Client\Model\DocumentModel;
 use SmartCat\Client\Model\ProjectModel;
 use SmartCat\Client\Model\ProjectVendorModel;
@@ -56,16 +57,16 @@ class ProjectModelNormalizer extends AbstractNormalizer
             $object->setDescription($data->{'description'});
         }
         if (property_exists($data, 'deadline')) {
-            $object->setDeadline(new \DateTime($data->{'deadline'}));
+            $object->setDeadline($data->{'deadline'});
         }
         if (property_exists($data, 'creationDate')) {
-            $object->setCreationDate(new \DateTime($data->{'creationDate'}));
+            $object->setCreationDate($data->{'creationDate'});
         }
         if (property_exists($data, 'createdByUserId')) {
             $object->setCreatedByUserId($data->{'createdByUserId'});
         }
         if (property_exists($data, 'modificationDate')) {
-            $object->setModificationDate(new \DateTime($data->{'modificationDate'}));
+            $object->setModificationDate($data->{'modificationDate'});
         }
         if (property_exists($data, 'sourceLanguage')) {
             $object->setSourceLanguage($data->{'sourceLanguage'});
@@ -81,7 +82,7 @@ class ProjectModelNormalizer extends AbstractNormalizer
             $object->setStatus($data->{'status'});
         }
         if (property_exists($data, 'statusModificationDate')) {
-            $object->setStatusModificationDate(new \DateTime($data->{'statusModificationDate'}));
+            $object->setStatusModificationDate($data->{'statusModificationDate'});
         }
         if (property_exists($data, 'domainId')) {
             $object->setDomainId($data->{'domainId'});
@@ -136,16 +137,16 @@ class ProjectModelNormalizer extends AbstractNormalizer
             $data->{'description'} = $object->getDescription();
         }
         if (null !== $object->getDeadline()) {
-            $data->{'deadline'} = $object->getDeadline()->format("Y-m-d\TH:i:sP");
+            $data->{'deadline'} = Carbon::parse($object->getDeadline())->toISOString();
         }
         if (null !== $object->getCreationDate()) {
-            $data->{'creationDate'} = $object->getCreationDate()->format("Y-m-d\TH:i:sP");
+            $data->{'creationDate'} = Carbon::parse($object->getCreationDate())->toISOString();
         }
         if (null !== $object->getCreatedByUserId()) {
             $data->{'createdByUserId'} = $object->getCreatedByUserId();
         }
         if (null !== $object->getModificationDate()) {
-            $data->{'modificationDate'} = $object->getModificationDate()->format("Y-m-d\TH:i:sP");
+            $data->{'modificationDate'} = Carbon::parse($object->getModificationDate())->toISOString();
         }
         if (null !== $object->getSourceLanguage()) {
             $data->{'sourceLanguage'} = $object->getSourceLanguage();
@@ -161,7 +162,7 @@ class ProjectModelNormalizer extends AbstractNormalizer
             $data->{'status'} = $object->getStatus();
         }
         if (null !== $object->getStatusModificationDate()) {
-            $data->{'statusModificationDate'} = $object->getStatusModificationDate()->format("Y-m-d\TH:i:sP");
+            $data->{'statusModificationDate'} = Carbon::parse($object->getStatusModificationDate())->toISOString();
         }
         if (null !== $object->getDomainId()) {
             $data->{'domainId'} = $object->getDomainId();

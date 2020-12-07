@@ -13,7 +13,7 @@ class CreateProjectModel
      */
     protected $description;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $deadline;
     /**
@@ -115,18 +115,18 @@ class CreateProjectModel
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDeadline()
     {
         return $this->deadline;
     }
     /**
-     * @param \DateTime $deadline
+     * @param string $deadline
      *
      * @return self
      */
-    public function setDeadline(\DateTime $deadline = null)
+    public function setDeadline(string $deadline = null)
     {
         $this->deadline = $deadline;
         return $this;

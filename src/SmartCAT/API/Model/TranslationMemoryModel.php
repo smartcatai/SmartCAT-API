@@ -33,7 +33,7 @@ class TranslationMemoryModel
      */
     protected $targetLanguages;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $createdDate;
     /**
@@ -164,18 +164,18 @@ class TranslationMemoryModel
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getCreatedDate()
     {
         return $this->createdDate;
     }
     /**
-     * @param \DateTime $createdDate
+     * @param string $createdDate
      *
      * @return self
      */
-    public function setCreatedDate(\DateTime $createdDate = null)
+    public function setCreatedDate(string $createdDate = null)
     {
         $this->createdDate = $createdDate;
         return $this;

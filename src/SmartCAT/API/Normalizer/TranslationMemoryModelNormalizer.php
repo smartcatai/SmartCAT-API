@@ -2,6 +2,8 @@
 
 namespace SmartCat\Client\Normalizer;
 
+use Carbon\Carbon;
+
 class TranslationMemoryModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -49,7 +51,7 @@ class TranslationMemoryModelNormalizer extends AbstractNormalizer
             $object->setTargetLanguages($values);
         }
         if (property_exists($data, 'createdDate')) {
-            $object->setCreatedDate(new \DateTime($data->{'createdDate'}));
+            $object->setCreatedDate($data->{'createdDate'});
         }
         if (property_exists($data, 'isAutomaticallyCreated')) {
             $object->setIsAutomaticallyCreated($data->{'isAutomaticallyCreated'});
@@ -93,7 +95,7 @@ class TranslationMemoryModelNormalizer extends AbstractNormalizer
             $data->{'targetLanguages'} = $values;
         }
         if (null !== $object->getCreatedDate()) {
-            $data->{'createdDate'} = $object->getCreatedDate()->format("Y-m-d\TH:i:sP");
+            $data->{'createdDate'} = Carbon::parse($object->getCreatedDate())->toISOString();
         }
         if (null !== $object->getIsAutomaticallyCreated()) {
             $data->{'isAutomaticallyCreated'} = $object->getIsAutomaticallyCreated();

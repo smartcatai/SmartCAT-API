@@ -2,6 +2,8 @@
 
 namespace SmartCat\Client\Normalizer;
 
+use Carbon\Carbon;
+
 class CallbackErrorModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -24,7 +26,7 @@ class CallbackErrorModelNormalizer extends AbstractNormalizer
     {
         $object = new \SmartCat\Client\Model\CallbackErrorModel();
         if (property_exists($data, 'created')) {
-            $object->setCreated(new \DateTime($data->{'created'}));
+            $object->setCreated($data->{'created'});
         }
         if (property_exists($data, 'url')) {
             $object->setUrl($data->{'url'});
@@ -52,7 +54,7 @@ class CallbackErrorModelNormalizer extends AbstractNormalizer
     {
         $data = new \stdClass();
         if (null !== $object->getCreated()) {
-            $data->{'created'} = $object->getCreated()->format("Y-m-d\TH:i:sP");
+            $data->{'created'} = Carbon::parse($object->getCreated())->toISOString();
         }
         if (null !== $object->getUrl()) {
             $data->{'url'} = $object->getUrl();

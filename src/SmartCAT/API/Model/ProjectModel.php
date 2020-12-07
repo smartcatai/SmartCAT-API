@@ -17,11 +17,11 @@ class ProjectModel
      */
     protected $description;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $deadline;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $creationDate;
     /**
@@ -29,7 +29,7 @@ class ProjectModel
      */
     protected $createdByUserId;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $modificationDate;
     /**
@@ -45,7 +45,7 @@ class ProjectModel
      */
     protected $status;
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $statusModificationDate;
     /**
@@ -124,35 +124,35 @@ class ProjectModel
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDeadline()
     {
         return $this->deadline;
     }
     /**
-     * @param \DateTime $deadline
+     * @param string $deadline
      *
      * @return self
      */
-    public function setDeadline(\DateTime $deadline = null)
+    public function setDeadline(string $deadline = null)
     {
         $this->deadline = $deadline;
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getCreationDate()
     {
         return $this->creationDate;
     }
     /**
-     * @param \DateTime $creationDate
+     * @param string $creationDate
      *
      * @return self
      */
-    public function setCreationDate(\DateTime $creationDate = null)
+    public function setCreationDate(string $creationDate = null)
     {
         $this->creationDate = $creationDate;
         return $this;
@@ -175,18 +175,18 @@ class ProjectModel
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getModificationDate()
     {
         return $this->modificationDate;
     }
     /**
-     * @param \DateTime $modificationDate
+     * @param string $modificationDate
      *
      * @return self
      */
-    public function setModificationDate(\DateTime $modificationDate = null)
+    public function setModificationDate(string $modificationDate = null)
     {
         $this->modificationDate = $modificationDate;
         return $this;
@@ -243,18 +243,18 @@ class ProjectModel
         return $this;
     }
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getStatusModificationDate()
     {
         return $this->statusModificationDate;
     }
     /**
-     * @param \DateTime $statusModificationDate
+     * @param string $statusModificationDate
      *
      * @return self
      */
-    public function setStatusModificationDate(\DateTime $statusModificationDate = null)
+    public function setStatusModificationDate(string $statusModificationDate = null)
     {
         $this->statusModificationDate = $statusModificationDate;
         return $this;

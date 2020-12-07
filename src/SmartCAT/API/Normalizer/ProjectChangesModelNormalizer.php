@@ -2,6 +2,8 @@
 
 namespace SmartCat\Client\Normalizer;
 
+use Carbon\Carbon;
+
 class ProjectChangesModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -30,7 +32,7 @@ class ProjectChangesModelNormalizer extends AbstractNormalizer
             $object->setDescription($data->{'description'});
         }
         if (property_exists($data, 'deadline')) {
-            $object->setDeadline(new \DateTime($data->{'deadline'}));
+            $object->setDeadline($data->{'deadline'});
         }
         if (property_exists($data, 'clientId')) {
             $object->setClientId($data->{'clientId'});
@@ -61,7 +63,7 @@ class ProjectChangesModelNormalizer extends AbstractNormalizer
             $data->{'description'} = $object->getDescription();
         }
         if (null !== $object->getDeadline()) {
-            $data->{'deadline'} = $object->getDeadline()->format("Y-m-d\TH:i:sP");
+            $data->{'deadline'} = Carbon::parse($object->getDeadline())->toISOString();
         }
         if (null !== $object->getClientId()) {
             $data->{'clientId'} = $object->getClientId();

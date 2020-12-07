@@ -2,6 +2,8 @@
 
 namespace SmartCat\Client\Normalizer;
 
+use Carbon\Carbon;
+
 class DocumentModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -30,10 +32,10 @@ class DocumentModelNormalizer extends AbstractNormalizer
             $object->setName($data->{'name'});
         }
         if (property_exists($data, 'creationDate')) {
-            $object->setCreationDate(new \DateTime($data->{'creationDate'}));
+            $object->setCreationDate($data->{'creationDate'});
         }
         if (property_exists($data, 'deadline')) {
-            $object->setDeadline(new \DateTime($data->{'deadline'}));
+            $object->setDeadline($data->{'deadline'});
         }
         if (property_exists($data, 'sourceLanguage')) {
             $object->setSourceLanguage($data->{'sourceLanguage'});
@@ -51,7 +53,7 @@ class DocumentModelNormalizer extends AbstractNormalizer
             $object->setWordsCount($data->{'wordsCount'});
         }
         if (property_exists($data, 'statusModificationDate')) {
-            $object->setStatusModificationDate(new \DateTime($data->{'statusModificationDate'}));
+            $object->setStatusModificationDate($data->{'statusModificationDate'});
         }
         if (property_exists($data, 'pretranslateCompleted')) {
             $object->setPretranslateCompleted($data->{'pretranslateCompleted'});
@@ -85,10 +87,10 @@ class DocumentModelNormalizer extends AbstractNormalizer
             $data->{'name'} = $object->getName();
         }
         if (null !== $object->getCreationDate()) {
-            $data->{'creationDate'} = $object->getCreationDate()->format("Y-m-d\TH:i:sP");
+            $data->{'creationDate'} = Carbon::parse($object->getCreationDate())->toISOString();
         }
         if (null !== $object->getDeadline()) {
-            $data->{'deadline'} = $object->getDeadline()->format("Y-m-d\TH:i:sP");
+            $data->{'deadline'} = Carbon::parse($object->getDeadline())->toISOString();
         }
         if (null !== $object->getSourceLanguage()) {
             $data->{'sourceLanguage'} = $object->getSourceLanguage();
@@ -106,7 +108,7 @@ class DocumentModelNormalizer extends AbstractNormalizer
             $data->{'wordsCount'} = $object->getWordsCount();
         }
         if (null !== $object->getStatusModificationDate()) {
-            $data->{'statusModificationDate'} = $object->getStatusModificationDate()->format("Y-m-d\TH:i:sP");
+            $data->{'statusModificationDate'} = Carbon::parse($object->getStatusModificationDate())->toISOString();
         }
         if (null !== $object->getPretranslateCompleted()) {
             $data->{'pretranslateCompleted'} = $object->getPretranslateCompleted();

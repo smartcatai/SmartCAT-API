@@ -5,7 +5,7 @@ namespace SmartCat\Client\Model;
 class CallbackErrorModel
 {
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $created;
     /**
@@ -29,18 +29,18 @@ class CallbackErrorModel
      */
     protected $sourceIds;
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getCreated()
     {
         return $this->created;
     }
     /**
-     * @param \DateTime $created
+     * @param string $created
      *
      * @return self
      */
-    public function setCreated(\DateTime $created = null)
+    public function setCreated(string $created = null)
     {
         $this->created = $created;
         return $this;
