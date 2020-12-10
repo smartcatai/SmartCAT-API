@@ -197,6 +197,39 @@ class DocumentResource extends Resource
     /**
     * Document ID can have the form  int1 or int1_int2, <br />
     *          with int1 being the document ID and int2 being the document's target language ID.<br />
+    *
+    * @param array  $parameters {
+    *     @var string $vendorAccountId Vendor Account ID
+    *     @var string $documentId Document ID
+    *     @var int $stageNumber Workflow stage number
+    * }
+    * @param string $fetch      Fetch mode (object or response)
+    *
+    * @return \Psr\Http\Message\ResponseInterface
+    */
+    public function documentAssignVendorToDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
+    {
+        $queryParam = new QueryParam();
+        $queryParam->setDefault('Content-Type', 'application/json');
+        $queryParam->setHeaderParameters(['Content-Type']);
+        $queryParam->setRequired('vendorAccountId');
+        $queryParam->setRequired('documentId');
+        $queryParam->setRequired('stageNumber');
+        $url = $this->host . '/api/integration/v1/document/assignVendors';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = $queryParam->buildHeaders($parameters);
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        return $response;
+    }
+    /**
+    * Document ID can have the form  int1 or int1_int2, <br />
+    *          with int1 being the document ID and int2 being the document's target language ID.<br />
     *		    Notes to the AssignmentMode values:<br />
     *		    AssignmentMode.DistributeAmongAll — assign segments automatically to all selected freelancers.<br />
     *			AssignmentMode.Rocket — send invitations to all selected freelancers and assign all unassigned segments to the first freelancer to accept the offer.<br />
