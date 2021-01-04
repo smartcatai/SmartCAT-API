@@ -11,6 +11,10 @@ class CreateProjectModel
     /**
      * @var string
      */
+    protected $number;
+    /**
+     * @var string
+     */
     protected $description;
     /**
      * @var string
@@ -95,6 +99,20 @@ class CreateProjectModel
     public function setName($name = null)
     {
         $this->name = $name;
+        return $this;
+    }
+    public function getNumber()
+    {
+        return $this->number;
+    }
+    /**
+     * @param string $number
+     *
+     * @return self
+     */
+    public function setNumber($number = null)
+    {
+        $this->number = $number;
         return $this;
     }
     /**

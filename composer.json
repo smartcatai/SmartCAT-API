@@ -13,9 +13,15 @@
   "support": {
     "issues": "https://github.com/smartcatai/SmartCAT-API/issues"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/panjiwiramanik/SmartCAT-API"
+    }
+  ],
   "require": {
     "php": "^7.1",
-    "php-http/socket-client": "2.0.0-beta1",
+    "php-http/socket-client": "~2.0",
     "php-http/client-common": "~2.3",
     "php-http/message": "~1.0",
     "guzzlehttp/psr7": "~1.2",
