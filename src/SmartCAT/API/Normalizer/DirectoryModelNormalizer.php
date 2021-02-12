@@ -2,6 +2,9 @@
 
 namespace SmartCat\Client\Normalizer;
 
+use SmartCat\Client\Model\DirectoryItemModel;
+use SmartCat\Client\Model\DirectoryModel;
+
 class DirectoryModelNormalizer extends AbstractNormalizer
 {
     public function supportsDenormalization($data, $type, $format = null)
@@ -14,7 +17,7 @@ class DirectoryModelNormalizer extends AbstractNormalizer
 
     public function supportsNormalization($data, $format = null)
     {
-        if ($data instanceof \SmartCat\Client\Model\DirectoryModel) {
+        if ($data instanceof DirectoryModel) {
             return true;
         }
         return false;
@@ -22,14 +25,14 @@ class DirectoryModelNormalizer extends AbstractNormalizer
 
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $object = new \SmartCat\Client\Model\DirectoryModel();
+        $object = new DirectoryModel();
         if (property_exists($data, 'type')) {
             $object->setType($data->{'type'});
         }
         if (property_exists($data, 'items')) {
             $values = array();
             foreach ($data->{'items'} as $value) {
-                $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\DirectoryItemModel', 'raw', $context);
+                $values[] = $this->serializer->deserialize(json_encode($value), DirectoryItemModel::class, 'json', $context);
             }
             $object->setItems($values);
         }
