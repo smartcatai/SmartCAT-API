@@ -4,14 +4,14 @@ PHP client SmartCAT API
 [![Software License](https://img.shields.io/github/license/smartcatai/SmartCAT-API.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/smartcat/smartcat-api.svg?style=flat-square)](https://packagist.org/packages/smartcat/smartcat-api)
 
-[PHP client SmartCAT API](https://smartcat.ai/api/methods/)
+[PHP client SmartCAT API](https://smartcat.com/api/methods/)
 
 ## How to use:
  1. Install [composer](https://getcomposer.org/)
  2. composer require smartcat/smartcat-api
  3. composer install 
 
- [Use Case](https://www.smartcat.ai/api/docs/)
+ [Use Case](https://www.smartcat.com/api/docs/)
 
 ```php 
 use SmartCat\Client\SmartCat;
@@ -19,20 +19,20 @@ use SmartCat\Client\SmartCat;
 $sc=new SmartCat($login, $password);
 ```
 
-## [Account](https://smartcat.ai/api/methods/#!/Account/Account_GetAccountInfo)
- [Gets the account details](https://smartcat.ai/api/methods/#!/Account/Account_GetAccountInfo)    
+## [Account](https://smartcat.com/api/methods/#!/Account/Account_GetAccountInfo)
+ [Gets the account details](https://smartcat.com/api/methods/#!/Account/Account_GetAccountInfo)    
  **GET** /api/integration/v1/account   
  ```php
  $sc->getAccountManager()->accountGetAccountInfo();
  ```
 
-  [Gets MT engines available for the account](https://smartcat.ai/api/methods/#!/Account/Account_GetMTEnginesForAccount)    
+  [Gets MT engines available for the account](https://smartcat.com/api/methods/#!/Account/Account_GetMTEnginesForAccount)    
   **GET** /api/integration/v1/account/mtengines   
   ```php
   $sc->getAccountManager()->accountGetMTEnginesForAccount();
   ```
 
-  Gets LSP's services available for the account](https://smartcat.ai/api/methods/#!/Account/Account_GetLSPServicesForAccount)    
+  Gets LSP's services available for the account](https://smartcat.com/api/methods/#!/Account/Account_GetLSPServicesForAccount)    
   **GET** /api/integration/v1/account/lsp/services   
   ```php
   $sc->getAccountManager()->accountGetLSPServicesForAccount();
