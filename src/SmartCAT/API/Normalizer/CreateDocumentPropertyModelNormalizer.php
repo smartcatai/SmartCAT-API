@@ -64,7 +64,7 @@ class CreateDocumentPropertyModelNormalizer extends AbstractNormalizer
             $data->{'disassembleAlgorithmName'} = $object->getDisassembleAlgorithmName();
         }
         if (null !== $object->getBilingualFileImportSettings()) {
-            $data->{'bilingualFileImportSettings'} = $this->serializer->serialize($object->getBilingualFileImportSettings(), 'raw', $context);
+            $data->{'bilingualFileImportSettings'} = $this->serializer->serialize($object->getBilingualFileImportSettings(), 'json', $context);
         }
         if (null !== $object->getTargetLanguages()) {
             $values = array();
