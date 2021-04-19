@@ -1,7 +1,7 @@
 {
   "name": "smartcat/smartcat-api",
   "description": "PHP client for SmartCAT API https://smartcat.ai/api/methods/",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "type": "library",
   "keywords": [
     "php",
@@ -14,7 +14,7 @@
     "issues": "https://github.com/smartcatai/SmartCAT-API/issues"
   },
   "require": {
-    "php": "^7.1",
+    "php": "^7.3|^7.4|^8.0",
     "php-http/socket-client": "2.1.0",
     "php-http/client-common": "~2.3",
     "php-http/message": "~1.0",
