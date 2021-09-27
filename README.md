@@ -280,6 +280,13 @@ $sc->getDirectoriesManager()->directoriesGetSupportedFormatsForAccount();
  ```php
  $sc->getProjectManager()->projectGetAll()
  ```
+
+Receive the list of all projects in account with offset (v2)
+
+**GET** /api/integration/v2/project/list
+ ```php
+ $sc->getProjectManager()->projectsGetWithOffset($offset = 0, $limit = 100)
+ ```
  
  [Receive statistics and project value](https://smartcat.ai/api/methods/#!/Project/Project_GetProjectStatistics)  
  **GET** /api/integration/v2/project/{projectId}/statistics  

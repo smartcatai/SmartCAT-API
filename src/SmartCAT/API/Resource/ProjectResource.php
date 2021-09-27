@@ -124,6 +124,33 @@ abstract class ProjectResource extends Resource
         }
         return $response;
     }
+
+    public function projectsGetWithOffset($offset = 0, $limit = 100, $fetch = self::FETCH_OBJECT)
+    {
+        $parameters = [
+            "limit" => $limit,
+            "offset" => $offset
+        ];
+        $queryParam = new QueryParam();
+        $queryParam->setDefault('limit', NULL);
+        $queryParam->setDefault('offset', NULL);
+        $url = $this->host . '/api/integration/v2/project/list';
+        $url = $url . ('?' . $queryParam->buildQueryString($parameters));
+        $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
+        $body = $queryParam->buildFormDataString($parameters);
+        $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
+        $promise = $this->httpClient->sendAsyncRequest($request);
+        if (self::FETCH_PROMISE === $fetch) {
+            return $promise;
+        }
+        $response = $promise->wait();
+        if (self::FETCH_OBJECT == $fetch) {
+            if ('200' == $response->getStatusCode()) {
+                return $this->serializer->deserialize((string) $response->getBody(), 'SmartCat\\Client\\Model\\ProjectModel[]', 'json');
+            }
+        }
+        return $response;
+    }
     /**
      * @param string $projectId Project ID
      * @param array  $parameters {
