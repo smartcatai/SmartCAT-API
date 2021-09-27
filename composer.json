@@ -1,7 +1,7 @@
 {
   "name": "smartcat/smartcat-api",
   "description": "PHP client for SmartCAT API https://smartcat.ai/api/methods/",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "type": "library",
   "keywords": [
     "php",
