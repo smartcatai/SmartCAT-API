@@ -92,7 +92,7 @@ class DocumentManager extends DocumentResource
 
         $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
         $builder
-            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => (isset($parameters['uploadedFile']['fileName']) ? $parameters['uploadedFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
+            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => (isset($parameters['uploadedFile']['fileName']) ? $this->prepareFileName($parameters['uploadedFile']['fileName']) : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         if ($updateDocumentModel) {
             $builder
                 ->addResource('updateDocumentModel', $this->serializer->serialize($updateDocumentModel, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
@@ -116,6 +116,11 @@ class DocumentManager extends DocumentResource
             }
         }
         return $response;
+    }
+
+    private function prepareFileName($fileName)
+    {
+        return preg_replace('/[\<\>\|\:\*\?]/', '_', $fileName);
     }
 
     //TODO: Генератор не умет работать с файлами

@@ -119,7 +119,7 @@ class ProjectManager extends ProjectResource
             foreach ($documentModel as $dm) {
                 $file = $this->prepareFile($dm->getFile());
                 $builder
-                    ->addResource("file$i", $file['fileContent'], ['filename' => (isset($file['fileName']) ? $file['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
+                    ->addResource("file$i", $file['fileContent'], ['filename' => (isset($file['fileName']) ? $this->prepareFileName($file['fileName']) : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
                 $i++;
             }
 
@@ -128,7 +128,7 @@ class ProjectManager extends ProjectResource
         } else {
             $parameters['file'] = $this->prepareFile($parameters['file']);
             $builder
-                ->addResource('file', $parameters['file']['fileContent'], ['filename' => $parameters['file']['fileName'], 'headers' => ['Content-Type' => "application/octet-stream"]]);
+                ->addResource('file', $parameters['file']['fileContent'], ['filename' => $this->prepareFileName($parameters['file']['fileName']), 'headers' => ['Content-Type' => "application/octet-stream"]]);
 
         }
         $multipartStream = $builder->build();
@@ -148,6 +148,11 @@ class ProjectManager extends ProjectResource
             }
         }
         return $response;
+    }
+
+    private function prepareFileName($fileName)
+    {
+        return preg_replace('/[\<\>\|\:\*\?]/', '_', $fileName);
     }
 
     //TODO: bool передается в апи как 0 или 1, а должен как true или false
