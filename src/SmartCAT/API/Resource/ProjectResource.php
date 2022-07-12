@@ -442,10 +442,16 @@ abstract class ProjectResource extends Resource
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder->addResource('model', $this->serializer->serialize($project, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
-        $multipartStream = $builder->build();
+        $serializedData = $this->serializer->serialize($project, 'json');
+        $serializedData = json_decode($serializedData);
 
+        if (!is_null($project->getIsEnableProjectTasks())) {
+            $serializedData->enableProjectTasks = $project->getIsEnableProjectTasks();
+        }
+
+        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
+        $builder->addResource('model', json_encode($serializedData), ['headers' => ['Content-Type' => 'application/json']]);
+        $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary="' . $boundary . '"';
 

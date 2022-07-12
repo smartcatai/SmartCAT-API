@@ -83,6 +83,12 @@ class CreateProjectModel
     /**
      * @return string
      */
+
+    /**
+     * @var bool
+     */
+    protected $isEnableProjectTasks;
+
     public function getName()
     {
         return $this->name;
@@ -401,6 +407,23 @@ class CreateProjectModel
     public function setExternalTag($externalTag = null)
     {
         $this->externalTag = $externalTag;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsEnableProjectTasks()
+    {
+        return $this->isEnableProjectTasks;
+    }
+
+    /**
+     * @param bool $isEnableProjectTasks
+     */
+    public function setIsEnableProjectTasks($isEnableProjectTasks)
+    {
+        $this->isEnableProjectTasks = $isEnableProjectTasks;
         return $this;
     }
 }
