@@ -47,6 +47,36 @@ class ProjectModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ProjectModel();
+        $data = (array) $data;
+        $properties = ['id', 'name', 'description', 'deadline', 'creationDate', 'createdByUserId', 'sourceLanguage', 'targetLanguages', 'status', 'statusModificationDate', 'domainId', 'clientId', 'vendors', 'workflowStages', 'documents', 'externalTag'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                if (is_array($data[$property])) {                    
+                    $values = [];
+                    foreach ($data[$property] as $value) {                        
+                        if ($property == 'vendors') {                            
+                            $values[] = $this->serializer->deserialize(json_encode($value), ProjectVendorModel::class, 'json', $context);
+                        } elseif ($property == 'workflowStages') {
+                            $values[] = $this->serializer->deserialize(json_encode($value), ProjectWorkflowStageModel::class, 'json', $context);
+                        } elseif ($property == 'documents') {
+                            $values[] = $this->serializer->deserialize(json_encode($value), DocumentModel::class, 'json', $context);
+                        } else {
+                            $values[] = $value;
+                        }
+                    }
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($values);
+                } else {
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($data[$property]);
+                }
+            }
+        }
+
+        return $object;        
+
+        $object = new \SmartCat\Client\Model\ProjectModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }

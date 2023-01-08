@@ -25,6 +25,32 @@ class DocumentModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\DocumentModel();
+        $data = (array) $data;
+        $properties = ['id', 'name', 'creationDate', 'deadline', 'sourceLanguage', 'documentDisassemblingStatus', 'targetLanguage', 'status', 'wordsCount', 'pretranslateCompleted', 'workflowStages', 'externalId', 'metaInfo', 'placeholdersAreEnabled'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                if (is_array($data[$property])) {                    
+                    $values = [];
+                    foreach ($data[$property] as $value) {                        
+                        if ($property == 'workflowStages') {
+                            $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\DocumentWorkflowStageModel', 'json', $context);
+                        } else {
+                            $values[] = $value;
+                        }
+                    }
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($values);
+                } else {
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($data[$property]);
+                }
+            }
+        }
+
+        return $object;        
+
+        $object = new \SmartCat\Client\Model\DocumentModel();
         if (property_exists($data, 'id')) {
             $object->setId($data->{'id'});
         }

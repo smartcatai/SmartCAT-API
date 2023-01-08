@@ -23,6 +23,33 @@ class DocumentWorkflowStageModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\DocumentWorkflowStageModel();
+        $data = (array) $data;
+
+        $properties = ['progress', 'wordsTranslated', 'unassignedWordsCount', 'status', 'executives'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                if (is_array($data[$property])) {                    
+                    $values = [];
+                    foreach ($data[$property] as $value) {                        
+                        if ($property == 'executives') {
+                            $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\AssignedExecutiveModel', 'json', $context);
+                        } else {
+                            $values[] = $value;
+                        }
+                    }
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($values);
+                } else {
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($data[$property]);
+                }
+            }
+        }
+
+        return $object;         
+
+        $object = new \SmartCat\Client\Model\DocumentWorkflowStageModel();
         if (property_exists($data, 'progress')) {
             $object->setProgress($data->{'progress'});
         }
