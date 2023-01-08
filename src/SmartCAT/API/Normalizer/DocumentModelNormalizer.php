@@ -26,7 +26,7 @@ class DocumentModelNormalizer extends AbstractNormalizer
     {
         $object = new \SmartCat\Client\Model\DocumentModel();
         $data = (array) $data;
-        $properties = ['id', 'name', 'creationDate', 'deadline', 'sourceLanguage', 'documentDisassemblingStatus', 'targetLanguage', 'status', 'wordsCount', 'pretranslateCompleted', 'workflowStages', 'externalId', 'metaInfo', 'placeholdersAreEnabled'];
+        $properties = ['id', 'name', 'creationDate', 'deadline', 'sourceLanguage', 'documentDisassemblingStatus', 'targetLanguage', 'status', 'wordsCount', 'statusModificationDate', 'pretranslateCompleted', 'workflowStages', 'externalId', 'metaInfo', 'placeholdersAreEnabled'];
 
         foreach ($properties as $property) {
             if (isset($data[$property])) {
@@ -48,58 +48,6 @@ class DocumentModelNormalizer extends AbstractNormalizer
             }
         }
 
-        return $object;        
-
-        $object = new \SmartCat\Client\Model\DocumentModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
-        }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
-        }
-        if (property_exists($data, 'creationDate')) {
-            $object->setCreationDate($data->{'creationDate'});
-        }
-        if (property_exists($data, 'deadline')) {
-            $object->setDeadline($data->{'deadline'});
-        }
-        if (property_exists($data, 'sourceLanguage')) {
-            $object->setSourceLanguage($data->{'sourceLanguage'});
-        }
-        if (property_exists($data, 'documentDisassemblingStatus')) {
-            $object->setDocumentDisassemblingStatus($data->{'documentDisassemblingStatus'});
-        }
-        if (property_exists($data, 'targetLanguage')) {
-            $object->setTargetLanguage($data->{'targetLanguage'});
-        }
-        if (property_exists($data, 'status')) {
-            $object->setStatus($data->{'status'});
-        }
-        if (property_exists($data, 'wordsCount')) {
-            $object->setWordsCount($data->{'wordsCount'});
-        }
-        if (property_exists($data, 'statusModificationDate')) {
-            $object->setStatusModificationDate($data->{'statusModificationDate'});
-        }
-        if (property_exists($data, 'pretranslateCompleted')) {
-            $object->setPretranslateCompleted($data->{'pretranslateCompleted'});
-        }
-        if (property_exists($data, 'workflowStages')) {
-            $values = array();
-            foreach ($data->{'workflowStages'} as $value) {
-                $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\DocumentWorkflowStageModel', 'json', $context);
-            }
-            $object->setWorkflowStages($values);
-        }
-        if (property_exists($data, 'externalId')) {
-            $object->setExternalId($data->{'externalId'});
-        }
-        if (property_exists($data, 'metaInfo')) {
-            $object->setMetaInfo($data->{'metaInfo'});
-        }
-        if (property_exists($data, 'placeholdersAreEnabled')) {
-            $object->setPlaceholdersAreEnabled($data->{'placeholdersAreEnabled'});
-        }
         return $object;
     }
 
