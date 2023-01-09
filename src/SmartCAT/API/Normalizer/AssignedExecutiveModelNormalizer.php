@@ -23,18 +23,15 @@ class AssignedExecutiveModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\AssignedExecutiveModel();
-        if (property_exists($data, 'assignedWordsCount')) {
-            $object->setAssignedWordsCount($data->{'assignedWordsCount'});
+        $data = (array) $data;
+        $properties = ['assignedWordsCount', 'progress', 'id', 'type'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                $object->{'set' . ucfirst($property)}($data[$property]);
+            }
         }
-        if (property_exists($data, 'progress')) {
-            $object->setProgress($data->{'progress'});
-        }
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
-        }
-        if (property_exists($data, 'type')) {
-            $object->setType($data->{'type'});
-        }
+
         return $object;
     }
 
