@@ -23,16 +23,25 @@ class ExportDocumentTaskModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ExportDocumentTaskModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
-        }
-        if (property_exists($data, 'documentIds')) {
-            $values = array();
-            foreach ($data->{'documentIds'} as $value) {
-                $values[] = $value;
+        $data = (array) $data;
+        $properties = ['id', 'documentIds'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                if (is_array($data[$property])) {                    
+                    $values = [];
+                    foreach ($data[$property] as $value) {                        
+                        $values[] = $value;
+                    }
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($values);
+                } else {
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($data[$property]);
+                }
             }
-            $object->setDocumentIds($values);
-        }
+        }        
+
         return $object;
     }
 

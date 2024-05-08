@@ -23,24 +23,15 @@ class UserModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\UserModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
-        }
-        if (property_exists($data, 'externalId')) {
-            $object->setExternalId($data->{'externalId'});
-        }
-        if (property_exists($data, 'email')) {
-            $object->setEmail($data->{'email'});
-        }
-        if (property_exists($data, 'firstName')) {
-            $object->setFirstName($data->{'firstName'});
-        }
-        if (property_exists($data, 'lastName')) {
-            $object->setLastName($data->{'lastName'});
-        }
-        if (property_exists($data, 'rightsGroup')) {
-            $object->setRightsGroup($data->{'rightsGroup'});
-        }
+        $data = (array) $data;
+        $properties = ['id', 'externalId', 'email', 'firstName', 'lastName', 'rightsGroup'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                $object->{'set' . ucfirst($property)}($data[$property]);
+            }
+        }        
+
         return $object;
     }
 

@@ -23,25 +23,30 @@ class DocumentWorkflowStageModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\DocumentWorkflowStageModel();
-        if (property_exists($data, 'progress')) {
-            $object->setProgress($data->{'progress'});
-        }
-        if (property_exists($data, 'wordsTranslated')) {
-            $object->setWordsTranslated($data->{'wordsTranslated'});
-        }
-        if (property_exists($data, 'unassignedWordsCount')) {
-            $object->setUnassignedWordsCount($data->{'unassignedWordsCount'});
-        }
-        if (property_exists($data, 'status')) {
-            $object->setStatus($data->{'status'});
-        }
-        if (property_exists($data, 'executives')) {
-            $values = array();
-            foreach ($data->{'executives'} as $value) {
-                $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\AssignedExecutiveModel', 'json', $context);
+        $data = (array) $data;
+
+        $properties = ['progress', 'wordsTranslated', 'unassignedWordsCount', 'status', 'executives'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                if (is_array($data[$property])) {                    
+                    $values = [];
+                    foreach ($data[$property] as $value) {                        
+                        if ($property == 'executives') {
+                            $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\AssignedExecutiveModel', 'json', $context);
+                        } else {
+                            $values[] = $value;
+                        }
+                    }
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($values);
+                } else {
+                    $setter = 'set' . ucfirst($property);
+                    $object->$setter($data[$property]);
+                }
             }
-            $object->setExecutives($values);
         }
+
         return $object;
     }
 

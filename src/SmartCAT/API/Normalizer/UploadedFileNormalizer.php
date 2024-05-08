@@ -23,21 +23,15 @@ class UploadedFileNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\UploadedFile();
-        if (property_exists($data, 'FullName')) {
-            $object->setFullName($data->{'FullName'});
+        $data = (array) $data;
+        $properties = ['FullName', 'Name', 'Extension', 'MediaType', 'FileSize'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                $object->{'set' . ucfirst($property)}($data[$property]);
+            }
         }
-        if (property_exists($data, 'Name')) {
-            $object->setName($data->{'Name'});
-        }
-        if (property_exists($data, 'Extension')) {
-            $object->setExtension($data->{'Extension'});
-        }
-        if (property_exists($data, 'MediaType')) {
-            $object->setMediaType($data->{'MediaType'});
-        }
-        if (property_exists($data, 'FileSize')) {
-            $object->setFileSize($data->{'FileSize'});
-        }
+
         return $object;
     }
 

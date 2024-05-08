@@ -23,12 +23,15 @@ class ProjectWorkflowStageModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ProjectWorkflowStageModel();
-        if (property_exists($data, 'progress')) {
-            $object->setProgress($data->{'progress'});
+        $data = (array) $data;
+        $properties = ['progress', 'stageType'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                $object->{'set' . ucfirst($property)}($data[$property]);
+            }
         }
-        if (property_exists($data, 'stageType')) {
-            $object->setStageType($data->{'stageType'});
-        }
+
         return $object;
     }
 
