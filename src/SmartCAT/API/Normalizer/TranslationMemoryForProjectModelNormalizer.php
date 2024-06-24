@@ -23,14 +23,14 @@ class TranslationMemoryForProjectModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\TranslationMemoryForProjectModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'matchThreshold')) {
-            $object->setMatchThreshold($data->{'matchThreshold'});
+        if (isset($data['matchThreshold'])) {
+            $object->setMatchThreshold($data['matchThreshold']);
         }
-        if (property_exists($data, 'isWritable')) {
-            $object->setIsWritable($data->{'isWritable'});
+        if (isset($data['isWritable'])) {
+            $object->setIsWritable($data['isWritable']);
         }
         return $object;
     }

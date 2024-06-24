@@ -95,7 +95,7 @@ class DocumentManager extends DocumentResource
             ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => (isset($parameters['uploadedFile']['fileName']) ? $this->prepareFileName($parameters['uploadedFile']['fileName']) : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
         if ($updateDocumentModel) {
             $builder
-                ->addResource('updateDocumentModel', $this->serializer->serialize($updateDocumentModel, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
+                ->addResource('updateDocumentModel', json_encode($updateDocumentModel), ['headers' => ['Content-Type' => 'application/json']]);
         }
         $multipartStream = $builder->build();
         $boundary = $builder->getBoundary();

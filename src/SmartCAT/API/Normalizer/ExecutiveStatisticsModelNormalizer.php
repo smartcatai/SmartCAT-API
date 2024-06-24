@@ -23,28 +23,28 @@ class ExecutiveStatisticsModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ExecutiveStatisticsModel();
-        if (property_exists($data, 'executive')) {
-            $object->setExecutive($this->serializer->deserialize($data->{'executive'}, 'SmartCat\\Client\\Model\\ExecutiveModel', 'raw', $context));
+        if (isset($data['executive'])) {
+            $object->setExecutive($this->serializer->deserialize($data['executive'], 'SmartCat\\Client\\Model\\ExecutiveModel', 'raw', $context));
         }
-        if (property_exists($data, 'stageType')) {
-            $object->setStageType($data->{'stageType'});
+        if (isset($data['stageType'])) {
+            $object->setStageType($data['stageType']);
         }
-        if (property_exists($data, 'stageNumber')) {
-            $object->setStageNumber($data->{'stageNumber'});
+        if (isset($data['stageNumber'])) {
+            $object->setStageNumber($data['stageNumber']);
         }
-        if (property_exists($data, 'targetLanguage')) {
-            $object->setTargetLanguage($data->{'targetLanguage'});
+        if (isset($data['targetLanguage'])) {
+            $object->setTargetLanguage($data['targetLanguage']);
         }
-        if (property_exists($data, 'total')) {
+        if (isset($data['total'])) {
             $values = array();
-            foreach ($data->{'total'} as $value) {
+            foreach ($data['total'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\StatisticsRowModel', 'raw', $context);
             }
             $object->setTotal($values);
         }
-        if (property_exists($data, 'documents')) {
+        if (isset($data['documents'])) {
             $values_1 = array();
-            foreach ($data->{'documents'} as $value_1) {
+            foreach ($data['documents'] as $value_1) {
                 $values_1[] = $this->serializer->deserialize($value_1, 'SmartCat\\Client\\Model\\DocumentStatisticsModel', 'raw', $context);
             }
             $object->setDocuments($values_1);

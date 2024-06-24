@@ -23,32 +23,32 @@ class StatisticsRowModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\StatisticsRowModel();
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'words')) {
-            $object->setWords($data->{'words'});
+        if (isset($data['words'])) {
+            $object->setWords($data['words']);
         }
-        if (property_exists($data, 'percent')) {
-            $object->setPercent($data->{'percent'});
+        if (isset($data['percent'])) {
+            $object->setPercent($data['percent']);
         }
-        if (property_exists($data, 'segments')) {
-            $object->setSegments($data->{'segments'});
+        if (isset($data['segments'])) {
+            $object->setSegments($data['segments']);
         }
-        if (property_exists($data, 'pages')) {
-            $object->setPages($data->{'pages'});
+        if (isset($data['pages'])) {
+            $object->setPages($data['pages']);
         }
-        if (property_exists($data, 'charsWithoutSpaces')) {
-            $object->setCharsWithoutSpaces($data->{'charsWithoutSpaces'});
+        if (isset($data['charsWithoutSpaces'])) {
+            $object->setCharsWithoutSpaces($data['charsWithoutSpaces']);
         }
-        if (property_exists($data, 'charsWithSpaces')) {
-            $object->setCharsWithSpaces($data->{'charsWithSpaces'});
+        if (isset($data['charsWithSpaces'])) {
+            $object->setCharsWithSpaces($data['charsWithSpaces']);
         }
-        if (property_exists($data, 'cost')) {
-            $object->setCost($data->{'cost'});
+        if (isset($data['cost'])) {
+            $object->setCost($data['cost']);
         }
-        if (property_exists($data, 'effectiveWordsForBilling')) {
-            $object->setEffectiveWordsForBilling($data->{'effectiveWordsForBilling'});
+        if (isset($data['effectiveWordsForBilling'])) {
+            $object->setEffectiveWordsForBilling($data['effectiveWordsForBilling']);
         }
         return $object;
     }

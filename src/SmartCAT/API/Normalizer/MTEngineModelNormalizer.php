@@ -23,11 +23,11 @@ class MTEngineModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\MTEngineModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
         return $object;
     }

@@ -23,11 +23,11 @@ class ExecutiveModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ExecutiveModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'type')) {
-            $object->setType($data->{'type'});
+        if (isset($data['type'])) {
+            $object->setType($data['type']);
         }
         return $object;
     }

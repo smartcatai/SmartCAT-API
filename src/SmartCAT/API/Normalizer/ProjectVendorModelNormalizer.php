@@ -43,11 +43,11 @@ class ProjectVendorModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ProjectVendorModel();
-        if (property_exists($data, 'vendorAccountId')) {
-            $object->setVendorAccountId($data->{'vendorAccountId'});
+        if (isset($data['vendorAccountId'])) {
+            $object->setVendorAccountId($data['vendorAccountId']);
         }
-        if (property_exists($data, 'removedFromProject')) {
-            $object->setRemovedFromProject($data->{'removedFromProject'});
+        if (isset($data['removedFromProject'])) {
+            $object->setRemovedFromProject($data['removedFromProject']);
         }
         return $object;
     }

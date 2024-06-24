@@ -23,8 +23,8 @@ class PlaceholderFormatModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\PlaceholderFormatModel();
-        if (property_exists($data, 'regex')) {
-            $object->setRegex($data->{'regex'});
+        if (isset($data['regex'])) {
+            $object->setRegex($data['regex']);
         }
         return $object;
     }

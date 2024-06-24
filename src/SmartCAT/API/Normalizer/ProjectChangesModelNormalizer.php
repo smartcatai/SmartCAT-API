@@ -25,30 +25,30 @@ class ProjectChangesModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ProjectChangesModel();
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'description')) {
-            $object->setDescription($data->{'description'});
+        if (isset($data['description'])) {
+            $object->setDescription($data['description']);
         }
-        if (property_exists($data, 'deadline')) {
-            $object->setDeadline($data->{'deadline'});
+        if (isset($data['deadline'])) {
+            $object->setDeadline($data['deadline']);
         }
-        if (property_exists($data, 'clientId')) {
-            $object->setClientId($data->{'clientId'});
+        if (isset($data['clientId'])) {
+            $object->setClientId($data['clientId']);
         }
-        if (property_exists($data, 'domainId')) {
-            $object->setDomainId($data->{'domainId'});
+        if (isset($data['domainId'])) {
+            $object->setDomainId($data['domainId']);
         }
-        if (property_exists($data, 'vendorAccountIds')) {
+        if (isset($data['vendorAccountIds'])) {
             $values_1 = array();
-            foreach ($data->{'vendorAccountIds'} as $value_1) {
+            foreach ($data['vendorAccountIds'] as $value_1) {
                 $values_1[] = $value_1;
             }
             $object->setVendorAccountIds($values_1);
         }
-        if (property_exists($data, 'externalTag')) {
-            $object->setExternalTag($data->{'externalTag'});
+        if (isset($data['externalTag'])) {
+            $object->setExternalTag($data['externalTag']);
         }
         return $object;
     }

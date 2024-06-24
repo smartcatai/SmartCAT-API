@@ -25,31 +25,31 @@ class InhouseTranslatorModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\InhouseTranslatorModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'email')) {
-            $object->setEmail($data->{'email'});
+        if (isset($data['email'])) {
+            $object->setEmail($data['email']);
         }
-        if (property_exists($data, 'firstName')) {
-            $object->setFirstName($data->{'firstName'});
+        if (isset($data['firstName'])) {
+            $object->setFirstName($data['firstName']);
         }
-        if (property_exists($data, 'lastName')) {
-            $object->setLastName($data->{'lastName'});
+        if (isset($data['lastName'])) {
+            $object->setLastName($data['lastName']);
         }
-        if (property_exists($data, 'externalId')) {
-            $object->setExternalId($data->{'externalId'});
+        if (isset($data['externalId'])) {
+            $object->setExternalId($data['externalId']);
         }
-        if (property_exists($data, 'services')) {
+        if (isset($data['services'])) {
             $values = [];
-            foreach ($data->{'services'} as $value) {
+            foreach ($data['services'] as $value) {
                 $values[] = $this->serializer->deserialize($value, ServiceModel::class, 'raw', $context);
             }
             $object->setServices($values);
         }
-        if (property_exists($data, 'clientIds')) {
+        if (isset($data['clientIds'])) {
             $values = [];
-            foreach ($data->{'clientIds'} as $value) {
+            foreach ($data['clientIds'] as $value) {
                 $values[] = $value;
             }
             $object->setClientIds($values);

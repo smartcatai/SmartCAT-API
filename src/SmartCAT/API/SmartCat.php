@@ -10,8 +10,8 @@ use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Client\Socket\Client as SocketHttpClient;
 use Http\Message\Authentication\BasicAuth;
-use Http\Message\MessageFactory;
 use SmartCat\Client\Helper\RawEncoder;
+use SmartCat\Client\Http\HttpFactory;
 use SmartCat\Client\Manager\AccountManager;
 use SmartCat\Client\Manager\CallbackManager;
 use SmartCat\Client\Manager\ClientManager;
@@ -47,7 +47,7 @@ class SmartCat
      */
     private $serializer;
     /**
-     * @var MessageFactory
+     * @var HttpFactory
      */
     private $messageFactory;
 
@@ -95,7 +95,7 @@ class SmartCat
             $normalizer->setSerializer($serializer);
         }
 
-        $messageFactory = new MessageFactory\GuzzleMessageFactory();
+        $messageFactory = new HttpFactory();
 
         $this->serializer = $serializer;
         $this->messageFactory = $messageFactory;

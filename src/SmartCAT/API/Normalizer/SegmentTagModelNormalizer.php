@@ -23,20 +23,20 @@ class SegmentTagModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\SegmentTagModel();
-        if (property_exists($data, 'tagNumber')) {
-            $object->setTagNumber($data->{'tagNumber'});
+        if (isset($data['tagNumber'])) {
+            $object->setTagNumber($data['tagNumber']);
         }
-        if (property_exists($data, 'tagType')) {
-            $object->setTagType($data->{'tagType'});
+        if (isset($data['tagType'])) {
+            $object->setTagType($data['tagType']);
         }
-        if (property_exists($data, 'position')) {
-            $object->setPosition($data->{'position'});
+        if (isset($data['position'])) {
+            $object->setPosition($data['position']);
         }
-        if (property_exists($data, 'isVirtual')) {
-            $object->setIsVirtual($data->{'isVirtual'});
+        if (isset($data['isVirtual'])) {
+            $object->setIsVirtual($data['isVirtual']);
         }
-        if (property_exists($data, 'isInvisible')) {
-            $object->setIsInvisible($data->{'isInvisible'});
+        if (isset($data['isInvisible'])) {
+            $object->setIsInvisible($data['isInvisible']);
         }
         return $object;
     }

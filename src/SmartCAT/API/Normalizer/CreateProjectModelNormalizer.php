@@ -25,82 +25,82 @@ class CreateProjectModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\CreateProjectModel();
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'description')) {
-            $object->setDescription($data->{'description'});
+        if (isset($data['description'])) {
+            $object->setDescription($data['description']);
         }
-        if (property_exists($data, 'deadline')) {
-            $object->setDeadline($data->{'deadline'});
+        if (isset($data['deadline'])) {
+            $object->setDeadline($data['deadline']);
         }
-        if (property_exists($data, 'sourceLanguage')) {
-            $object->setSourceLanguage($data->{'sourceLanguage'});
+        if (isset($data['sourceLanguage'])) {
+            $object->setSourceLanguage($data['sourceLanguage']);
         }
-        if (property_exists($data, 'targetLanguages')) {
+        if (isset($data['targetLanguages'])) {
             $values = array();
-            foreach ($data->{'targetLanguages'} as $value) {
+            foreach ($data['targetLanguages'] as $value) {
                 $values[] = $value;
             }
             $object->setTargetLanguages($values);
         }
-        if (property_exists($data, 'domainId')) {
-            $object->setDomainId($data->{'domainId'});
+        if (isset($data['domainId'])) {
+            $object->setDomainId($data['domainId']);
         }
-        if (property_exists($data, 'clientId')) {
-            $object->setClientId($data->{'clientId'});
+        if (isset($data['clientId'])) {
+            $object->setClientId($data['clientId']);
         }
-        if (property_exists($data, 'vendorAccountIds')) {
+        if (isset($data['vendorAccountIds'])) {
             $values_1 = array();
-            foreach ($data->{'vendorAccountIds'} as $value_1) {
+            foreach ($data['vendorAccountIds'] as $value_1) {
                 $values_1[] = $value_1;
             }
             $object->setVendorAccountIds($values_1);
         }
-        if (property_exists($data, 'assignToVendor')) {
-            $object->setAssignToVendor($data->{'assignToVendor'});
+        if (isset($data['assignToVendor'])) {
+            $object->setAssignToVendor($data['assignToVendor']);
         }
-        if (property_exists($data, 'useMT')) {
-            $object->setUseMT($data->{'useMT'});
+        if (isset($data['useMT'])) {
+            $object->setUseMT($data['useMT']);
         }
-        if (property_exists($data, 'pretranslate')) {
-            $object->setPretranslate($data->{'pretranslate'});
+        if (isset($data['pretranslate'])) {
+            $object->setPretranslate($data['pretranslate']);
         }
-        if (property_exists($data, 'translationMemoryName')) {
-            $object->setTranslationMemoryName($data->{'translationMemoryName'});
+        if (isset($data['translationMemoryName'])) {
+            $object->setTranslationMemoryName($data['translationMemoryName']);
         }
-        if (property_exists($data, 'useTranslationMemory')) {
-            $object->setUseTranslationMemory($data->{'useTranslationMemory'});
+        if (isset($data['useTranslationMemory'])) {
+            $object->setUseTranslationMemory($data['useTranslationMemory']);
         }
-        if (property_exists($data, 'autoPropagateRepetitions')) {
-            $object->setAutoPropagateRepetitions($data->{'autoPropagateRepetitions'});
+        if (isset($data['autoPropagateRepetitions'])) {
+            $object->setAutoPropagateRepetitions($data['autoPropagateRepetitions']);
         }
-        if (property_exists($data, 'disassembleAlgorithmNames')) {
+        if (isset($data['disassembleAlgorithmNames'])) {
             $values_1 = array();
-            foreach ($data->{'disassembleAlgorithmNames'} as $value_1) {
+            foreach ($data['disassembleAlgorithmNames'] as $value_1) {
                 $values_1[] = $value_1;
             }
             $object->setDisassembleAlgorithmNames($values_1);
         }
-        if (property_exists($data, 'documentProperties')) {
+        if (isset($data['documentProperties'])) {
             $values_2 = array();
-            foreach ($data->{'documentProperties'} as $value_2) {
+            foreach ($data['documentProperties'] as $value_2) {
                 $values_2[] = $this->serializer->deserialize(json_encode($value_2), 'SmartCat\\Client\\Model\\CreateDocumentPropertyModel', 'json', $context);
             }
             $object->setDocumentProperties($values_2);
         }
-        if (property_exists($data, 'workflowStages')) {
+        if (isset($data['workflowStages'])) {
             $values_3 = array();
-            foreach ($data->{'workflowStages'} as $value_3) {
+            foreach ($data['workflowStages'] as $value_3) {
                 $values_3[] = $value_3;
             }
             $object->setWorkflowStages($values_3);
         }
-        if (property_exists($data, 'isForTesting')) {
-            $object->setIsForTesting($data->{'isForTesting'});
+        if (isset($data['isForTesting'])) {
+            $object->setIsForTesting($data['isForTesting']);
         }
-        if (property_exists($data, 'externalTag')) {
-            $object->setExternalTag($data->{'externalTag'});
+        if (isset($data['externalTag'])) {
+            $object->setExternalTag($data['externalTag']);
         }
         return $object;
     }

@@ -23,11 +23,11 @@ class DocumentTargetIdNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\DocumentTargetId();
-        if (property_exists($data, 'DocumentId')) {
-            $object->setDocumentId($data->{'DocumentId'});
+        if (isset($data['DocumentId'])) {
+            $object->setDocumentId($data['DocumentId']);
         }
-        if (property_exists($data, 'LanguageId')) {
-            $object->setLanguageId($data->{'LanguageId'});
+        if (isset($data['LanguageId'])) {
+            $object->setLanguageId($data['LanguageId']);
         }
         return $object;
     }

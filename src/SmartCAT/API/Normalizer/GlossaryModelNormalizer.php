@@ -23,30 +23,30 @@ class GlossaryModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\GlossaryModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'description')) {
-            $object->setDescription($data->{'description'});
+        if (isset($data['description'])) {
+            $object->setDescription($data['description']);
         }
-        if (property_exists($data, 'clientId')) {
-            $object->setClientId($data->{'clientId'});
+        if (isset($data['clientId'])) {
+            $object->setClientId($data['clientId']);
         }
-        if (property_exists($data, 'languages')) {
+        if (isset($data['languages'])) {
             $values = array();
-            foreach ($data->{'languages'} as $value) {
+            foreach ($data['languages'] as $value) {
                 $values[] = $value;
             }
             $object->setLanguages($values);
         }
-        if (property_exists($data, 'units')) {
-            $object->setUnits($data->{'units'});
+        if (isset($data['units'])) {
+            $object->setUnits($data['units']);
         }
-        if (property_exists($data, 'unitsPending')) {
-            $object->setUnitsPending($data->{'unitsPending'});
+        if (isset($data['unitsPending'])) {
+            $object->setUnitsPending($data['unitsPending']);
         }
         return $object;
     }

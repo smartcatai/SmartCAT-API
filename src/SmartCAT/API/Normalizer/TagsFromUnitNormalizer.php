@@ -23,11 +23,11 @@ class TagsFromUnitNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\TagsFromUnit();
-        if (property_exists($data, 'position')) {
-            $object->setPosition($data->{'position'});
+        if (isset($data['position'])) {
+            $object->setPosition($data['position']);
         }
-        if (property_exists($data, 'order')) {
-            $object->setOrder($data->{'order'});
+        if (isset($data['order'])) {
+            $object->setOrder($data['order']);
         }
         return $object;
     }

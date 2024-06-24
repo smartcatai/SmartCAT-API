@@ -23,12 +23,12 @@ class ModelWithFilesUploadDocumentPropertiesModelNormalizer extends AbstractNorm
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ModelWithFilesUploadDocumentPropertiesModel();
-        if (property_exists($data, 'Value')) {
-            $object->setValue($this->serializer->deserialize($data->{'Value'}, 'SmartCat\\Client\\Model\\UploadDocumentPropertiesModel', 'raw', $context));
+        if (isset($data['Value'])) {
+            $object->setValue($this->serializer->deserialize($data['Value'], 'SmartCat\\Client\\Model\\UploadDocumentPropertiesModel', 'raw', $context));
         }
-        if (property_exists($data, 'Files')) {
+        if (isset($data['Files'])) {
             $values = array();
-            foreach ($data->{'Files'} as $value) {
+            foreach ($data['Files'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\UploadedFile', 'raw', $context);
             }
             $object->setFiles($values);

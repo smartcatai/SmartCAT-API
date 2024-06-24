@@ -23,22 +23,22 @@ class ProjectStatisticsModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ProjectStatisticsModel();
-        if (property_exists($data, 'language')) {
-            $object->setLanguage($data->{'language'});
+        if (isset($data['language'])) {
+            $object->setLanguage($data['language']);
         }
-        if (property_exists($data, 'statistics')) {
+        if (isset($data['statistics'])) {
             $values = array();
-            foreach ($data->{'statistics'} as $value) {
+            foreach ($data['statistics'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\StatisticsRowModel', 'raw', $context);
             }
             $object->setStatistics($values);
         }
-        if (property_exists($data, 'cost')) {
-            $object->setCost($data->{'cost'});
+        if (isset($data['cost'])) {
+            $object->setCost($data['cost']);
         }
-        if (property_exists($data, 'documents')) {
+        if (isset($data['documents'])) {
             $values_1 = array();
-            foreach ($data->{'documents'} as $value_1) {
+            foreach ($data['documents'] as $value_1) {
                 $values_1[] = $this->serializer->deserialize($value_1, 'SmartCat\\Client\\Model\\DocumentStatisticsModel', 'raw', $context);
             }
             $object->setDocuments($values_1);

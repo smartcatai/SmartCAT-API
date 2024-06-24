@@ -5,7 +5,7 @@ namespace SmartCat\Client\Resource;
 use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
+use SmartCat\Client\Http\HttpFactory;
 use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class Resource
@@ -18,7 +18,7 @@ abstract class Resource
      */
     protected $httpClient;
     /**
-     * @var MessageFactory
+     * @var HttpFactory
      */
     protected $messageFactory;
     /**
@@ -26,7 +26,7 @@ abstract class Resource
      */
     protected $serializer;
 
-    public function __construct($httpClient, MessageFactory $messageFactory, SerializerInterface $serializer)
+    public function __construct($httpClient, HttpFactory $messageFactory, SerializerInterface $serializer)
     {
         $this->httpClient = new FlexibleHttpClient($httpClient);
         $this->messageFactory = $messageFactory;

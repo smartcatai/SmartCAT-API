@@ -25,40 +25,40 @@ class TranslationMemoryModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\TranslationMemoryModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'accountId')) {
-            $object->setAccountId($data->{'accountId'});
+        if (isset($data['accountId'])) {
+            $object->setAccountId($data['accountId']);
         }
-        if (property_exists($data, 'clientId')) {
-            $object->setClientId($data->{'clientId'});
+        if (isset($data['clientId'])) {
+            $object->setClientId($data['clientId']);
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'description')) {
-            $object->setDescription($data->{'description'});
+        if (isset($data['description'])) {
+            $object->setDescription($data['description']);
         }
-        if (property_exists($data, 'sourceLanguage')) {
-            $object->setSourceLanguage($data->{'sourceLanguage'});
+        if (isset($data['sourceLanguage'])) {
+            $object->setSourceLanguage($data['sourceLanguage']);
         }
-        if (property_exists($data, 'targetLanguages')) {
+        if (isset($data['targetLanguages'])) {
             $values = array();
-            foreach ($data->{'targetLanguages'} as $value) {
+            foreach ($data['targetLanguages'] as $value) {
                 $values[] = $value;
             }
             $object->setTargetLanguages($values);
         }
-        if (property_exists($data, 'createdDate')) {
-            $object->setCreatedDate($data->{'createdDate'});
+        if (isset($data['createdDate'])) {
+            $object->setCreatedDate($data['createdDate']);
         }
-        if (property_exists($data, 'isAutomaticallyCreated')) {
-            $object->setIsAutomaticallyCreated($data->{'isAutomaticallyCreated'});
+        if (isset($data['isAutomaticallyCreated'])) {
+            $object->setIsAutomaticallyCreated($data['isAutomaticallyCreated']);
         }
-        if (property_exists($data, 'unitCountByLanguageId')) {
+        if (isset($data['unitCountByLanguageId'])) {
             $values_1 = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            foreach ($data->{'unitCountByLanguageId'} as $key => $value_1) {
+            foreach ($data['unitCountByLanguageId'] as $key => $value_1) {
                 $values_1[$key] = $value_1;
             }
             $object->setUnitCountByLanguageId($values_1);

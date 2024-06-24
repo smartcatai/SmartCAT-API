@@ -23,26 +23,26 @@ class ImportJobModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ImportJobModel();
-        if (property_exists($data, 'freelancerId')) {
-            $object->setFreelancerId($data->{'freelancerId'});
+        if (isset($data['freelancerId'])) {
+            $object->setFreelancerId($data['freelancerId']);
         }
-        if (property_exists($data, 'serviceType')) {
-            $object->setServiceType($data->{'serviceType'});
+        if (isset($data['serviceType'])) {
+            $object->setServiceType($data['serviceType']);
         }
-        if (property_exists($data, 'jobDescription')) {
-            $object->setJobDescription($data->{'jobDescription'});
+        if (isset($data['jobDescription'])) {
+            $object->setJobDescription($data['jobDescription']);
         }
-        if (property_exists($data, 'unitsType')) {
-            $object->setUnitsType($data->{'unitsType'});
+        if (isset($data['unitsType'])) {
+            $object->setUnitsType($data['unitsType']);
         }
-        if (property_exists($data, 'unitsAmount')) {
-            $object->setUnitsAmount($data->{'unitsAmount'});
+        if (isset($data['unitsAmount'])) {
+            $object->setUnitsAmount($data['unitsAmount']);
         }
-        if (property_exists($data, 'pricePerUnit')) {
-            $object->setPricePerUnit($data->{'pricePerUnit'});
+        if (isset($data['pricePerUnit'])) {
+            $object->setPricePerUnit($data['pricePerUnit']);
         }
-        if (property_exists($data, 'currency')) {
-            $object->setCurrency($data->{'currency'});
+        if (isset($data['currency'])) {
+            $object->setCurrency($data['currency']);
         }
         return $object;
     }

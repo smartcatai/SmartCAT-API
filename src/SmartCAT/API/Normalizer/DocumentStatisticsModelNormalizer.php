@@ -23,12 +23,12 @@ class DocumentStatisticsModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\DocumentStatisticsModel();
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'statistics')) {
+        if (isset($data['statistics'])) {
             $values = array();
-            foreach ($data->{'statistics'} as $value) {
+            foreach ($data['statistics'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\StatisticsRowModel', 'raw', $context);
             }
             $object->setStatistics($values);

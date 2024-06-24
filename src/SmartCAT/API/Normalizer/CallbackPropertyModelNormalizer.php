@@ -23,12 +23,12 @@ class CallbackPropertyModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\CallbackPropertyModel();
-        if (property_exists($data, 'url')) {
-            $object->setUrl($data->{'url'});
+        if (isset($data['url'])) {
+            $object->setUrl($data['url']);
         }
-        if (property_exists($data, 'additionalHeaders')) {
+        if (isset($data['additionalHeaders'])) {
             $values = array();
-            foreach ($data->{'additionalHeaders'} as $value) {
+            foreach ($data['additionalHeaders'] as $value) {
                 $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\AdditionalHeaderModel', 'json', $context);
             }
             $object->setAdditionalHeaders($values);

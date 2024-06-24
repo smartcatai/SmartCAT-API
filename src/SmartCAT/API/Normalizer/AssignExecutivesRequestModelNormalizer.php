@@ -23,18 +23,18 @@ class AssignExecutivesRequestModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\AssignExecutivesRequestModel();
-        if (property_exists($data, 'executives')) {
+        if (isset($data['executives'])) {
             $values = array();
-            foreach ($data->{'executives'} as $value) {
+            foreach ($data['executives'] as $value) {
                 $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\Executive', 'json', $context);
             }
             $object->setExecutives($values);
         }
-        if (property_exists($data, 'minWordsCountForExecutive')) {
-            $object->setMinWordsCountForExecutive($data->{'minWordsCountForExecutive'});
+        if (isset($data['minWordsCountForExecutive'])) {
+            $object->setMinWordsCountForExecutive($data['minWordsCountForExecutive']);
         }
-        if (property_exists($data, 'assignmentMode')) {
-            $object->setAssignmentMode($data->{'assignmentMode'});
+        if (isset($data['assignmentMode'])) {
+            $object->setAssignmentMode($data['assignmentMode']);
         }
         return $object;
     }

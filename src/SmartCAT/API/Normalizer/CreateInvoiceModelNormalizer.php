@@ -23,12 +23,12 @@ class CreateInvoiceModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\CreateInvoiceModel();
-        if (property_exists($data, 'userId')) {
-            $object->setUserId($data->{'userId'});
+        if (isset($data['userId'])) {
+            $object->setUserId($data['userId']);
         }
-        if (property_exists($data, 'jobIds')) {
+        if (isset($data['jobIds'])) {
             $values = array();
-            foreach ($data->{'jobIds'} as $value) {
+            foreach ($data['jobIds'] as $value) {
                 $values[] = $value;
             }
             $object->setJobIds($values);

@@ -23,16 +23,16 @@ class ModelWithFilesIReadOnlyListCreateDocumentPropertyModelNormalizer extends A
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ModelWithFilesIReadOnlyListCreateDocumentPropertyModel();
-        if (property_exists($data, 'Value')) {
+        if (isset($data['Value'])) {
             $values = array();
-            foreach ($data->{'Value'} as $value) {
+            foreach ($data['Value'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\CreateDocumentPropertyModel', 'raw', $context);
             }
             $object->setValue($values);
         }
-        if (property_exists($data, 'Files')) {
+        if (isset($data['Files'])) {
             $values_1 = array();
-            foreach ($data->{'Files'} as $value_1) {
+            foreach ($data['Files'] as $value_1) {
                 $values_1[] = $this->serializer->deserialize($value_1, 'SmartCat\\Client\\Model\\UploadedFile', 'raw', $context);
             }
             $object->setFiles($values_1);

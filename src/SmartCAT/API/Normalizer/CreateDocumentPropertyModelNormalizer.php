@@ -23,30 +23,30 @@ class CreateDocumentPropertyModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\CreateDocumentPropertyModel();
-        if (property_exists($data, 'externalId')) {
-            $object->setExternalId($data->{'externalId'});
+        if (isset($data['externalId'])) {
+            $object->setExternalId($data['externalId']);
         }
-        if (property_exists($data, 'metaInfo')) {
-            $object->setMetaInfo($data->{'metaInfo'});
+        if (isset($data['metaInfo'])) {
+            $object->setMetaInfo($data['metaInfo']);
         }
-        if (property_exists($data, 'disassembleAlgorithmName')) {
-            $object->setDisassembleAlgorithmName($data->{'disassembleAlgorithmName'});
+        if (isset($data['disassembleAlgorithmName'])) {
+            $object->setDisassembleAlgorithmName($data['disassembleAlgorithmName']);
         }
-        if (property_exists($data, 'bilingualFileImportSettings')) {
-            $object->setBilingualFileImportSettings($this->serializer->deserialize(json_encode($data->{'bilingualFileImportSettings'}), 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'json', $context));
+        if (isset($data['bilingualFileImportSettings'])) {
+            $object->setBilingualFileImportSettings($this->serializer->deserialize(json_encode($data['bilingualFileImportSettings']), 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'json', $context));
         }
-        if (property_exists($data, 'targetLanguages')) {
+        if (isset($data['targetLanguages'])) {
             $values = array();
-            foreach ($data->{'targetLanguages'} as $value) {
+            foreach ($data['targetLanguages'] as $value) {
                 $values[] = $value;
             }
             $object->setTargetLanguages($values);
         }
-        if (property_exists($data, 'enablePlaceholders')) {
-            $object->setEnablePlaceholders($data->{'enablePlaceholders'});
+        if (isset($data['enablePlaceholders'])) {
+            $object->setEnablePlaceholders($data['enablePlaceholders']);
         }
-        if (property_exists($data, 'disassembleSettings')) {
-            $object->setDisassembleSettingsModel($this->serializer->deserialize($data->{'disassembleSettings'}, 'SmartCat\\API\\Model\\DisassembleSettingsModel', 'raw', $context));
+        if (isset($data['disassembleSettings'])) {
+            $object->setDisassembleSettingsModel($this->serializer->deserialize($data['disassembleSettings'], 'SmartCat\\API\\Model\\DisassembleSettingsModel', 'raw', $context));
         }
         return $object;
     }

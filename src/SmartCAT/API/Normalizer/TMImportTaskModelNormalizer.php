@@ -23,20 +23,20 @@ class TMImportTaskModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\TMImportTaskModel();
-        if (property_exists($data, 'accountId')) {
-            $object->setAccountId($data->{'accountId'});
+        if (isset($data['accountId'])) {
+            $object->setAccountId($data['accountId']);
         }
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'translationMemoryId')) {
-            $object->setTranslationMemoryId($data->{'translationMemoryId'});
+        if (isset($data['translationMemoryId'])) {
+            $object->setTranslationMemoryId($data['translationMemoryId']);
         }
-        if (property_exists($data, 'state')) {
-            $object->setState($data->{'state'});
+        if (isset($data['state'])) {
+            $object->setState($data['state']);
         }
-        if (property_exists($data, 'insertedUnitCount')) {
-            $object->setInsertedUnitCount($data->{'insertedUnitCount'});
+        if (isset($data['insertedUnitCount'])) {
+            $object->setInsertedUnitCount($data['insertedUnitCount']);
         }
         return $object;
     }

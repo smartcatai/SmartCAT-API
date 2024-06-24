@@ -23,14 +23,14 @@ class BilingualFileImportSettingsModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\BilingualFileImportSettingsModel();
-        if (property_exists($data, 'targetSubstitutionMode')) {
-            $object->setTargetSubstitutionMode($data->{'targetSubstitutionMode'});
+        if (isset($data['targetSubstitutionMode'])) {
+            $object->setTargetSubstitutionMode($data['targetSubstitutionMode']);
         }
-        if (property_exists($data, 'lockMode')) {
-            $object->setLockMode($data->{'lockMode'});
+        if (isset($data['lockMode'])) {
+            $object->setLockMode($data['lockMode']);
         }
-        if (property_exists($data, 'confirmMode')) {
-            $object->setConfirmMode($data->{'confirmMode'});
+        if (isset($data['confirmMode'])) {
+            $object->setConfirmMode($data['confirmMode']);
         }
         return $object;
     }

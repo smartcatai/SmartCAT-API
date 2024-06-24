@@ -27,8 +27,8 @@ class DisassembleSettingsModelNormalizer implements DenormalizerInterface, Norma
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCAT\Client\Model\DisassembleSettingsModel();
-        if (property_exists($data, 'translatableAttributes')) {
-            $object->setTranslatableAttributes($data->{'translatableAttributes'});
+        if (isset($data['translatableAttributes'])) {
+            $object->setTranslatableAttributes($data['translatableAttributes']);
         }
         return $object;
     }

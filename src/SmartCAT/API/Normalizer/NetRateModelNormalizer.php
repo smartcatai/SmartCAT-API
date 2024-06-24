@@ -23,21 +23,21 @@ class NetRateModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\NetRateModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'newWordsRate')) {
-            $object->setNewWordsRate($data->{'newWordsRate'});
+        if (isset($data['newWordsRate'])) {
+            $object->setNewWordsRate($data['newWordsRate']);
         }
-        if (property_exists($data, 'repetitionsRate')) {
-            $object->setRepetitionsRate($data->{'repetitionsRate'});
+        if (isset($data['repetitionsRate'])) {
+            $object->setRepetitionsRate($data['repetitionsRate']);
         }
-        if (property_exists($data, 'tmMatchRates')) {
+        if (isset($data['tmMatchRates'])) {
             $values = array();
-            foreach ($data->{'tmMatchRates'} as $value) {
+            foreach ($data['tmMatchRates'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\TMRangeRateModel', 'raw', $context);
             }
             $object->setTmMatchRates($values);

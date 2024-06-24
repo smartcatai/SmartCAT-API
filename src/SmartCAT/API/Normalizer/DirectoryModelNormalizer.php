@@ -26,12 +26,12 @@ class DirectoryModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new DirectoryModel();
-        if (property_exists($data, 'type')) {
-            $object->setType($data->{'type'});
+        if (isset($data['type'])) {
+            $object->setType($data['type']);
         }
-        if (property_exists($data, 'items')) {
+        if (isset($data['items'])) {
             $values = array();
-            foreach ($data->{'items'} as $value) {
+            foreach ($data['items'] as $value) {
                 $values[] = $this->serializer->deserialize(json_encode($value), DirectoryItemModel::class, 'json', $context);
             }
             $object->setItems($values);

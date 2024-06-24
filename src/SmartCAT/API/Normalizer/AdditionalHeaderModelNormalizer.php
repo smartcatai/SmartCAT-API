@@ -23,11 +23,11 @@ class AdditionalHeaderModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\AdditionalHeaderModel();
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'value')) {
-            $object->setValue($data->{'value'});
+        if (isset($data['value'])) {
+            $object->setValue($data['value']);
         }
         return $object;
     }

@@ -47,72 +47,72 @@ class ProjectModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ProjectModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'description')) {
-            $object->setDescription($data->{'description'});
+        if (isset($data['description'])) {
+            $object->setDescription($data['description']);
         }
-        if (property_exists($data, 'deadline')) {
-            $object->setDeadline($data->{'deadline'});
+        if (isset($data['deadline'])) {
+            $object->setDeadline($data['deadline']);
         }
-        if (property_exists($data, 'creationDate')) {
-            $object->setCreationDate($data->{'creationDate'});
+        if (isset($data['creationDate'])) {
+            $object->setCreationDate($data['creationDate']);
         }
-        if (property_exists($data, 'createdByUserId')) {
-            $object->setCreatedByUserId($data->{'createdByUserId'});
+        if (isset($data['createdByUserId'])) {
+            $object->setCreatedByUserId($data['createdByUserId']);
         }
-        if (property_exists($data, 'modificationDate')) {
-            $object->setModificationDate($data->{'modificationDate'});
+        if (isset($data['modificationDate'])) {
+            $object->setModificationDate($data['modificationDate']);
         }
-        if (property_exists($data, 'sourceLanguage')) {
-            $object->setSourceLanguage($data->{'sourceLanguage'});
+        if (isset($data['sourceLanguage'])) {
+            $object->setSourceLanguage($data['sourceLanguage']);
         }
-        if (property_exists($data, 'targetLanguages')) {
+        if (isset($data['targetLanguages'])) {
             $values = array();
-            foreach ($data->{'targetLanguages'} as $value) {
+            foreach ($data['targetLanguages'] as $value) {
                 $values[] = $value;
             }
             $object->setTargetLanguages($values);
         }
-        if (property_exists($data, 'status')) {
-            $object->setStatus($data->{'status'});
+        if (isset($data['status'])) {
+            $object->setStatus($data['status']);
         }
-        if (property_exists($data, 'statusModificationDate')) {
-            $object->setStatusModificationDate($data->{'statusModificationDate'});
+        if (isset($data['statusModificationDate'])) {
+            $object->setStatusModificationDate($data['statusModificationDate']);
         }
-        if (property_exists($data, 'domainId')) {
-            $object->setDomainId($data->{'domainId'});
+        if (isset($data['domainId'])) {
+            $object->setDomainId($data['domainId']);
         }
-        if (property_exists($data, 'clientId')) {
-            $object->setClientId($data->{'clientId'});
+        if (isset($data['clientId'])) {
+            $object->setClientId($data['clientId']);
         }
-        if (property_exists($data, 'vendors')) {
+        if (isset($data['vendors'])) {
             $values_3 = array();
-            foreach ($data->{'vendors'} as $value_3) {
+            foreach ($data['vendors'] as $value_3) {
                 $values_3[] = $this->serializer->deserialize(json_encode($value_3), ProjectVendorModel::class, 'json', $context);
             }
             $object->setVendors($values_3);
         }
-        if (property_exists($data, 'workflowStages')) {
+        if (isset($data['workflowStages'])) {
             $values_1 = array();
-            foreach ($data->{'workflowStages'} as $value_1) {
+            foreach ($data['workflowStages'] as $value_1) {
                 $values_1[] = $this->serializer->deserialize(json_encode($value_1), ProjectWorkflowStageModel::class, 'json', $context);
             }
             $object->setWorkflowStages($values_1);
         }
-        if (property_exists($data, 'documents')) {
+        if (isset($data['documents'])) {
             $values_2 = array();
-            foreach ($data->{'documents'} as $value_2) {
+            foreach ($data['documents'] as $value_2) {
                 $values_2[] = $this->serializer->deserialize(json_encode($value_2), DocumentModel::class, 'json', $context);
             }
             $object->setDocuments($values_2);
         }
-        if (property_exists($data, 'externalTag')) {
-            $object->setExternalTag($data->{'externalTag'});
+        if (isset($data['externalTag'])) {
+            $object->setExternalTag($data['externalTag']);
         }
 
         return $object;
