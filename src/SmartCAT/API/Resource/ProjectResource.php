@@ -2,8 +2,7 @@
 
 namespace SmartCat\Client\Resource;
 
-use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Http\Message\StreamFactory\GuzzleStreamFactory;
+use GuzzleHttp\Psr7\MultipartStream;
 use SmartCat\Client\Helper\QueryParam;
 use SmartCat\Client\Model\ProjectModel;
 
@@ -28,7 +27,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -51,7 +50,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -82,7 +81,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($model, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -112,7 +111,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -139,7 +138,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -170,7 +169,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -196,7 +195,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -227,7 +226,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -255,7 +254,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -285,7 +284,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -308,7 +307,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -339,7 +338,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($glossaryIds, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -363,7 +362,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -389,7 +388,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -414,7 +413,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -449,14 +448,18 @@ abstract class ProjectResource extends Resource
             $serializedData->enableProjectTasks = $project->getIsEnableProjectTasks();
         }
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder->addResource('model', json_encode($serializedData), ['headers' => ['Content-Type' => 'application/json']]);
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
+        $body = [];
+        $body[] = [
+            'name' => 'model',
+            'contents' => json_encode($serializedData),
+            'headers' => ['Content-Type' => 'application/json']
+        ];
+        $multipartStream = new MultipartStream($body);
+        $boundary = $multipartStream->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary="' . $boundary . '"';
 
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $multipartStream);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -495,7 +498,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $documentModel;
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -526,7 +529,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -550,7 +553,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmForLanguagesModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -576,7 +579,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -606,7 +609,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

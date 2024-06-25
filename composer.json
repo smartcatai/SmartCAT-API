@@ -14,16 +14,13 @@
     "issues": "https://github.com/smartcatai/SmartCAT-API/issues"
   },
   "require": {
-    "php": "^8.0",
-    "php-http/socket-client": "dev-compatibility-stream-interface",
-    "php-http/client-common": "~2.3",
+    "php": "^7.4 | ^8.0",
     "guzzlehttp/psr7": "^2.0",
-    "php-http/multipart-stream-builder": "~1.0",
     "symfony/serializer": "^2.0 || ^3.0 || ^4.0 || ^5.0",
     "nesbot/carbon": "^2.42",
-    "php-http/message": "^1.9",
-    "psr/http-factory": "^1.1",
-    "php-http/message-factory": "^1.1"
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.8",
+    "symfony/options-resolver": "^5.4"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -24,7 +24,7 @@ class MyTeamResource extends Resource
         $body = str_replace('}"', '}', $body);
         $body = str_replace('\"', '"', $body);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

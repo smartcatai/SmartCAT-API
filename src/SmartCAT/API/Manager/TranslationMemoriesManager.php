@@ -2,8 +2,7 @@
 
 namespace SmartCat\Client\Manager;
 
-use Http\Message\StreamFactory\GuzzleStreamFactory;
-use Http\Message\MultipartStream\MultipartStreamBuilder;
+use GuzzleHttp\Psr7\MultipartStream;
 use SmartCat\Client\Helper\QueryParam;
 use SmartCat\Client\Resource\TranslationMemoriesResource;
 
@@ -58,20 +57,22 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         $url = str_replace('{tmId}', urlencode($tmId), $url);
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = $queryParam->buildHeaders($parameters);
-        $body = $queryParam->buildFormDataString($parameters);
 
         $parameters['tmxFile'] = $this->prepareFile($parameters['tmxFile']);
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder
-            ->addResource('uploadedFile', $parameters['tmxFile']['fileContent'], ['filename' => (isset($parameters['tmxFile']['fileName']) ? $parameters['tmxFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
+        $body = [];
+        $body[] = [
+            'name' => 'uploadedFile',
+            'contents' => $parameters['tmxFile']['fileContent'],
+            'filename' => $parameters['tmxFile']['fileName'] ?? null,
+            'headers' => ['Content-Type' => "application/octet-stream"]
+        ];
+        $stream = new MultipartStream($body);
+        $boundary = $stream->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
-        $body = $multipartStream->getContents();
 
-        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $stream);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -102,7 +103,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($targetLanguages, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

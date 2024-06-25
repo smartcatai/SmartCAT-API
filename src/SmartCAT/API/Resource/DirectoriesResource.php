@@ -25,7 +25,7 @@ class DirectoriesResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -53,7 +53,7 @@ class DirectoriesResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
