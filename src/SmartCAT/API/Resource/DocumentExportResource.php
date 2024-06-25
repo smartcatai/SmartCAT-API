@@ -13,7 +13,7 @@ class DocumentExportResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentExportDownloadExportResult($taskId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -41,7 +41,7 @@ class DocumentExportResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ExportDocumentTaskModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ExportDocumentTaskModel
      */
     public function documentExportRequestExport($parameters = array(), $fetch = self::FETCH_OBJECT)
     {

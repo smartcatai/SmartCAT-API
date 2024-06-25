@@ -16,7 +16,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectDelete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -39,7 +39,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel
      */
     public function projectGet($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -68,7 +68,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectUpdateProject($projectId, \SmartCat\Client\Model\ProjectChangesModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -97,7 +97,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel[]
      */
     public function projectGetAll($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -157,7 +157,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectGetProjectStatisticsObsolete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -183,7 +183,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]
      */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -215,7 +215,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ExecutiveStatisticsModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ExecutiveStatisticsModel[]
      */
     public function projectGetCompletedWorkStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -243,7 +243,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectTranslationMemoryModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectTranslationMemoryModel[]
      */
     public function projectGetProjectTranslationMemories($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -272,7 +272,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectSetTranslationMemoriesForWholeProject($projectId, $tmModels, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -296,7 +296,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\GlossaryModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\GlossaryModel[]
      */
     public function projectGetGlossaries($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -325,7 +325,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectSetGlossaries($projectId, array $glossaryIds, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -351,7 +351,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectCancelProject($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -377,7 +377,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectRestoreProject($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -402,7 +402,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectCompleteProject($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -431,7 +431,7 @@ abstract class ProjectResource extends Resource
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel
      * @throws \Exception
      */
     public function projectCreateProject(\SmartCat\Client\Model\CreateProjectModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
@@ -482,7 +482,7 @@ abstract class ProjectResource extends Resource
      * @param array $parameters {
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel[]
      * @throws \Exception
      */
     public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
@@ -517,7 +517,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectAddLanguage($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -542,7 +542,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectSetProjectTranslationMemoriesByLanguages($projectId, $tmForLanguagesModels, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -567,7 +567,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectBuildStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -595,7 +595,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectAssignGroupToWorkflowStage($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

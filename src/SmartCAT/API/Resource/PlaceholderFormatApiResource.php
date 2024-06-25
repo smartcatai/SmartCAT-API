@@ -12,7 +12,7 @@ class PlaceholderFormatApiResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\PlaceholderFormatModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\PlaceholderFormatModel[]
      */
     public function placeholderFormatApiGetPlaceholderFormats($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -41,7 +41,7 @@ class PlaceholderFormatApiResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function placeholderFormatApiUpdatePlaceholderFormats($formats, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -68,7 +68,7 @@ class PlaceholderFormatApiResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function placeholderFormatApiValidatePlaceholderFormat($parameters = array(), $fetch = self::FETCH_OBJECT)
     {

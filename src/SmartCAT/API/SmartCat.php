@@ -5,7 +5,6 @@ namespace SmartCat\Client;
 use GuzzleHttp\Client;
 use SmartCat\Client\Helper\RawEncoder;
 use SmartCat\Client\Http\HttpFactory;
-use SmartCat\Client\Http\SocketClient;
 use SmartCat\Client\Manager\AccountManager;
 use SmartCat\Client\Manager\CallbackManager;
 use SmartCat\Client\Manager\ClientManager;

@@ -13,7 +13,7 @@ class UserResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\UserModel
      */
     public function userCreate(\SmartCat\Client\Model\CreateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -42,7 +42,7 @@ class UserResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function userDelete($accountUserId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -68,7 +68,7 @@ class UserResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\UserModel
      */
     public function userGetExternal($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -99,7 +99,7 @@ class UserResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function userUpdate($accountUserId, \SmartCat\Client\Model\UpdateUserRequest $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

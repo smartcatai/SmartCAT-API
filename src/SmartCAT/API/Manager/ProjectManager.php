@@ -20,7 +20,7 @@ class ProjectManager extends ProjectResource
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel
      */
     public function projectCreateProjectWithFiles(\SmartCat\Client\Model\CreateProjectWithFilesModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -83,7 +83,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -173,7 +173,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectGetProjectStatisticsObsolete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -193,7 +193,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]|string
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]|string
      */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

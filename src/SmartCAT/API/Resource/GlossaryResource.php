@@ -12,7 +12,7 @@ class GlossaryResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\GlossaryModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\GlossaryModel[]
      */
     public function glossaryGetGlossaries($parameters = array(), $fetch = self::FETCH_OBJECT)
     {

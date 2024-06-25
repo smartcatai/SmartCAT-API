@@ -13,7 +13,7 @@ class ClientResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function clientCreateClient($name, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -39,7 +39,7 @@ class ClientResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ClientModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ClientModel
      */
     public function clientSetClientNetRate($clientId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -70,7 +70,7 @@ class ClientResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ClientModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ClientModel
      */
     public function clientGetClient($clientId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

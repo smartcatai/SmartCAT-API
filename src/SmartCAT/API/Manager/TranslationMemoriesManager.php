@@ -16,7 +16,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
      * @param \SmartCat\Client\Model\CreateTranslationMemoryModel $model
      * @param array $parameters
      * @param string $fetch
-     * @return \Psr\Http\Message\ResponseInterface | string
+     * @return \GuzzleHttp\Promise\PromiseInterface | string
      */
     public function translationMemoriesCreateEmptyTM(\SmartCat\Client\Model\CreateTranslationMemoryModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -44,7 +44,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function translationMemoriesImport($tmId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -90,7 +90,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function translationMemoriesSetTMTargetLanguages($tmId, array $targetLanguages, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -123,7 +123,7 @@ class TranslationMemoriesManager extends TranslationMemoriesResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function translationMemoriesExportFile($tmId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

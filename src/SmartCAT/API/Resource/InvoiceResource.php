@@ -16,7 +16,7 @@ class InvoiceResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function invoiceImportJob(\SmartCat\Client\Model\ImportJobModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -39,7 +39,7 @@ class InvoiceResource extends Resource
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|string|string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|string|string[]
      * @throws \Exception
      */
     public function invoiceImportJobV2(\SmartCat\Client\Model\ImportJobModelV2 $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
@@ -70,7 +70,7 @@ class InvoiceResource extends Resource
      * @param array $parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|string|string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|string|string[]
      * @throws \Exception
      */
     public function createInvoice(\SmartCat\Client\Model\CreateInvoiceModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
@@ -99,7 +99,7 @@ class InvoiceResource extends Resource
      * @param $externalIds
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|string|string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|string|string[]
      * @throws \Exception
      */
     public function jobListByExternalId($externalIds, $fetch = self::FETCH_OBJECT)
@@ -138,7 +138,7 @@ class InvoiceResource extends Resource
      * @param int $skip
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|string|string[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|string|string[]
      * @throws \Exception
      */
     public function getInvoiceList(\DateTime $dateCreatedFrom, \DateTime $dateCreatedTo, $limit = 10, $skip = 0, $fetch = self::FETCH_OBJECT)

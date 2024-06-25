@@ -34,10 +34,5 @@
     "psr-4": {
       "SmartCat\\Client\\": "src/SmartCAT/API"
     }
-  },
-  "config": {
-    "allow-plugins": {
-      "php-http/discovery": true
-    }
   }
 }

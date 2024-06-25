@@ -14,7 +14,7 @@ class UserManager extends UserResource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Http\Promise\Promise|\Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\UserModel
      */
     public function userGet($accountUserId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

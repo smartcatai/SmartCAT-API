@@ -18,7 +18,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface | \Psr\Http\Message\ResponseInterface[]
+     * @return \GuzzleHttp\Promise\PromiseInterface | \GuzzleHttp\Promise\PromiseInterface[]
      */
     public function documentDelete($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -41,7 +41,6 @@ class DocumentManager extends DocumentResource
 
         $stack[] = $parametersStack;
         $responses = [];
-        $response = null;
         foreach ($stack as $params) {
             $response = parent::documentDelete(['documentIds' => $params], $fetch);
             if (self::FETCH_PROMISE === $fetch) {
@@ -71,7 +70,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -142,7 +141,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentTranslate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -193,7 +192,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentTranslateWithXliff($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
