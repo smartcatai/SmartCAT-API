@@ -2,8 +2,7 @@
 
 namespace SmartCat\Client\Manager;
 
-use Http\Message\StreamFactory\GuzzleStreamFactory;
-use Http\Message\MultipartStream\MultipartStreamBuilder;
+use GuzzleHttp\Psr7\MultipartStream;
 use SmartCat\Client\Helper\QueryParam;
 use SmartCat\Client\Resource\DocumentResource;
 
@@ -19,7 +18,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface | \Psr\Http\Message\ResponseInterface[]
+     * @return \GuzzleHttp\Promise\PromiseInterface | \GuzzleHttp\Promise\PromiseInterface[]
      */
     public function documentDelete($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -42,7 +41,6 @@ class DocumentManager extends DocumentResource
 
         $stack[] = $parametersStack;
         $responses = [];
-        $response = null;
         foreach ($stack as $params) {
             $response = parent::documentDelete(['documentIds' => $params], $fetch);
             if (self::FETCH_PROMISE === $fetch) {
@@ -72,7 +70,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -85,27 +83,31 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('uploadedFile');
         $queryParam->setFormParameters(array('uploadedFile'));
         $queryParam->setDefault('disassembleAlgorithmName', NULL);
-        $body = $queryParam->buildFormDataString($parameters);
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
 
         $parameters['uploadedFile'] = $this->prepareFile($parameters['uploadedFile']);
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder
-            ->addResource('uploadedFile', $parameters['uploadedFile']['fileContent'], ['filename' => (isset($parameters['uploadedFile']['fileName']) ? $this->prepareFileName($parameters['uploadedFile']['fileName']) : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
+        $body = [];
+        $body[] = [
+            'name' => 'uploadedFile',
+            'contents' =>  $parameters['uploadedFile']['fileContent'],
+            'filename' => isset($parameters['uploadedFile']['fileName']) ? $this->prepareFileName($parameters['uploadedFile']['fileName']) : null,
+            'headers' => ['Content-Type' => "application/octet-stream"]
+        ];
         if ($updateDocumentModel) {
-            $builder
-                ->addResource('updateDocumentModel', $this->serializer->serialize($updateDocumentModel, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
+            $body[] = [
+                'name' => 'updateDocumentModel',
+                'contents' => json_encode($updateDocumentModel),
+                'headers' => ['Content-Type' => 'application/json']
+            ];
         }
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
-        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
-        $body = $multipartStream->getContents();
+        $stream = new MultipartStream($body);
+        $headers['Content-Type'] = 'multipart/form-data; boundary=' . $stream->getBoundary();
 
         $url = $this->host . '/api/integration/v1/document/update';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
-        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $stream);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -139,7 +141,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentTranslate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -147,24 +149,26 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('documentId');
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(array('translationFile'));
-        $body = $queryParam->buildFormDataString($parameters);
         $headers = $queryParam->buildHeaders($parameters);
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder
-            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
+        $body = [];
+        $body[] = [
+            'name' => 'translationFile',
+            'contents' => $parameters['translationFile']['fileContent'],
+            'filename' => $parameters['translationFile']['fileName'] ?? null,
+            'headers' => ['Content-Type' => "application/octet-stream"]
+        ];
+        $multipartStream = new MultipartStream($body);
+        $boundary = $multipartStream->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
-        $body = $multipartStream->getContents();
 
         $url = $this->host . '/api/integration/v1/document/translate';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
-        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $request = $this->messageFactory->createRequest('PUT', $url, $headers, $multipartStream);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -188,7 +192,7 @@ class DocumentManager extends DocumentResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentTranslateWithXliff($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -199,23 +203,26 @@ class DocumentManager extends DocumentResource
         $queryParam->setRequired('overwriteUpdatedSegments');
         $queryParam->setRequired('translationFile');
         $queryParam->setFormParameters(['translationFile']);
-        $body = $queryParam->buildFormDataString($parameters);
         $headers = $queryParam->buildHeaders($parameters);
 
         $parameters['translationFile'] = $this->prepareFile($parameters['translationFile']);
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder
-            ->addResource('translationFile', $parameters['translationFile']['fileContent'], ['filename' => (isset($parameters['translationFile']['fileName']) ? $parameters['translationFile']['fileName'] : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
+        $body = [];
+        $body[] = [
+            'name' => 'translationFile',
+            'contents' => $parameters['translationFile']['fileContent'],
+            'filename' => $parameters['translationFile']['fileName'] ?? null,
+            'headers' => ['Content-Type' => "application/octet-stream"]
+        ];
+        $multipartStream = new MultipartStream($body);
+        $boundary = $multipartStream->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
         $body = $multipartStream->getContents();
 
         $url = $this->host . '/api/integration/v1/document/translateWithXliff';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

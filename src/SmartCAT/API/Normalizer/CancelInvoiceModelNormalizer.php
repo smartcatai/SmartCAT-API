@@ -23,11 +23,11 @@ class CancelInvoiceModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\CancelInvoiceModel();
-        if (property_exists($data, 'userId')) {
-            $object->setUserId($data->{'userId'});
+        if (isset($data['userId'])) {
+            $object->setUserId($data['userId']);
         }
-        if (property_exists($data, 'invoiceId')) {
-            $object->setInvoiceId($data->{'invoiceId'});
+        if (isset($data['invoiceId'])) {
+            $object->setInvoiceId($data['invoiceId']);
         }
         return $object;
     }

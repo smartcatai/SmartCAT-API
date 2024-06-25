@@ -23,14 +23,14 @@ class ClientModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ClientModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'netRate')) {
-            $object->setNetRate($this->serializer->deserialize(json_encode($data->{'netRate'}), 'SmartCat\\Client\\Model\\NetRateModel', 'json', $context));
+        if (isset($data['netRate'])) {
+            $object->setNetRate($this->serializer->deserialize(json_encode($data['netRate']), 'SmartCat\\Client\\Model\\NetRateModel', 'json', $context));
         }
         return $object;
     }

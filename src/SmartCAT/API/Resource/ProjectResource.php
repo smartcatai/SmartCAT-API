@@ -2,8 +2,7 @@
 
 namespace SmartCat\Client\Resource;
 
-use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Http\Message\StreamFactory\GuzzleStreamFactory;
+use GuzzleHttp\Psr7\MultipartStream;
 use SmartCat\Client\Helper\QueryParam;
 use SmartCat\Client\Model\ProjectModel;
 
@@ -17,7 +16,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectDelete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -28,7 +27,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -40,7 +39,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel
      */
     public function projectGet($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -51,7 +50,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -69,7 +68,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectUpdateProject($projectId, \SmartCat\Client\Model\ProjectChangesModel $model, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -82,7 +81,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($model, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -98,7 +97,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel[]
      */
     public function projectGetAll($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -112,7 +111,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -139,7 +138,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -158,7 +157,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectGetProjectStatisticsObsolete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -170,7 +169,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -184,7 +183,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]
      */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -196,7 +195,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -216,7 +215,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ExecutiveStatisticsModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ExecutiveStatisticsModel[]
      */
     public function projectGetCompletedWorkStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -227,7 +226,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -244,7 +243,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectTranslationMemoryModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectTranslationMemoryModel[]
      */
     public function projectGetProjectTranslationMemories($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -255,7 +254,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -273,7 +272,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectSetTranslationMemoriesForWholeProject($projectId, $tmModels, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -285,7 +284,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -297,7 +296,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\GlossaryModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\GlossaryModel[]
      */
     public function projectGetGlossaries($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -308,7 +307,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -326,7 +325,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectSetGlossaries($projectId, array $glossaryIds, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -339,7 +338,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($glossaryIds, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -352,7 +351,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectCancelProject($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -363,7 +362,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -378,7 +377,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectRestoreProject($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -389,7 +388,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -403,7 +402,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectCompleteProject($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -414,7 +413,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -432,7 +431,7 @@ abstract class ProjectResource extends Resource
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel
      * @throws \Exception
      */
     public function projectCreateProject(\SmartCat\Client\Model\CreateProjectModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
@@ -449,14 +448,18 @@ abstract class ProjectResource extends Resource
             $serializedData->enableProjectTasks = $project->getIsEnableProjectTasks();
         }
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder->addResource('model', json_encode($serializedData), ['headers' => ['Content-Type' => 'application/json']]);
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
+        $body = [];
+        $body[] = [
+            'name' => 'model',
+            'contents' => json_encode($serializedData),
+            'headers' => ['Content-Type' => 'application/json']
+        ];
+        $multipartStream = new MultipartStream($body);
+        $boundary = $multipartStream->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary="' . $boundary . '"';
 
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $multipartStream);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
 
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
@@ -479,7 +482,7 @@ abstract class ProjectResource extends Resource
      * @param array $parameters {
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel[]
      * @throws \Exception
      */
     public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
@@ -495,7 +498,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $documentModel;
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -514,7 +517,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectAddLanguage($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -526,7 +529,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -539,7 +542,7 @@ abstract class ProjectResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectSetProjectTranslationMemoriesByLanguages($projectId, $tmForLanguagesModels, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -550,7 +553,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($tmForLanguagesModels, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -564,7 +567,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectBuildStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -576,7 +579,7 @@ abstract class ProjectResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -592,7 +595,7 @@ abstract class ProjectResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectAssignGroupToWorkflowStage($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -606,7 +609,7 @@ abstract class ProjectResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

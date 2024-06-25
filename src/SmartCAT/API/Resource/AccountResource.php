@@ -12,7 +12,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\AccountModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\AccountModel
      */
     public function accountGetAccountInfo($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -22,7 +22,7 @@ class AccountResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -40,7 +40,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\MTEngineModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\MTEngineModel[]
      */
     public function accountGetMTEnginesForAccount($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -50,7 +50,7 @@ class AccountResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -68,7 +68,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters (targetLanguage, sourceLanguage)
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\LSPServicesModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\LSPServicesModel[]
      */
     public function accountGetLSPServicesForAccount($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -78,7 +78,7 @@ class AccountResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -96,7 +96,7 @@ class AccountResource extends Resource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\AssignableExecutiveModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\AssignableExecutiveModel[]
      */
     public function accountGetAssignableExecutives($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -106,7 +106,7 @@ class AccountResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

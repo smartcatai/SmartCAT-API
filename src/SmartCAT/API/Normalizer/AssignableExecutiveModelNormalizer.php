@@ -23,23 +23,23 @@ class AssignableExecutiveModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\AssignableExecutiveModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+        if (isset($data['id'])) {
+            $object->setId($data['id']);
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'surname')) {
-            $object->setSurname($data->{'surname'});
+        if (isset($data['surname'])) {
+            $object->setSurname($data['surname']);
         }
-        if (property_exists($data, 'email')) {
-            $object->setEmail($data->{'email'});
+        if (isset($data['email'])) {
+            $object->setEmail($data['email']);
         }
-        if (property_exists($data, 'md5HashOfEMail')) {
-            $object->setMd5HashOfEMail($data->{'md5HashOfEMail'});
+        if (isset($data['md5HashOfEMail'])) {
+            $object->setMd5HashOfEMail($data['md5HashOfEMail']);
         }
-        if (property_exists($data, 'type')) {
-            $object->setType($data->{'type'});
+        if (isset($data['type'])) {
+            $object->setType($data['type']);
         }
         return $object;
     }

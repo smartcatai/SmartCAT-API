@@ -16,7 +16,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface
+    * @return \GuzzleHttp\Promise\PromiseInterface | mixed
     */
     public function documentDelete($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -32,12 +32,11 @@ class DocumentResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('DELETE', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
-        $response = $promise->wait();
-        return $response;
+        return $promise->wait();
     }
     /**
     * Document ID can have the form  int1 or int1_int2, <br />
@@ -48,7 +47,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel
+    * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel
     */
     public function documentGet($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -59,7 +58,7 @@ class DocumentResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -80,7 +79,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface
+    * @return \GuzzleHttp\Promise\PromiseInterface
     */
     public function documentGetTranslationStatus($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -91,7 +90,7 @@ class DocumentResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -106,7 +105,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ObjectModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ObjectModel
      */
     public function documentGetTranslationsImportResult($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -117,7 +116,7 @@ class DocumentResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -138,7 +137,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentStatisticsModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentStatisticsModel
      */
     public function documentGetStatistics($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -150,7 +149,7 @@ class DocumentResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -173,7 +172,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface
+    * @return \GuzzleHttp\Promise\PromiseInterface
     */
     public function documentAssignFreelancersToDocument(array $freelancerUserIds, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -187,7 +186,7 @@ class DocumentResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($freelancerUserIds, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -205,7 +204,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface
+    * @return \GuzzleHttp\Promise\PromiseInterface
     */
     public function documentAssignVendorToDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -220,7 +219,7 @@ class DocumentResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -243,7 +242,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface
+    * @return \GuzzleHttp\Promise\PromiseInterface
     */
     public function documentAssignExecutives(\SmartCat\Client\Model\AssignExecutivesRequestModel $request, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -257,7 +256,7 @@ class DocumentResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $this->serializer->serialize($request, 'json');
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -274,7 +273,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function documentUpdate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -286,7 +285,7 @@ class DocumentResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json'), 'Content-Type' => 'application/json'), $queryParam->buildHeaders($parameters));
         $body = $this->serializer->serialize($updateDocumentModel, 'json');
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -308,7 +307,7 @@ class DocumentResource extends Resource
     * }
     * @param string $fetch      Fetch mode (object or response)
     *
-    * @return \Psr\Http\Message\ResponseInterface
+    * @return \GuzzleHttp\Promise\PromiseInterface
     */
     public function documentRename($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -320,7 +319,7 @@ class DocumentResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -338,7 +337,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentTranslate($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -353,7 +352,7 @@ class DocumentResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -371,7 +370,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentTranslateWithXliff($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -386,7 +385,7 @@ class DocumentResource extends Resource
         $headers = $queryParam->buildHeaders($parameters);
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('PUT', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -402,7 +401,7 @@ class DocumentResource extends Resource
      * }
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function documentGetAuthUrl($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -414,7 +413,7 @@ class DocumentResource extends Resource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

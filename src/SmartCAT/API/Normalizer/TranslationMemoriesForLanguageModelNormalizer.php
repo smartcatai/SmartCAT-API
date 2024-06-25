@@ -23,12 +23,12 @@ class TranslationMemoriesForLanguageModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\TranslationMemoriesForLanguageModel();
-        if (property_exists($data, 'language')) {
-            $object->setLanguage($data->{'language'});
+        if (isset($data['language'])) {
+            $object->setLanguage($data['language']);
         }
-        if (property_exists($data, 'translationMemories')) {
+        if (isset($data['translationMemories'])) {
             $values = array();
-            foreach ($data->{'translationMemories'} as $value) {
+            foreach ($data['translationMemories'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\TranslationMemoryForProjectModel', 'raw', $context);
             }
             $object->setTranslationMemories($values);

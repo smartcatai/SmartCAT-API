@@ -14,7 +14,7 @@ class UserManager extends UserResource
      * @param array  $parameters List of parameters
      * @param string $fetch      Fetch mode (object or response)
      *
-     * @return \Http\Promise\Promise|\Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\UserModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\UserModel
      */
     public function userGet($accountUserId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -25,7 +25,7 @@ class UserManager extends UserResource
         $headers = array_merge(array('Accept' => array('application/json')), $queryParam->buildHeaders($parameters));
         $body = $queryParam->buildFormDataString($parameters);
         $request = $this->messageFactory->createRequest('GET', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }

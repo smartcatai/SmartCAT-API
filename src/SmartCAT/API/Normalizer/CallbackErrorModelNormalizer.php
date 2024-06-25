@@ -25,24 +25,24 @@ class CallbackErrorModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\CallbackErrorModel();
-        if (property_exists($data, 'created')) {
-            $object->setCreated($data->{'created'});
+        if (isset($data['created'])) {
+            $object->setCreated($data['created']);
         }
-        if (property_exists($data, 'url')) {
-            $object->setUrl($data->{'url'});
+        if (isset($data['url'])) {
+            $object->setUrl($data['url']);
         }
-        if (property_exists($data, 'reason')) {
-            $object->setReason($data->{'reason'});
+        if (isset($data['reason'])) {
+            $object->setReason($data['reason']);
         }
-        if (property_exists($data, 'code')) {
-            $object->setCode($data->{'code'});
+        if (isset($data['code'])) {
+            $object->setCode($data['code']);
         }
-        if (property_exists($data, 'content')) {
-            $object->setContent($data->{'content'});
+        if (isset($data['content'])) {
+            $object->setContent($data['content']);
         }
-        if (property_exists($data, 'sourceIds')) {
+        if (isset($data['sourceIds'])) {
             $values = array();
-            foreach ($data->{'sourceIds'} as $value) {
+            foreach ($data['sourceIds'] as $value) {
                 $values[] = $value;
             }
             $object->setSourceIds($values);

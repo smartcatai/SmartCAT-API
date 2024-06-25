@@ -25,35 +25,35 @@ class ImportJobModelV2Normalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ImportJobModelV2();
-        if (property_exists($data, 'supplierEmail')) {
-            $object->setSupplierEmail($data->{'supplierEmail'});
+        if (isset($data['supplierEmail'])) {
+            $object->setSupplierEmail($data['supplierEmail']);
         }
-        if (property_exists($data, 'supplierName')) {
-            $object->setSupplierName($data->{'supplierName'});
+        if (isset($data['supplierName'])) {
+            $object->setSupplierName($data['supplierName']);
         }
-        if (property_exists($data, 'supplierType')) {
-            $object->setSupplierType($data->{'supplierType'});
+        if (isset($data['supplierType'])) {
+            $object->setSupplierType($data['supplierType']);
         }
-        if (property_exists($data, 'serviceType')) {
-            $object->setServiceType($data->{'serviceType'});
+        if (isset($data['serviceType'])) {
+            $object->setServiceType($data['serviceType']);
         }
-        if (property_exists($data, 'jobDescription')) {
-            $object->setJobDescription($data->{'jobDescription'});
+        if (isset($data['jobDescription'])) {
+            $object->setJobDescription($data['jobDescription']);
         }
-        if (property_exists($data, 'unitsType')) {
-            $object->setUnitsType($data->{'unitsType'});
+        if (isset($data['unitsType'])) {
+            $object->setUnitsType($data['unitsType']);
         }
-        if (property_exists($data, 'unitsAmount')) {
-            $object->setUnitsAmount($data->{'unitsAmount'});
+        if (isset($data['unitsAmount'])) {
+            $object->setUnitsAmount($data['unitsAmount']);
         }
-        if (property_exists($data, 'pricePerUnit')) {
-            $object->setPricePerUnit($data->{'pricePerUnit'});
+        if (isset($data['pricePerUnit'])) {
+            $object->setPricePerUnit($data['pricePerUnit']);
         }
-        if (property_exists($data, 'currency')) {
-            $object->setCurrency($data->{'currency'});
+        if (isset($data['currency'])) {
+            $object->setCurrency($data['currency']);
         }
-        if (property_exists($data, 'externalNumber')) {
-            $object->setExternalNumber($data->{'externalNumber'});
+        if (isset($data['externalNumber'])) {
+            $object->setExternalNumber($data['externalNumber']);
         }
         return $object;
     }

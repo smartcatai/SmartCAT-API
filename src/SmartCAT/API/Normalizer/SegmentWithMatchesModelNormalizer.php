@@ -23,18 +23,18 @@ class SegmentWithMatchesModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\SegmentWithMatchesModel();
-        if (property_exists($data, 'sourceText')) {
-            $object->setSourceText($data->{'sourceText'});
+        if (isset($data['sourceText'])) {
+            $object->setSourceText($data['sourceText']);
         }
-        if (property_exists($data, 'targetText')) {
-            $object->setTargetText($data->{'targetText'});
+        if (isset($data['targetText'])) {
+            $object->setTargetText($data['targetText']);
         }
-        if (property_exists($data, 'segmentMatch')) {
-            $object->setSegmentMatch($data->{'segmentMatch'});
+        if (isset($data['segmentMatch'])) {
+            $object->setSegmentMatch($data['segmentMatch']);
         }
-        if (property_exists($data, 'tags')) {
+        if (isset($data['tags'])) {
             $values = array();
-            foreach ($data->{'tags'} as $value) {
+            foreach ($data['tags'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\TagsFromUnit', 'raw', $context);
             }
             $object->setTags($values);

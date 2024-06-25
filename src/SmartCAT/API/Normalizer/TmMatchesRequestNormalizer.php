@@ -23,17 +23,17 @@ class TmMatchesRequestNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\TmMatchesRequest();
-        if (property_exists($data, 'sourceLanguage')) {
-            $object->setSourceLanguage($data->{'sourceLanguage'});
+        if (isset($data['sourceLanguage'])) {
+            $object->setSourceLanguage($data['sourceLanguage']);
         }
-        if (property_exists($data, 'targetLanguage')) {
-            $object->setTargetLanguage($data->{'targetLanguage'});
+        if (isset($data['targetLanguage'])) {
+            $object->setTargetLanguage($data['targetLanguage']);
         }
-        if (property_exists($data, 'segmentModel')) {
-            $object->setSegmentModel($this->serializer->deserialize($data->{'segmentModel'}, 'SmartCat\\Client\\Model\\SegmentModel', 'raw', $context));
+        if (isset($data['segmentModel'])) {
+            $object->setSegmentModel($this->serializer->deserialize($data['segmentModel'], 'SmartCat\\Client\\Model\\SegmentModel', 'raw', $context));
         }
-        if (property_exists($data, 'checkFuzzyMatches')) {
-            $object->setCheckFuzzyMatches($data->{'checkFuzzyMatches'});
+        if (isset($data['checkFuzzyMatches'])) {
+            $object->setCheckFuzzyMatches($data['checkFuzzyMatches']);
         }
         return $object;
     }

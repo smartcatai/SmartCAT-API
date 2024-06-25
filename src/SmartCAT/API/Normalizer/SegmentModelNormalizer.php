@@ -23,18 +23,18 @@ class SegmentModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\SegmentModel();
-        if (property_exists($data, 'text')) {
-            $object->setText($data->{'text'});
+        if (isset($data['text'])) {
+            $object->setText($data['text']);
         }
-        if (property_exists($data, 'prevContext')) {
-            $object->setPrevContext($data->{'prevContext'});
+        if (isset($data['prevContext'])) {
+            $object->setPrevContext($data['prevContext']);
         }
-        if (property_exists($data, 'nextContext')) {
-            $object->setNextContext($data->{'nextContext'});
+        if (isset($data['nextContext'])) {
+            $object->setNextContext($data['nextContext']);
         }
-        if (property_exists($data, 'tags')) {
+        if (isset($data['tags'])) {
             $values = array();
-            foreach ($data->{'tags'} as $value) {
+            foreach ($data['tags'] as $value) {
                 $values[] = $this->serializer->deserialize($value, 'SmartCat\\Client\\Model\\SegmentTagModel', 'raw', $context);
             }
             $object->setTags($values);

@@ -2,16 +2,9 @@
 
 namespace SmartCat\Client;
 
-use Http\Client\Common\Plugin\AuthenticationPlugin;
-use Http\Client\Common\Plugin\ContentLengthPlugin;
-use Http\Client\Common\Plugin\DecoderPlugin;
-use Http\Client\Common\Plugin\ErrorPlugin;
-use Http\Client\Common\PluginClient;
-use Http\Client\HttpClient;
-use Http\Client\Socket\Client as SocketHttpClient;
-use Http\Message\Authentication\BasicAuth;
-use Http\Message\MessageFactory;
+use GuzzleHttp\Client;
 use SmartCat\Client\Helper\RawEncoder;
+use SmartCat\Client\Http\HttpFactory;
 use SmartCat\Client\Manager\AccountManager;
 use SmartCat\Client\Manager\CallbackManager;
 use SmartCat\Client\Manager\ClientManager;
@@ -39,7 +32,7 @@ class SmartCat
     const SC_ASIA = 'https://ea.smartcat.ai';
 
     /**
-     * @var HttpClient
+     * @var Client
      */
     private $httpClient;
     /**
@@ -47,7 +40,7 @@ class SmartCat
      */
     private $serializer;
     /**
-     * @var MessageFactory
+     * @var HttpFactory
      */
     private $messageFactory;
 
@@ -95,26 +88,13 @@ class SmartCat
             $normalizer->setSerializer($serializer);
         }
 
-        $messageFactory = new MessageFactory\GuzzleMessageFactory();
+        $messageFactory = new HttpFactory();
 
         $this->serializer = $serializer;
         $this->messageFactory = $messageFactory;
-        $options = [
-            'remote_socket' => "tcp://" . str_replace("https://", "", $this->host) . ":443",
-            'ssl' => true,
-        ];
 
-        $socketClient = new SocketHttpClient($messageFactory, $options);
-        $lengthPlugin = new ContentLengthPlugin();
-        $decodingPlugin = new DecoderPlugin();
-        $errorPlugin = new ErrorPlugin();
-        $authentication = new BasicAuth($this->login, $this->password);
-        $authenticationPlugin = new AuthenticationPlugin($authentication);
-        $this->httpClient = new PluginClient($socketClient, [
-            $errorPlugin,
-            $lengthPlugin,
-            $decodingPlugin,
-            $authenticationPlugin
+        $this->httpClient = new Client([
+            'auth' => [$this->login, $this->password]
         ]);
     }
 

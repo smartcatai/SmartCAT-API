@@ -23,21 +23,21 @@ class DocumentWorkflowStageModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\DocumentWorkflowStageModel();
-        if (property_exists($data, 'progress')) {
-            $object->setProgress($data->{'progress'});
+        if (isset($data['progress'])) {
+            $object->setProgress($data['progress']);
         }
-        if (property_exists($data, 'wordsTranslated')) {
-            $object->setWordsTranslated($data->{'wordsTranslated'});
+        if (isset($data['wordsTranslated'])) {
+            $object->setWordsTranslated($data['wordsTranslated']);
         }
-        if (property_exists($data, 'unassignedWordsCount')) {
-            $object->setUnassignedWordsCount($data->{'unassignedWordsCount'});
+        if (isset($data['unassignedWordsCount'])) {
+            $object->setUnassignedWordsCount($data['unassignedWordsCount']);
         }
-        if (property_exists($data, 'status')) {
-            $object->setStatus($data->{'status'});
+        if (isset($data['status'])) {
+            $object->setStatus($data['status']);
         }
-        if (property_exists($data, 'executives')) {
+        if (isset($data['executives'])) {
             $values = array();
-            foreach ($data->{'executives'} as $value) {
+            foreach ($data['executives'] as $value) {
                 $values[] = $this->serializer->deserialize(json_encode($value), 'SmartCat\\Client\\Model\\AssignedExecutiveModel', 'json', $context);
             }
             $object->setExecutives($values);

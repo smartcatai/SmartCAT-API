@@ -23,24 +23,24 @@ class ServiceModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\ServiceModel();
-        if (property_exists($data, 'serviceType')) {
-            $object->setServiceType($data->{'serviceType'});
+        if (isset($data['serviceType'])) {
+            $object->setServiceType($data['serviceType']);
         }
-        if (property_exists($data, 'sourceLanguage')) {
-            $object->setSourceLanguage($data->{'sourceLanguage'});
+        if (isset($data['sourceLanguage'])) {
+            $object->setSourceLanguage($data['sourceLanguage']);
         }
-        if (property_exists($data, 'targetLanguage')) {
-            $object->setTargetLanguage($data->{'targetLanguage'});
+        if (isset($data['targetLanguage'])) {
+            $object->setTargetLanguage($data['targetLanguage']);
         }
-        if (property_exists($data, 'pricePerUnit')) {
-            $object->setPricePerUnit($data->{'pricePerUnit'});
+        if (isset($data['pricePerUnit'])) {
+            $object->setPricePerUnit($data['pricePerUnit']);
         }
-        if (property_exists($data, 'currency')) {
-            $object->setCurrency($data->{'currency'});
+        if (isset($data['currency'])) {
+            $object->setCurrency($data['currency']);
         }
-        if (property_exists($data, 'specializations')) {
+        if (isset($data['specializations'])) {
             $values = [];
-            foreach ($data->{'specializations'} as $value) {
+            foreach ($data['specializations'] as $value) {
                 $values[] = $value;
             }
             $object->setSpecializations($values);

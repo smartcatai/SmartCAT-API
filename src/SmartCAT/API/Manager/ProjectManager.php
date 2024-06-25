@@ -2,8 +2,7 @@
 
 namespace SmartCat\Client\Manager;
 
-use Http\Message\MultipartStream\MultipartStreamBuilder;
-use Http\Message\StreamFactory\GuzzleStreamFactory;
+use GuzzleHttp\Psr7\MultipartStream;
 use SmartCat\Client\Helper\QueryParam;
 use SmartCat\Client\Model\CreateDocumentPropertyWithFilesModel;
 use SmartCat\Client\Model\ProjectModel;
@@ -21,7 +20,7 @@ class ProjectManager extends ProjectResource
      * @param array $parameters List of parameters
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectModel
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectModel
      */
     public function projectCreateProjectWithFiles(\SmartCat\Client\Model\CreateProjectWithFilesModel $project, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -30,30 +29,30 @@ class ProjectManager extends ProjectResource
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
         $headers = $queryParam->buildHeaders($parameters);
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
-        $builder
-            ->addResource('model', $this->serializer->serialize($project, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
+        $body = [];
+        $body[] = [
+            'name' => 'model',
+            'contents' => $this->serializer->serialize($project, 'json'),
+            'headers' => ['Content-Type' => 'application/json'],
+        ];
         $projectFiles = $project->getFiles();
         $i = 0;
-        foreach ($projectFiles as $fileName => $file) {
+        foreach ($projectFiles as $file) {
             $i++;
-            $builder
-                ->addResource(
-                    'file_' . $i,
-                    $file['fileContent'],
-                    [
-                        'filename' => isset($file['fileName']) ? $file['fileName'] : null,
-                        'headers' => ['Content-Type' => "application/octet-stream"]
-                    ]
-                );
+            $body[] = [
+                'name' => "file_$i",
+                'contents' => $file['fileContent'],
+                'filename' => $file['fileName'] ?? null,
+                'headers' => ['Content-Type' => "application/octet-stream"]
+            ];
         }
 
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
+        $multipartStream = new MultipartStream($body);
+        $boundary = $multipartStream->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary="' . $boundary . '"';
 
         $request = $this->messageFactory->createRequest('POST', $url, $headers, $multipartStream);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -84,7 +83,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\DocumentModel[]
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\DocumentModel[]
      */
     public function projectAddDocument($parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -103,14 +102,13 @@ class ProjectManager extends ProjectResource
         $queryParam->setDefault('metaInfo', NULL);
         $queryParam->setDefault('targetLanguages', NULL);
         $headers = array_merge(['Accept' => ['application/json']], $queryParam->buildHeaders($parameters));
-        $body = $queryParam->buildFormDataString($parameters);
         /** @var CreateDocumentPropertyWithFilesModel[] $documentModel */
         $documentModel = isset($parameters['documentModel']) ? $parameters['documentModel'] : null;
 
         $url = $this->host . '/api/integration/v1/project/document';
         $url = $url . ('?' . $queryParam->buildQueryString($parameters));
 
-        $builder = new MultipartStreamBuilder(new GuzzleStreamFactory());
+        $body = [];
         if ($documentModel) {
             $prepareDocumentModel = array_map(function (CreateDocumentPropertyWithFilesModel $n) {
                 return $n->toCreateDocumentPropertyModel();
@@ -118,26 +116,36 @@ class ProjectManager extends ProjectResource
             $i = 0;
             foreach ($documentModel as $dm) {
                 $file = $this->prepareFile($dm->getFile());
-                $builder
-                    ->addResource("file$i", $file['fileContent'], ['filename' => (isset($file['fileName']) ? $this->prepareFileName($file['fileName']) : null), 'headers' => ['Content-Type' => "application/octet-stream"]]);
+                $body[] = [
+                    'name' => "file$i",
+                    'contents' => $file["fileContent"],
+                    'filename' => isset($file['fileName']) ? $this->prepareFileName($file['fileName']) : null
+                ];
+
                 $i++;
             }
 
-            $builder
-                ->addResource('documentModel', $this->serializer->serialize($prepareDocumentModel, 'json'), ['headers' => ['Content-Type' => 'application/json']]);
+            $body[] = [
+                'name'     => 'documentModel',
+                'contents' => $this->serializer->serialize($prepareDocumentModel, 'json'),
+                'headers'  => ['Content-Type' => 'application/json']
+            ];
         } else {
             $parameters['file'] = $this->prepareFile($parameters['file']);
-            $builder
-                ->addResource('file', $parameters['file']['fileContent'], ['filename' => $this->prepareFileName($parameters['file']['fileName']), 'headers' => ['Content-Type' => "application/octet-stream"]]);
 
+            $body[] = [
+                'name'     => "file",
+                'contents' => $parameters['file']['fileContent'],
+                'filename' => $this->prepareFileName($parameters['file']['fileName']),
+                'headers' => ['Content-Type' => "application/octet-stream"]
+            ];
         }
-        $multipartStream = $builder->build();
-        $boundary = $builder->getBoundary();
+        $stream = new MultipartStream($body);
+        $boundary = $stream->getBoundary();
         $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
-        $body = $multipartStream->getContents();
 
-        $request = $this->messageFactory->createRequest('POST', $url, $headers, $body);
-        $promise = $this->httpClient->sendAsyncRequest($request);
+        $request = $this->messageFactory->createRequest('POST', $url, $headers, $stream);
+        $promise = $this->httpClient->sendAsync($request);
         if (self::FETCH_PROMISE === $fetch) {
             return $promise;
         }
@@ -165,7 +173,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function projectGetProjectStatisticsObsolete($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {
@@ -185,7 +193,7 @@ class ProjectManager extends ProjectResource
      * }
      * @param string $fetch Fetch mode (object or response)
      *
-     * @return \Psr\Http\Message\ResponseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]|string
+     * @return \GuzzleHttp\Promise\PromiseInterface|\SmartCat\Client\Model\ProjectStatisticsModel[]|string
      */
     public function projectGetProjectStatistics($projectId, $parameters = array(), $fetch = self::FETCH_OBJECT)
     {

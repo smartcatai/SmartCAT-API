@@ -23,20 +23,20 @@ class CreateUserRequestNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\CreateUserRequest();
-        if (property_exists($data, 'email')) {
-            $object->setEmail($data->{'email'});
+        if (isset($data['email'])) {
+            $object->setEmail($data['email']);
         }
-        if (property_exists($data, 'firstName')) {
-            $object->setFirstName($data->{'firstName'});
+        if (isset($data['firstName'])) {
+            $object->setFirstName($data['firstName']);
         }
-        if (property_exists($data, 'lastName')) {
-            $object->setLastName($data->{'lastName'});
+        if (isset($data['lastName'])) {
+            $object->setLastName($data['lastName']);
         }
-        if (property_exists($data, 'externalId')) {
-            $object->setExternalId($data->{'externalId'});
+        if (isset($data['externalId'])) {
+            $object->setExternalId($data['externalId']);
         }
-        if (property_exists($data, 'rightsGroup')) {
-            $object->setRightsGroup($data->{'rightsGroup'});
+        if (isset($data['rightsGroup'])) {
+            $object->setRightsGroup($data['rightsGroup']);
         }
         return $object;
     }

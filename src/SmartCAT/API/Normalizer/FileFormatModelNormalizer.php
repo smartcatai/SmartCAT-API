@@ -23,14 +23,14 @@ class FileFormatModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\FileFormatModel();
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
+        if (isset($data['name'])) {
+            $object->setName($data['name']);
         }
-        if (property_exists($data, 'ocr')) {
-            $object->setOcr($data->{'ocr'});
+        if (isset($data['ocr'])) {
+            $object->setOcr($data['ocr']);
         }
-        if (property_exists($data, 'mime-type')) {
-            $object->setMimeType($data->{'mime-type'});
+        if (isset($data['mime-type'])) {
+            $object->setMimeType($data['mime-type']);
         }
         return $object;
     }

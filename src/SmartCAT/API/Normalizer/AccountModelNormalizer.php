@@ -23,18 +23,16 @@ class AccountModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\AccountModel();
-        if (property_exists($data, 'id')) {
-            $object->setId($data->{'id'});
+
+        $data = (array) $data;
+        $properties = ['id', 'name', 'isPersonal', 'type'];
+
+        foreach ($properties as $property) {
+            if (isset($data[$property])) {
+                $object->{'set' . ucfirst($property)}($data[$property]);
+            }
         }
-        if (property_exists($data, 'name')) {
-            $object->setName($data->{'name'});
-        }
-        if (property_exists($data, 'isPersonal')) {
-            $object->setIsPersonal($data->{'isPersonal'});
-        }
-        if (property_exists($data, 'type')) {
-            $object->setType($data->{'type'});
-        }
+
         return $object;
     }
 

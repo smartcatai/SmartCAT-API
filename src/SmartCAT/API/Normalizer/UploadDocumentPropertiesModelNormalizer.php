@@ -23,11 +23,11 @@ class UploadDocumentPropertiesModelNormalizer extends AbstractNormalizer
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $object = new \SmartCat\Client\Model\UploadDocumentPropertiesModel();
-        if (property_exists($data, 'bilingualFileImportSettings')) {
-            $object->setBilingualFileImportSettings($this->serializer->deserialize($data->{'bilingualFileImportSettings'}, 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
+        if (isset($data['bilingualFileImportSettings'])) {
+            $object->setBilingualFileImportSettings($this->serializer->deserialize($data['bilingualFileImportSettings'], 'SmartCat\\Client\\Model\\BilingualFileImportSettingsModel', 'raw', $context));
         }
-        if (property_exists($data, 'enablePlaceholders')) {
-            $object->setEnablePlaceholders($data->{'enablePlaceholders'});
+        if (isset($data['enablePlaceholders'])) {
+            $object->setEnablePlaceholders($data['enablePlaceholders']);
         }
         return $object;
     }
