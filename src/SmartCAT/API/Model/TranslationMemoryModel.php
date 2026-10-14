@@ -158,7 +158,7 @@ class TranslationMemoryModel
      *
      * @return self
      */
-    public function setTargetLanguages(array $targetLanguages = null)
+    public function setTargetLanguages(?array $targetLanguages = null)
     {
         $this->targetLanguages = $targetLanguages;
         return $this;
@@ -175,7 +175,7 @@ class TranslationMemoryModel
      *
      * @return self
      */
-    public function setCreatedDate(string $createdDate = null)
+    public function setCreatedDate(?string $createdDate = null)
     {
         $this->createdDate = $createdDate;
         return $this;
@@ -209,7 +209,7 @@ class TranslationMemoryModel
      *
      * @return self
      */
-    public function setUnitCountByLanguageId(\ArrayObject $unitCountByLanguageId = null)
+    public function setUnitCountByLanguageId(?\ArrayObject $unitCountByLanguageId = null)
     {
         $this->unitCountByLanguageId = $unitCountByLanguageId;
         return $this;

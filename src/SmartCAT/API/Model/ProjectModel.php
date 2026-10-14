@@ -135,7 +135,7 @@ class ProjectModel
      *
      * @return self
      */
-    public function setDeadline(string $deadline = null)
+    public function setDeadline(?string $deadline = null)
     {
         $this->deadline = $deadline;
         return $this;
@@ -152,7 +152,7 @@ class ProjectModel
      *
      * @return self
      */
-    public function setCreationDate(string $creationDate = null)
+    public function setCreationDate(?string $creationDate = null)
     {
         $this->creationDate = $creationDate;
         return $this;
@@ -186,7 +186,7 @@ class ProjectModel
      *
      * @return self
      */
-    public function setModificationDate(string $modificationDate = null)
+    public function setModificationDate(?string $modificationDate = null)
     {
         $this->modificationDate = $modificationDate;
         return $this;
@@ -220,7 +220,7 @@ class ProjectModel
      *
      * @return self
      */
-    public function setTargetLanguages(array $targetLanguages = null)
+    public function setTargetLanguages(?array $targetLanguages = null)
     {
         $this->targetLanguages = $targetLanguages;
         return $this;
@@ -254,7 +254,7 @@ class ProjectModel
      *
      * @return self
      */
-    public function setStatusModificationDate(string $statusModificationDate = null)
+    public function setStatusModificationDate(?string $statusModificationDate = null)
     {
         $this->statusModificationDate = $statusModificationDate;
         return $this;
@@ -322,7 +322,7 @@ class ProjectModel
      *
      * @return self
      */
-    public function setWorkflowStages(array $workflowStages = null)
+    public function setWorkflowStages(?array $workflowStages = null)
     {
         $this->workflowStages = $workflowStages;
         return $this;
@@ -339,7 +339,7 @@ class ProjectModel
      *
      * @return self
      */
-    public function setDocuments(array $documents = null)
+    public function setDocuments(?array $documents = null)
     {
         $this->documents = $documents;
         return $this;

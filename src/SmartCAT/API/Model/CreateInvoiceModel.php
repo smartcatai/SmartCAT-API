@@ -27,7 +27,7 @@ class CreateInvoiceModel
      *
      * @return self
      */
-    public function setTargetCurrency(string $targetCurrency = null)
+    public function setTargetCurrency(?string $targetCurrency = null)
     {
         $this->targetCurrency = $targetCurrency;
         return $this;
@@ -46,7 +46,7 @@ class CreateInvoiceModel
      *
      * @return self
      */
-    public function setJobIds(array $jobIds = null)
+    public function setJobIds(?array $jobIds = null)
     {
         $this->jobIds = $jobIds;
         return $this;

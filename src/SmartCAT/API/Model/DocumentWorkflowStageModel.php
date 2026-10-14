@@ -104,7 +104,7 @@ class DocumentWorkflowStageModel
      *
      * @return self
      */
-    public function setExecutives(array $executives = null)
+    public function setExecutives(?array $executives = null)
     {
         $this->executives = $executives;
         return $this;

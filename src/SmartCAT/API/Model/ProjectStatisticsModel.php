@@ -49,7 +49,7 @@ class ProjectStatisticsModel
      *
      * @return self
      */
-    public function setStatistics(array $statistics = null)
+    public function setStatistics(?array $statistics = null)
     {
         $this->statistics = $statistics;
         return $this;
@@ -83,7 +83,7 @@ class ProjectStatisticsModel
      *
      * @return self
      */
-    public function setDocuments(array $documents = null)
+    public function setDocuments(?array $documents = null)
     {
         $this->documents = $documents;
         return $this;

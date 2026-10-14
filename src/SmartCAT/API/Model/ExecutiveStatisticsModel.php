@@ -40,7 +40,7 @@ class ExecutiveStatisticsModel
      *
      * @return self
      */
-    public function setExecutive(ExecutiveModel $executive = null)
+    public function setExecutive(?ExecutiveModel $executive = null)
     {
         $this->executive = $executive;
         return $this;
@@ -108,7 +108,7 @@ class ExecutiveStatisticsModel
      *
      * @return self
      */
-    public function setTotal(array $total = null)
+    public function setTotal(?array $total = null)
     {
         $this->total = $total;
         return $this;
@@ -125,7 +125,7 @@ class ExecutiveStatisticsModel
      *
      * @return self
      */
-    public function setDocuments(array $documents = null)
+    public function setDocuments(?array $documents = null)
     {
         $this->documents = $documents;
         return $this;

@@ -112,7 +112,7 @@ class GlossaryModel
      *
      * @return self
      */
-    public function setLanguages(array $languages = null)
+    public function setLanguages(?array $languages = null)
     {
         $this->languages = $languages;
         return $this;

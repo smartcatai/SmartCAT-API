@@ -95,7 +95,7 @@ class CreateDocumentPropertyModel
      *
      * @return self
      */
-    public function setBilingualFileImportSettings(BilingualFileImportSettingsModel $bilingualFileImportSettings = null)
+    public function setBilingualFileImportSettings(?BilingualFileImportSettingsModel $bilingualFileImportSettings = null)
     {
         $this->bilingualFileImportSettings = $bilingualFileImportSettings;
         return $this;
@@ -112,7 +112,7 @@ class CreateDocumentPropertyModel
      *
      * @return self
      */
-    public function setTargetLanguages(array $targetLanguages = null)
+    public function setTargetLanguages(?array $targetLanguages = null)
     {
         $this->targetLanguages = $targetLanguages;
         return $this;

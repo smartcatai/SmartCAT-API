@@ -40,7 +40,7 @@ class CallbackErrorModel
      *
      * @return self
      */
-    public function setCreated(string $created = null)
+    public function setCreated(?string $created = null)
     {
         $this->created = $created;
         return $this;
@@ -125,7 +125,7 @@ class CallbackErrorModel
      *
      * @return self
      */
-    public function setSourceIds(array $sourceIds = null)
+    public function setSourceIds(?array $sourceIds = null)
     {
         $this->sourceIds = $sourceIds;
         return $this;

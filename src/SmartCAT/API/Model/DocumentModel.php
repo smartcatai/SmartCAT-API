@@ -110,7 +110,7 @@ class DocumentModel
      *
      * @return self
      */
-    public function setCreationDate(string $creationDate = null)
+    public function setCreationDate(?string $creationDate = null)
     {
         $this->creationDate = $creationDate;
         return $this;
@@ -127,7 +127,7 @@ class DocumentModel
      *
      * @return self
      */
-    public function setDeadline(string $deadline = null)
+    public function setDeadline(?string $deadline = null)
     {
         $this->deadline = $deadline;
         return $this;
@@ -229,7 +229,7 @@ class DocumentModel
      *
      * @return self
      */
-    public function setStatusModificationDate(string $statusModificationDate = null)
+    public function setStatusModificationDate(?string $statusModificationDate = null)
     {
         $this->statusModificationDate = $statusModificationDate;
         return $this;
@@ -263,7 +263,7 @@ class DocumentModel
      *
      * @return self
      */
-    public function setWorkflowStages(array $workflowStages = null)
+    public function setWorkflowStages(?array $workflowStages = null)
     {
         $this->workflowStages = $workflowStages;
         return $this;

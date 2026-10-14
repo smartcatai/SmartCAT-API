@@ -83,7 +83,7 @@ class SegmentModel
      *
      * @return self
      */
-    public function setTags(array $tags = null)
+    public function setTags(?array $tags = null)
     {
         $this->tags = $tags;
         return $this;
