@@ -70,7 +70,7 @@ class CreateTranslationMemoryModel
      *
      * @return self
      */
-    public function setTargetLanguages(array $targetLanguages = null)
+    public function setTargetLanguages(?array $targetLanguages = null)
     {
         $this->targetLanguages = $targetLanguages;
         return $this;

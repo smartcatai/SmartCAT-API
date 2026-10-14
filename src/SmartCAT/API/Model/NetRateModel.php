@@ -104,7 +104,7 @@ class NetRateModel
      *
      * @return self
      */
-    public function setTmMatchRates(array $tmMatchRates = null)
+    public function setTmMatchRates(?array $tmMatchRates = null)
     {
         $this->tmMatchRates = $tmMatchRates;
         return $this;

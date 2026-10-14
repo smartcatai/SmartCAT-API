@@ -24,7 +24,7 @@ class ProjectStatisticsObsoleteModel
      *
      * @return self
      */
-    public function setStatistics(array $statistics = null)
+    public function setStatistics(?array $statistics = null)
     {
         $this->statistics = $statistics;
         return $this;

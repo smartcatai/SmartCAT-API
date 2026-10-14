@@ -41,7 +41,7 @@ class DirectoryModel
      *
      * @return self
      */
-    public function setItems(array $items = null)
+    public function setItems(?array $items = null)
     {
         $this->items = $items;
         return $this;

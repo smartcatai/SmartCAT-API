@@ -24,7 +24,7 @@ class ModelWithFilesCreateProjectModel
      *
      * @return self
      */
-    public function setValue(CreateProjectModel $value = null)
+    public function setValue(?CreateProjectModel $value = null)
     {
         $this->value = $value;
         return $this;
@@ -41,7 +41,7 @@ class ModelWithFilesCreateProjectModel
      *
      * @return self
      */
-    public function setFiles(array $files = null)
+    public function setFiles(?array $files = null)
     {
         $this->files = $files;
         return $this;

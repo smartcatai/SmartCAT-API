@@ -41,7 +41,7 @@ class TranslationMemoriesForLanguageModel
      *
      * @return self
      */
-    public function setTranslationMemories(array $translationMemories = null)
+    public function setTranslationMemories(?array $translationMemories = null)
     {
         $this->translationMemories = $translationMemories;
         return $this;

@@ -24,7 +24,7 @@ class ModelWithFilesIReadOnlyListCreateDocumentPropertyModel
      *
      * @return self
      */
-    public function setValue(array $value = null)
+    public function setValue(?array $value = null)
     {
         $this->value = $value;
         return $this;
@@ -41,7 +41,7 @@ class ModelWithFilesIReadOnlyListCreateDocumentPropertyModel
      *
      * @return self
      */
-    public function setFiles(array $files = null)
+    public function setFiles(?array $files = null)
     {
         $this->files = $files;
         return $this;

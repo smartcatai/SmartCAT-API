@@ -41,7 +41,7 @@ class CallbackPropertyModel
      *
      * @return self
      */
-    public function setAdditionalHeaders(array $additionalHeaders = null)
+    public function setAdditionalHeaders(?array $additionalHeaders = null)
     {
         $this->additionalHeaders = $additionalHeaders;
         return $this;

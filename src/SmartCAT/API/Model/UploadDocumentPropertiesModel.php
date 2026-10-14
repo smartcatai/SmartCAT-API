@@ -24,7 +24,7 @@ class UploadDocumentPropertiesModel
      *
      * @return self
      */
-    public function setBilingualFileImportSettings(BilingualFileImportSettingsModel $bilingualFileImportSettings = null)
+    public function setBilingualFileImportSettings(?BilingualFileImportSettingsModel $bilingualFileImportSettings = null)
     {
         $this->bilingualFileImportSettings = $bilingualFileImportSettings;
         return $this;

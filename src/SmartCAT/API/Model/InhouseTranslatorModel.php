@@ -51,7 +51,7 @@ class InhouseTranslatorModel
      * @param string $id
      * @return InhouseTranslatorModel
      */
-    public function setId(string $id = null)
+    public function setId(?string $id = null)
     {
         $this->id = $id;
         return $this;
@@ -69,7 +69,7 @@ class InhouseTranslatorModel
      * @param string $email
      * @return InhouseTranslatorModel
      */
-    public function setEmail(string $email = null)
+    public function setEmail(?string $email = null)
     {
         $this->email = $email;
         return $this;
@@ -87,7 +87,7 @@ class InhouseTranslatorModel
      * @param string $firstName
      * @return InhouseTranslatorModel
      */
-    public function setFirstName(string $firstName = null)
+    public function setFirstName(?string $firstName = null)
     {
         $this->firstName = $firstName;
         return $this;
@@ -105,7 +105,7 @@ class InhouseTranslatorModel
      * @param string $lastName
      * @return InhouseTranslatorModel
      */
-    public function setLastName(string $lastName = null)
+    public function setLastName(?string $lastName = null)
     {
         $this->lastName = $lastName;
         return $this;
@@ -123,7 +123,7 @@ class InhouseTranslatorModel
      * @param string $externalId
      * @return InhouseTranslatorModel
      */
-    public function setExternalId(string $externalId = null)
+    public function setExternalId(?string $externalId = null)
     {
         $this->externalId = $externalId;
         return $this;

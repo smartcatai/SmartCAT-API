@@ -78,7 +78,7 @@ class ProjectChangesModel
      *
      * @return self
      */
-    public function setDeadline(string $deadline = null)
+    public function setDeadline(?string $deadline = null)
     {
         $this->deadline = $deadline;
         return $this;

@@ -66,7 +66,7 @@ class TmMatchesRequest
      *
      * @return self
      */
-    public function setSegmentModel(SegmentModel $segmentModel = null)
+    public function setSegmentModel(?SegmentModel $segmentModel = null)
     {
         $this->segmentModel = $segmentModel;
         return $this;

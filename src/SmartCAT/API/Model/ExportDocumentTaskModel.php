@@ -41,7 +41,7 @@ class ExportDocumentTaskModel
      *
      * @return self
      */
-    public function setDocumentIds(array $documentIds = null)
+    public function setDocumentIds(?array $documentIds = null)
     {
         $this->documentIds = $documentIds;
         return $this;

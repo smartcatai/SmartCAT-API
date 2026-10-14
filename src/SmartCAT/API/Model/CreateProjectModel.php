@@ -132,7 +132,7 @@ class CreateProjectModel
      *
      * @return self
      */
-    public function setDeadline(string $deadline = null)
+    public function setDeadline(?string $deadline = null)
     {
         $this->deadline = $deadline;
         return $this;
@@ -166,7 +166,7 @@ class CreateProjectModel
      *
      * @return self
      */
-    public function setTargetLanguages(array $targetLanguages = null)
+    public function setTargetLanguages(?array $targetLanguages = null)
     {
         $this->targetLanguages = $targetLanguages;
         return $this;
@@ -336,7 +336,7 @@ class CreateProjectModel
      *
      * @return self
      */
-    public function setDisassembleAlgorithmNames(array $disassembleAlgorithmNames = null)
+    public function setDisassembleAlgorithmNames(?array $disassembleAlgorithmNames = null)
     {
         $this->disassembleAlgorithmNames = $disassembleAlgorithmNames;
         return $this;
@@ -353,7 +353,7 @@ class CreateProjectModel
      *
      * @return self
      */
-    public function setDocumentProperties(array $documentProperties = null)
+    public function setDocumentProperties(?array $documentProperties = null)
     {
         $this->documentProperties = $documentProperties;
         return $this;
@@ -370,7 +370,7 @@ class CreateProjectModel
      *
      * @return self
      */
-    public function setWorkflowStages(array $workflowStages = null)
+    public function setWorkflowStages(?array $workflowStages = null)
     {
         $this->workflowStages = $workflowStages;
         return $this;

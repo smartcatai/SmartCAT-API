@@ -62,7 +62,7 @@ class ClientModel
      *
      * @return self
      */
-    public function setNetRate(NetRateModel $netRate = null)
+    public function setNetRate(?NetRateModel $netRate = null)
     {
         $this->netRate = $netRate;
         return $this;
